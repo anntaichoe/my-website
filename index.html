@@ -1,0 +1,1232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ann T. Choe, PhD</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ── Reset & Base ──────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --ink:       #1c1c1c;
+      --ink-soft:  #5a5a5a;
+      --ink-faint: #9a9a9a;
+      --paper:     #faf9f7;
+      --paper-alt: #f2f0ec;
+      --sage:      #7a9e8e;
+      --ocean:     #4e7fa3;
+      --sand:      #c4a97d;
+      --rule:      #e2dfd9;
+
+      --serif: 'Cormorant Garamond', Georgia, serif;
+      --sans:  'Inter', system-ui, sans-serif;
+
+      --max: 860px;
+      --gutter: clamp(1.5rem, 5vw, 4rem);
+    }
+
+    html { scroll-behavior: smooth; font-size: 16px; }
+
+    body {
+      font-family: var(--sans);
+      background: var(--paper);
+      color: var(--ink);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── Nav ───────────────────────────────────────── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.25rem var(--gutter);
+      background: rgba(250,249,247,0.88);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.3s;
+    }
+    nav.scrolled { border-color: var(--rule); }
+
+    .nav-name {
+      font-family: var(--serif);
+      font-weight: 400;
+      font-size: 1.05rem;
+      letter-spacing: 0.02em;
+      color: var(--ink);
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: 0.78rem;
+      font-weight: 400;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--ink-soft);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--sage); }
+
+    /* ── Shared Layout ─────────────────────────────── */
+    section {
+      padding: clamp(4rem, 10vh, 7rem) var(--gutter);
+    }
+
+    .inner {
+      max-width: var(--max);
+      margin: 0 auto;
+    }
+
+    .section-label {
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--sage);
+      margin-bottom: 2.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .section-label::after {
+      content: '';
+      display: block;
+      flex: 1;
+      height: 1px;
+      background: var(--rule);
+    }
+
+    h2 {
+      font-family: var(--serif);
+      font-weight: 300;
+      font-size: clamp(2rem, 4vw, 2.8rem);
+      line-height: 1.25;
+      color: var(--ink);
+      margin-bottom: 1.5rem;
+    }
+
+    p { color: var(--ink-soft); font-size: 0.95rem; }
+
+    /* ── Fade-in animation ─────────────────────────── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(22px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    /* ── Hero ──────────────────────────────────────── */
+    #hero {
+      min-height: 100dvh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding-top: calc(clamp(4rem, 10vh, 7rem) + 3.5rem);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-canvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      max-width: var(--max);
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    .hero-eyebrow {
+      font-size: 0.78rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--sage);
+      margin-bottom: 1.5rem;
+      font-weight: 400;
+    }
+
+    h1 {
+      font-family: var(--serif);
+      font-size: 26px;
+      font-weight: 300;
+      line-height: 1.08;
+      letter-spacing: -0.01em;
+      margin-bottom: 1.75rem;
+    }
+    h1 em {
+      font-style: italic;
+      color: var(--sage);
+    }
+
+    .hero-main {
+      display: flex;
+      align-items: flex-start;
+      gap: 3rem;
+    }
+
+    .hero-left {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .hero-portrait {
+      width: 260px;
+      height: 260px;
+      border-radius: 50%;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+
+
+.hero-tagline {
+      font-family: var(--serif);
+      font-size: clamp(1.05rem, 2.2vw, 1.35rem);
+      font-weight: 300;
+      color: var(--ink-soft);
+      line-height: 1.55;
+      max-width: 540px;
+      margin-bottom: 1rem;
+    }
+
+    .hero-roles {
+      margin-bottom: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+    }
+    .hero-social {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem 1.25rem;
+      margin-top: 1.5rem;
+    }
+    .hero-social a {
+      font-size: 0.78rem;
+      letter-spacing: 0.06em;
+      color: var(--ink-faint);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .hero-social a:hover { color: var(--sage); }
+    .hero-role {
+      font-size: 0.8rem;
+      color: var(--ink-faint);
+      letter-spacing: 0.02em;
+    }
+
+    .hero-meta {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .hero-location {
+      font-size: 0.8rem;
+      letter-spacing: 0.06em;
+      color: var(--ink-faint);
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .hero-location svg { flex-shrink: 0; }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      text-decoration: none;
+      padding: 0.65rem 1.4rem;
+      border-radius: 2px;
+      transition: all 0.2s;
+    }
+    .btn-primary {
+      background: var(--ink);
+      color: var(--paper);
+    }
+    .btn-primary:hover {
+      background: var(--sage);
+    }
+    .btn-outline {
+      border: 1px solid var(--rule);
+      color: var(--ink-soft);
+    }
+    .btn-outline:hover {
+      border-color: var(--sage);
+      color: var(--sage);
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(8px); }
+      to   { opacity: 1; transform: none; }
+    }
+
+    /* ── About ─────────────────────────────────────── */
+    #about { background: var(--paper-alt); }
+
+    .about-text > * + * { margin-top: 1.2rem; }
+
+    .tag-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 1.75rem;
+    }
+    .tag {
+      font-size: 0.72rem;
+      font-weight: 400;
+      letter-spacing: 0.06em;
+      padding: 0.3rem 0.75rem;
+      border: 1px solid var(--rule);
+      border-radius: 100px;
+      color: var(--ink-soft);
+      background: var(--paper);
+      cursor: default;
+      transition: border-color 0.25s, color 0.25s, transform 0.25s;
+    }
+    .tag:hover {
+      border-color: var(--sage);
+      color: var(--sage);
+      transform: scale(1.1);
+    }
+
+    /* ── Education ─────────────────────────────────── */
+    .edu-list { margin-top: 0.5rem; }
+    .edu-item {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: baseline;
+      gap: 1rem 2rem;
+      padding: 1.6rem 0;
+      border-bottom: 1px solid var(--rule);
+    }
+    .edu-item:first-child { border-top: 1px solid var(--rule); }
+    .edu-degree {
+      font-family: var(--serif);
+      font-size: 1.1rem;
+      font-weight: 400;
+      color: var(--ink);
+      margin-bottom: 0.2rem;
+    }
+    .edu-field {
+      font-size: 0.85rem;
+      color: var(--ink-soft);
+      margin-bottom: 0.35rem;
+    }
+    .edu-institution {
+      font-size: 0.8rem;
+      color: var(--ink-faint);
+      letter-spacing: 0.03em;
+    }
+    .edu-year {
+      font-size: 0.78rem;
+      font-weight: 500;
+      color: var(--sage);
+      letter-spacing: 0.04em;
+      white-space: nowrap;
+      align-self: start;
+      padding-top: 0.15rem;
+    }
+
+    /* ── Research ──────────────────────────────────── */
+    .research-intro {
+      font-family: var(--serif);
+      font-size: clamp(1.1rem, 2vw, 1.3rem);
+      font-weight: 300;
+      color: var(--ink-soft);
+      line-height: 1.65;
+      max-width: 620px;
+      margin-bottom: 3.5rem;
+    }
+
+
+    .pubs-list {
+      margin-top: 3.5rem;
+    }
+
+    .pubs-label {
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--ink-faint);
+      margin-bottom: 1.5rem;
+    }
+    .pubs-category {
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--sage);
+      margin-top: 2.5rem;
+      margin-bottom: 0.25rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--rule);
+    }
+    .pubs-category:first-child { margin-top: 0; }
+
+    .pub-item {
+      padding: 1.25rem 0;
+      border-bottom: 1px solid var(--rule);
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 1.25rem;
+      align-items: baseline;
+    }
+    .pub-year {
+      font-size: 0.78rem;
+      color: var(--sage);
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      min-width: 2.5rem;
+    }
+    .pub-ref {
+      font-size: 0.88rem;
+      color: var(--ink-soft);
+      line-height: 1.65;
+    }
+    .pub-ref em { color: var(--ink); font-style: italic; }
+    .pub-ref a {
+      color: var(--ocean);
+      text-decoration: none;
+    }
+    .pub-ref a:hover { text-decoration: underline; }
+
+    /* ── Grants & Awards ───────────────────────────── */
+    .grant-list, .award-list { margin-top: 0.5rem; }
+
+    .grant-item, .award-item {
+      padding: 1.4rem 0;
+      border-bottom: 1px solid var(--rule);
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 0.5rem 2rem;
+      align-items: start;
+    }
+    .grant-item:first-of-type, .award-item:first-of-type {
+      border-top: 1px solid var(--rule);
+    }
+    .grant-title, .award-title {
+      font-family: var(--serif);
+      font-size: 1rem;
+      font-weight: 400;
+      color: var(--ink);
+      margin-bottom: 0.2rem;
+    }
+    .grant-org, .award-org {
+      font-size: 0.82rem;
+      color: var(--ink-soft);
+    }
+    .grant-role {
+      font-size: 0.78rem;
+      color: var(--ink-faint);
+      margin-top: 0.2rem;
+      font-style: italic;
+    }
+    .grant-date, .award-date {
+      font-size: 0.78rem;
+      font-weight: 500;
+      color: var(--sage);
+      letter-spacing: 0.03em;
+      white-space: nowrap;
+      text-align: right;
+    }
+
+    /* ── Teaching ──────────────────────────────────── */
+    #teaching { background: var(--paper-alt); }
+
+    .teaching-layout {
+      display: grid;
+      grid-template-columns: 1.1fr 1fr;
+      gap: 4rem;
+    }
+
+    .philosophy-block p {
+      font-family: var(--serif);
+      font-size: clamp(1.1rem, 2vw, 1.3rem);
+      font-weight: 300;
+      color: var(--ink-soft);
+      line-height: 1.65;
+    }
+    .philosophy-block p + p { margin-top: 1.2rem; }
+    blockquote {
+      margin: 2rem 0;
+      padding-left: 1.25rem;
+      border-left: 2px solid var(--sage);
+      font-family: var(--serif);
+      font-size: clamp(1.2rem, 2.2vw, 1.45rem);
+      font-style: italic;
+      color: var(--ink);
+      line-height: 1.6;
+    }
+
+    .courses-panel { }
+    .courses-label {
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--ink-faint);
+      margin-bottom: 1.25rem;
+    }
+    .courses-institution {
+      font-size: 0.82rem;
+      font-weight: 500;
+      color: var(--ink);
+      margin-top: 1.5rem;
+      margin-bottom: 0.1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 0.5rem;
+    }
+    .courses-institution:first-of-type { margin-top: 0; }
+    .courses-dates {
+      font-size: 0.72rem;
+      font-weight: 400;
+      color: var(--sage);
+      letter-spacing: 0.04em;
+      white-space: nowrap;
+    }
+    blockquote footer {
+      display: block;
+      margin-top: 0.6rem;
+      font-style: normal;
+      font-size: 0.82rem;
+      color: var(--ink-faint);
+      letter-spacing: 0.03em;
+    }
+
+    .course-item {
+      padding: 0.45rem 0;
+    }
+    .course-name {
+      font-size: 0.85rem;
+      font-weight: 400;
+      color: var(--ink-soft);
+      line-height: 1.4;
+    }
+
+    /* ── Side Hustles ──────────────────────────────── */
+    .hustles-intro {
+      font-size: 0.97rem;
+      color: var(--ink-soft);
+      max-width: 560px;
+      margin-bottom: 3rem;
+      line-height: 1.8;
+    }
+
+    .hustles-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 2rem;
+    }
+
+    .hustle-card {
+      display: block;
+      text-decoration: none;
+      color: inherit;
+      position: relative;
+      padding: 1.75rem;
+      border: 1px solid rgba(226, 223, 217, 0.7);
+      border-radius: 4px;
+      background: rgba(250, 249, 247, 0.6);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+      transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+    }
+    .hustle-card:hover {
+      border-color: var(--sage);
+      transform: translateY(-3px);
+    }
+
+.hustle-number {
+      font-family: var(--serif);
+      font-size: 2.5rem;
+      font-weight: 300;
+      color: var(--rule);
+      line-height: 1;
+      margin-bottom: 1rem;
+      user-select: none;
+    }
+
+    .hustle-title {
+      font-family: var(--serif);
+      font-size: 1.1rem;
+      font-weight: 400;
+      color: var(--ink);
+      margin-bottom: 0.5rem;
+    }
+    .hustle-body {
+      font-size: 0.84rem;
+      color: var(--ink-soft);
+      line-height: 1.7;
+    }
+
+    /* ── Footer ────────────────────────────────────── */
+    footer {
+      padding: 3rem var(--gutter);
+      border-top: 1px solid var(--rule);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .footer-name {
+      font-family: var(--serif);
+      font-size: 1rem;
+      color: var(--ink-soft);
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 1.5rem;
+    }
+    .footer-links a {
+      font-size: 0.78rem;
+      letter-spacing: 0.06em;
+      color: var(--ink-faint);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--sage); }
+
+    .footer-copy {
+      font-size: 0.72rem;
+      color: var(--ink-faint);
+      width: 100%;
+      margin-top: 0.5rem;
+    }
+
+    /* ── Wave strips ───────────────────────────────── */
+    .wave-strip {
+      position: fixed;
+      left: 0;
+      right: 0;
+      height: 72px;
+      z-index: 95;
+      pointer-events: none;
+    }
+    .wave-strip-top {
+      top: 0;
+      /* gradient fades out downward so strip blends into page */
+      -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 40%, rgba(0,0,0,0) 100%);
+      mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 40%, rgba(0,0,0,0) 100%);
+    }
+    .wave-strip canvas { width: 100%; height: 100%; display: block; }
+
+    /* ── Mobile ────────────────────────────────────── */
+    @media (max-width: 680px) {
+      .teaching-layout {
+        grid-template-columns: 1fr;
+      }
+      .hero-main { flex-direction: column-reverse; align-items: flex-start; }
+      .hero-portrait { width: 160px; height: 160px; }
+      .nav-links { display: none; }
+      .hero-meta { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── Navigation ───────────────────────────────── -->
+  <nav id="nav">
+    <a class="nav-name" href="#hero">Ann T. Choe</a>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#education">Education</a></li>
+      <li><a href="#research">Research</a></li>
+      <li><a href="#teaching">Teaching</a></li>
+      <li><a href="#grants">Grants</a></li>
+      <li><a href="#awards">Awards</a></li>
+      <li><a href="#side-hustles">Projects</a></li>
+    </ul>
+  </nav>
+
+  <!-- Wave strips -->
+  <div class="wave-strip wave-strip-top"><canvas id="waveTop"></canvas></div>
+
+  <!-- ── Hero ─────────────────────────────────────── -->
+  <section id="hero">
+    <canvas class="hero-canvas" id="waveCanvas"></canvas>
+
+    <div class="hero-content">
+      <p class="hero-eyebrow">Applied Linguistics · Conversation Analysis · EdTech</p>
+      <div class="hero-main">
+        <div class="hero-left">
+          <h1>Ann T. Choe, <em>PhD</em></h1>
+          <p class="hero-tagline">
+            I'm an applied linguist with a tech twist — My toolbox is a mix of linguistic knowledge, design skills, and data analytic skills. My goal is to provide pedagogical and technological solutions that enhance learner experiences and drive meaningful interactions.
+          </p>
+          <div class="hero-roles">
+            <p class="hero-role">Lecturer of Second Language Studies · University of Hawaiʻi at Mānoa</p>
+            <p class="hero-role">Senior Adjunct Instructor of Applied Linguistics · Hawaiʻi Pacific University</p>
+          </div>
+          <div class="hero-meta">
+            <a class="btn btn-outline" href="#about">About Me</a>
+            <a class="btn btn-primary" href="#research">View Research</a>
+            <span class="hero-location">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/>
+                <circle cx="12" cy="9" r="2.5"/>
+              </svg>
+              Honolulu, Hawaiʻi
+            </span>
+          </div>
+          <div class="hero-social">
+            <a href="https://www.linkedin.com/in/ann-t-choe/" target="_blank" rel="noopener">LinkedIn</a>
+            <a href="https://www.researchgate.net/profile/Ann-Choe/research" target="_blank" rel="noopener">ResearchGate</a>
+            <a href="https://scholar.google.com/citations?user=m7vYqyEAAAAJ&hl=en" target="_blank" rel="noopener">Google Scholar</a>
+            <a href="https://github.com/anntaichoe" target="_blank" rel="noopener">GitHub</a>
+            <a href="#">CV</a>
+          </div>
+        </div>
+        <div class="hero-portrait">
+          <img src="https://avatars.githubusercontent.com/u/177082429?v=4" alt="Ann T. Choe" style="width:100%;height:100%;object-fit:cover;display:block;" />
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ── About ─────────────────────────────────────── -->
+  <section id="about">
+    <div class="inner">
+      <p class="section-label">About</p>
+      <div class="reveal">
+        <h2>language x technology x interaction</h2>
+        <div class="tag-row">
+          <span class="tag">Conversation Analysis</span>
+          <span class="tag">SLA</span>
+          <span class="tag">CALL</span>
+          <span class="tag">Interactional Linguistics</span>
+          <span class="tag">Multimodality</span>
+          <span class="tag">Korean</span>
+          <span class="tag">Mandarin Chinese</span>
+          <span class="tag">English</span>
+          <span class="tag">Multilingual Interaction</span>
+          <span class="tag">Human-Computer Interaction</span>
+          <span class="tag">EdTech</span>
+          <span class="tag">AI Solutions</span>
+          <span class="tag">L2 Assessment</span>
+          <span class="tag">University Teaching</span>
+          <span class="tag">Applied Linguistics</span>
+          <span class="tag">Language Learning</span>
+          <span class="tag">Language Teaching</span>
+          <span class="tag">Language Use</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Education ───────────────────────────────────── -->
+  <section id="education">
+    <div class="inner">
+      <p class="section-label">Education</p>
+      <div class="edu-list reveal">
+
+        <div class="edu-item">
+          <div>
+            <p class="edu-degree">Ph.D. Applied Linguistics</p>
+            <p class="edu-field"></p>
+            <p class="edu-institution">University of Hawaiʻi at Mānoa &mdash; Hawaiʻi, USA</p>
+          </div>
+          <span class="edu-year">2023</span>
+        </div>
+
+        <div class="edu-item">
+          <div>
+            <p class="edu-degree">Ed.M. Applied Linguistics</p>
+            <p class="edu-field"></p>
+            <p class="edu-institution">Teachers College, Columbia University &mdash; New York, USA</p>
+          </div>
+          <span class="edu-year">2017</span>
+        </div>
+
+        <div class="edu-item">
+          <div>
+            <p class="edu-degree">M.A. Teaching English to Speakers of Other Languages (TESOL)</p>
+            <p class="edu-field"></p>
+            <p class="edu-institution">Hawaiʻi Pacific University &mdash; Hawaiʻi, USA</p>
+          </div>
+          <span class="edu-year">2013</span>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Research ──────────────────────────────────── -->
+  <section id="research">
+    <div class="inner">
+      <p class="section-label">Research</p>
+      <p class="research-intro reveal">
+        My research sits at the intersection of conversation analysis, second language learning, and digital/AI interaction. Much of my work examines multilingual interaction in institutional and educational settings. I draw heavily on ethnomethodology and conversation analysis (EMCA) to study the fine-grained organization of multimodal interaction.
+      </p>
+      <p class="research-intro reveal">
+        A growing thread in my research explores human-AI interaction and AI-supported learning, including how learners' attitudes toward tools like ChatGPT shape their writing processes and outcomes, how generative AI can be leveraged in the applied linguistics classroom, and the impact of human-made vs. AI-generated podcasts on learning.
+      </p>
+
+      <div class="pubs-list reveal">
+
+        <p class="pubs-category">Peer-reviewed journal articles</p>
+
+        <div class="pub-item">
+          <span class="pub-year">in review</span>
+          <p class="pub-ref">Choe, A. T., &amp; Kang, J. (under review). Use of scales for assessing personal appearance in Korean variety shows.</p>
+        </div>
+        <div class="pub-item">
+          <span class="pub-year">2026</span>
+          <p class="pub-ref">Jin, S-H., &amp; Choe, A. T. (2026). Investigating how learners' attitudes shape AI-supported argumentative writing processes and outcomes. <em>Journal of Computer Assisted Learning, 42</em>(2), 1–21. <a href="https://doi.org/10.1002/jcal.70232" target="_blank" rel="noopener">https://doi.org/10.1002/jcal.70232</a></p>
+        </div>
+        <div class="pub-item">
+          <span class="pub-year">2025</span>
+          <p class="pub-ref">Choe, A. T., &amp; Huang, S-Y. (2025). Marking pedagogical saliency with honh in Taiwan Mandarin interaction. <em>Interactional Linguistics, 6</em>(1), 66–94. <a href="https://doi.org/10.1075/il.24023.cho" target="_blank" rel="noopener">https://doi.org/10.1075/il.24023.cho</a></p>
+        </div>
+        <div class="pub-item">
+          <span class="pub-year">2023</span>
+          <p class="pub-ref">Chang, Y-Z., Choe, A. T., Holden, D., Isbell, D. R. (2023). Making each point count: Revising a local adaptation of the Jacobs et al. (1981) ESL COMPOSITION PROFILE rubric. <em>Language Testing.</em> <a href="https://doi.org/10.1177/02655322231217979" target="_blank" rel="noopener">https://doi.org/10.1177/02655322231217979</a></p>
+        </div>
+        <div class="pub-item">
+          <span class="pub-year">2023</span>
+          <p class="pub-ref">Choe, A. T., &amp; Yagi, J. (2023). Embodied remembering in coordinated performances. <em>Multimodal Communication, 12</em>(2), 99–122. <a href="https://doi.org/10.1515/mc-2022-0029" target="_blank" rel="noopener">https://doi.org/10.1515/mc-2022-0029</a></p>
+        </div>
+        <div class="pub-item">
+          <span class="pub-year">2022</span>
+          <p class="pub-ref">Choe, A. T., Nguyen, H. t., &amp; Vicentini, C. (2022). Epistemic and affective stance management online search during computer-mediated conversation for language learning. <em>TESOL in Context, 30</em>(2), 9–33. <a href="https://doi.org/10.21153/tesol2022vol30no2art1517" target="_blank" rel="noopener">https://doi.org/10.21153/tesol2022vol30no2art1517</a></p>
+        </div>
+        <div class="pub-item">
+          <span class="pub-year">2022</span>
+          <p class="pub-ref">Nguyen, H. t., Choe, A. T., &amp; Vicentini, C. (2022). Opportunities for second language learning in online search sequences during a computer-mediated tutoring session. <em>Classroom Discourse, 13</em>(2), 145–163. <a href="https://doi.org/10.1080/19463014.2021.2023597" target="_blank" rel="noopener">https://doi.org/10.1080/19463014.2021.2023597</a></p>
+        </div>
+        <div class="pub-item">
+          <span class="pub-year">2022</span>
+          <p class="pub-ref">Kyle, K., Eguchi, M., Choe, A. T., LaFlair, G. (2022). Register variation in spoken and written language use across technology-mediated and non-technology-mediated learning environments. <em>Language Testing.</em> <a href="https://doi.org/10.1177/02655322211057868" target="_blank" rel="noopener">https://doi.org/10.1177/02655322211057868</a></p>
+        </div>
+        <div class="pub-item">
+          <span class="pub-year">2021</span>
+          <p class="pub-ref">Kyle, K., Choe, A. T., Eguchi, M., LaFlair, G., &amp; Ziegler, N. (2021). A comparison of spoken and written language use in traditional and technology mediated learning environments. <em>ETS Research Report Series.</em> <a href="https://doi.org/10.1002/ets2.12329" target="_blank" rel="noopener">https://doi.org/10.1002/ets2.12329</a></p>
+        </div>
+        <div class="pub-item">
+          <span class="pub-year">2018</span>
+          <p class="pub-ref">Choe, A. T. (2018). 'Can anyone help her?': Managing student embarrassment in the adult ESL classroom. <em>Hacettepe University Journal of Education, 33</em>(Special Issue), 16–35. <a href="https://doi.org/10.16986/HUJE.2018038794" target="_blank" rel="noopener">doi.org/10.16986/HUJE.2018038794</a></p>
+        </div>
+
+        <p class="pubs-category">Book chapters and conference proceedings</p>
+
+        <div class="pub-item">
+          <span class="pub-year">in review</span>
+          <p class="pub-ref">Isbell, D. R., Choe, A. T., Holden, D., Kawasaki, A., Kim, J., Kim, Y., McGehee, M., Nishizawa, H., Park, L., &amp; Tang, A. F. (under review). Investigating Duolingo English Test washback: A focus on test preparation activities. <em>Handbook of digital language assessment: Innovations and insights from the Duolingo English Test.</em></p>
+        </div>
+        <div class="pub-item">
+          <span class="pub-year">in review</span>
+          <p class="pub-ref">Wang, J., Shin, M., Nishizawa, H., Miller, M., Larkin, R., Kim, J., Nguyen, H., Holden, D., Diez-Ortega, M., Choe, A. T., &amp; Crowther, D. (under review). Multiʻōlelo's legacy and future: Cultivating research dissemination through multilingual and multimodal approaches. <em>Cambridge University Press.</em></p>
+        </div>
+        <div class="pub-item">
+          <span class="pub-year">2022</span>
+          <p class="pub-ref">Choe, A. T., Yagi, J. (2022). Embodied remembering in coordinated performances. <em>Proceedings of the 5th CAN-Asia Symposium on L2 Interaction</em> (pp. 45–55).</p>
+        </div>
+        <div class="pub-item">
+          <span class="pub-year">2020</span>
+          <p class="pub-ref">Choe, A. T., &amp; Reddington, E. (2020). But-prefacing for refocusing in public talk. In H. Z. Waring &amp; E. Reddington (Eds.), <em>Communicating with the public: Conversation analytic studies</em> (pp. 87–110). Bloomsbury. <a href="https://doi.org/10.5040/9781350098213.ch-005" target="_blank" rel="noopener">doi.org/10.5040/9781350098213.ch-005</a></p>
+        </div>
+
+        <p class="pubs-category">Working papers</p>
+
+        <div class="pub-item">
+          <span class="pub-year">2025</span>
+          <p class="pub-ref">Choe, A. T. (2025). AI as empowerment in the applied linguistics classroom. <em>Hawaiʻi Pacific University Working Paper Series, 23,</em> 67–72.</p>
+        </div>
+        <div class="pub-item">
+          <span class="pub-year">2024</span>
+          <p class="pub-ref">Choe, A. T. (2024). Using AI to enhance language teaching: Introduction. <em>Hawaiʻi Pacific University Working Paper Series, 22,</em> 89–90.</p>
+        </div>
+        <div class="pub-item">
+          <span class="pub-year">2022</span>
+          <p class="pub-ref">Chang, Y-T., Choe, A. T., Holden, D., &amp; Isbell, D. R. (2022). An evaluation of HELP's writing placement test rubric using Many-Facet Rasch Analysis. <em>Second Language Studies, 40</em>(1). <a href="https://www.hawaii.edu/sls/wp-content/uploads/Chang-et-al.-2022.pdf" target="_blank" rel="noopener">https://www.hawaii.edu/sls/wp-content/uploads/Chang-et-al.-2022.pdf</a></p>
+        </div>
+        <div class="pub-item">
+          <span class="pub-year">2020</span>
+          <p class="pub-ref">Phung, H., Choe, A. T., Diez-Ortega, M., Eguchi, M., Holden, D., Mendoza, A., &amp; Nguyen, T. H. (2020). The Multiʻōlelo initiative for language research communications. <em>Second Language Studies, 38</em>(1), Article 2. <a href="https://www.hawaii.edu/sls/wp-content/uploads/Phung-et-al.-2020.pdf" target="_blank" rel="noopener">https://www.hawaii.edu/sls/wp-content/uploads/Phung-et-al.-2020.pdf</a></p>
+        </div>
+        <div class="pub-item">
+          <span class="pub-year">2018</span>
+          <p class="pub-ref">Choe, A. T., &amp; Reddington, E. (2018). But-prefacing for refocusing in public questioning and answering. <em>Teachers College, Columbia University Working Papers in TESOL &amp; Applied Linguistics, 18</em>(1), 44–50.</p>
+        </div>
+        <div class="pub-item">
+          <span class="pub-year">2017</span>
+          <p class="pub-ref">Choe, A. T. (2017). Exploring the dynamics of willingness to communicate in written communication. <em>Teachers College, Columbia University Working Papers in TESOL &amp; Applied Linguistics, 17</em>(1), 39–55.</p>
+        </div>
+        <div class="pub-item">
+          <span class="pub-year">2016</span>
+          <p class="pub-ref">Choe, A. T. (2016). A critical review of Pimsleur® language learning programs. <em>Hawaiʻi Pacific University Working Paper Series, 14,</em> 108–120.</p>
+        </div>
+        <div class="pub-item">
+          <span class="pub-year">2012</span>
+          <p class="pub-ref">Tai, A. &amp; Tregelles, E. (2012). Inquiry-based learning: Gender stereotypes in advertising. <em>Hawaiʻi Pacific University TESOL Working Paper Series, 10,</em> 107–137.</p>
+        </div>
+
+        <p class="pubs-category">Book reviews</p>
+
+        <div class="pub-item">
+          <span class="pub-year">2022</span>
+          <p class="pub-ref">Choe, A. T. (2022). Review of the book <em>Teaching and testing second language pragmatics and interaction: A practical guide</em> by C. Roever. <em>TESOL in Context, 30</em>(2), 63–67. <a href="https://doi.org/10.21153/tesol2022vol30no2art1567" target="_blank" rel="noopener">https://doi.org/10.21153/tesol2022vol30no2art1567</a></p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Teaching ──────────────────────────────────── -->
+  <section id="teaching">
+    <div class="inner">
+      <p class="section-label">Teaching</p>
+      <h2>experiential learning x relevancy</h2>
+      <div class="teaching-layout reveal">
+        <div class="philosophy-block">
+          <p>
+            My teaching philosophy centers on creating the optimal conditions for learning. I design interactive, project-based experiences that connect course content to students' real-world needs and interests. In my classroom, students are active participants — collaborating, problem-solving, and applying concepts in ways that are immediately meaningful to them. I also believe in bringing current, up-to-date knowledge into the classroom, ensuring that what we discuss reflects the latest developments in the field.
+          </p>
+          <blockquote>
+            "If we teach today's students as we taught yesterday's, we rob them of tomorrow."
+            <footer>― John Dewey</footer>
+          </blockquote>
+        </div>
+
+        <div class="courses-panel">
+          <p class="courses-label">Current &amp; Past Courses</p>
+
+          <p class="courses-institution">University of Hawaiʻi at Mānoa <span class="courses-dates">2019–2021, 2025–Present</span></p>
+          <div class="course-item"><p class="course-name">SLS 150: Learning Languages and Communicating Interculturally</p></div>
+          <div class="course-item"><p class="course-name">SLS 302: Second Language Learning</p></div>
+          <div class="course-item"><p class="course-name">SLS 303: Second Language Teaching</p></div>
+          <div class="course-item"><p class="course-name">SLS 480E: Language Learning with Apps</p></div>
+          <div class="course-item"><p class="course-name">SLS 675: Second Language Qualitative Research</p></div>
+
+          <p class="courses-institution">Hawaiʻi Pacific University <span class="courses-dates">2023–Present</span></p>
+          <div class="course-item"><p class="course-name">UNIV 1000: First Year Success Seminar</p></div>
+          <div class="course-item"><p class="course-name">AL 3500: Second Language Learning and Teaching</p></div>
+          <div class="course-item"><p class="course-name">AL 3950: Language Classroom Experience</p></div>
+          <div class="course-item"><p class="course-name">AL 3740: Technology in Language Teaching</p></div>
+          <div class="course-item"><p class="course-name">AL 4710: Teaching Listening and Speaking Skills</p></div>
+          <div class="course-item"><p class="course-name">AL 4720: Teaching Reading and Writing Skills</p></div>
+          <div class="course-item"><p class="course-name">AL 4960: Practice Teaching</p></div>
+          <div class="course-item"><p class="course-name">AL 6720: Second Language Reading and Writing</p></div>
+          <div class="course-item"><p class="course-name">AL 6740: Research &amp; Issues in CALL</p></div>
+          <div class="course-item"><p class="course-name">AL 6961: Practicum I in TESOL</p></div>
+          <div class="course-item"><p class="course-name">AL 7099: Practicum II and Capstone</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Grants ──────────────────────────────────────── -->
+  <section id="grants">
+    <div class="inner">
+      <p class="section-label">Grants</p>
+      <div class="grant-list reveal">
+
+        <div class="grant-item">
+          <div>
+            <p class="grant-title">Access Pakistan Teacher Training and Cultural Exchange Program</p>
+            <p class="grant-org">U.S. Department of State · Hawaiʻi Pacific University</p>
+            <p class="grant-role">Lead Instructor</p>
+          </div>
+          <span class="grant-date">October 2024</span>
+        </div>
+
+        <div class="grant-item">
+          <div>
+            <p class="grant-title">Duolingo English Test (DET)</p>
+            <p class="grant-org">University of Hawaiʻi at Mānoa</p>
+            <p class="grant-role">Research Assistant</p>
+          </div>
+          <span class="grant-date">Sep 2024–Jun 2025</span>
+        </div>
+
+        <div class="grant-item">
+          <div>
+            <p class="grant-title">Education Testing Service (ETS)</p>
+            <p class="grant-org">University of Hawaiʻi at Mānoa</p>
+            <p class="grant-role">Research Assistant</p>
+          </div>
+          <span class="grant-date">Fall 2018–Summer 2019</span>
+        </div>
+
+        <div class="grant-item">
+          <div>
+            <p class="grant-title">Robert Wood Johnson Foundation (RWJF)</p>
+            <p class="grant-org">Teachers College, Columbia University</p>
+            <p class="grant-role">Research Assistant</p>
+          </div>
+          <span class="grant-date">2016–2017</span>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Awards ───────────────────────────────────────── -->
+  <section id="awards" style="background: var(--paper-alt);">
+    <div class="inner">
+      <p class="section-label">Awards</p>
+      <div class="award-list reveal">
+
+        <div class="award-item">
+          <div>
+            <p class="award-title">Honolulu Tech Week Hackathon: Best AI Project</p>
+            <p class="award-org">Honolulu Tech Week</p>
+          </div>
+          <span class="award-date">September 2024</span>
+        </div>
+
+        <div class="award-item">
+          <div>
+            <p class="award-title">Calvin Shindo Student Venture Fund</p>
+            <p class="award-org">Pacific Asian Center for Entrepreneurship (PACE), Shidler College of Business</p>
+          </div>
+          <span class="award-date">May 2024</span>
+        </div>
+
+        <div class="award-item">
+          <div>
+            <p class="award-title">Achievement Scholarship</p>
+            <p class="award-org">Department of Second Language Studies, University of Hawaiʻi at Mānoa</p>
+          </div>
+          <span class="award-date">August 2023</span>
+        </div>
+
+        <div class="award-item">
+          <div>
+            <p class="award-title">CPB Foundation Scholarship</p>
+            <p class="award-org">Central Pacific Bank</p>
+          </div>
+          <span class="award-date">August 2023</span>
+        </div>
+
+        <div class="award-item">
+          <div>
+            <p class="award-title">AAAL Graduate Student Award</p>
+            <p class="award-org">American Association for Applied Linguistics (AAAL)</p>
+          </div>
+          <span class="award-date">March 2023</span>
+        </div>
+
+        <div class="award-item">
+          <div>
+            <p class="award-title">Graduate Dean's Scholarship</p>
+            <p class="award-org">Graduate Division, University of Hawaiʻi at Mānoa</p>
+          </div>
+          <span class="award-date">February 2023</span>
+        </div>
+
+        <div class="award-item">
+          <div>
+            <p class="award-title">Merit-Based Award in Mentorship</p>
+            <p class="award-org">Graduate Student Organization, University of Hawaiʻi at Mānoa</p>
+          </div>
+          <span class="award-date">April 2022</span>
+        </div>
+
+        <div class="award-item">
+          <div>
+            <p class="award-title">Venture Competition First Prize</p>
+            <p class="award-org">Pacific Asian Center for Entrepreneurship (PACE), Shidler College of Business</p>
+          </div>
+          <span class="award-date">April 2022</span>
+        </div>
+
+        <div class="award-item">
+          <div>
+            <p class="award-title">Bilinski Dissertation Fellowship</p>
+            <p class="award-org">Russell J. &amp; Dorothy S. Bilinski Fellowships</p>
+          </div>
+          <span class="award-date">Aug 2021–Dec 2022</span>
+        </div>
+
+        <div class="award-item">
+          <div>
+            <p class="award-title">Dean's Special Fund</p>
+            <p class="award-org">College of Languages, Linguistics, &amp; Literature, University of Hawaiʻi at Mānoa</p>
+          </div>
+          <span class="award-date">September 2018</span>
+        </div>
+
+        <div class="award-item">
+          <div>
+            <p class="award-title">Teachers College Scholarship</p>
+            <p class="award-org">Teachers College, Columbia University</p>
+          </div>
+          <span class="award-date">November 2016</span>
+        </div>
+
+        <div class="award-item">
+          <div>
+            <p class="award-title">Annual Teachers of Excellence Award</p>
+            <p class="award-org">Chinese Culture University School of Continuing Education</p>
+          </div>
+          <span class="award-date">September 2014</span>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Side Hustles ──────────────────────────────── -->
+  <section id="side-hustles">
+    <div class="inner">
+      <p class="section-label">Projects</p>
+      <h2>work x play x work</h2>
+      <p class="hustles-intro reveal">
+        When I'm not researching or teaching, I am busy doing the following:
+      </p>
+
+      <div class="hustles-grid reveal">
+        <a class="hustle-card" href="https://www.goall.app/" target="_blank" rel="noopener">
+          <div class="hustle-number">01</div>
+          <p class="hustle-title">GOALL</p>
+          <p class="hustle-body">I co-founded a Chinese language learning app for serious learners who want to improve their reading skills with Dr. Susanne DeVore.</p>
+        </a>
+        <div class="hustle-card">
+          <div class="hustle-number">02</div>
+          <p class="hustle-title">Zendala with Ann</p>
+          <p class="hustle-body">I am a certified Zentangle teacher who specializes in Zendala. I designed this online course (10 lessons) for anyone interested in the art of Zentangle and Zendala.</p>
+        </div>
+        <a class="hustle-card" href="https://dribbble.com/diane2837" target="_blank" rel="noopener">
+          <div class="hustle-number">03</div>
+          <p class="hustle-title">Product Design</p>
+          <p class="hustle-body">I am a certified Product Designer and have worked on real-world projects using Figma, including GOALL and JumpstartAI.</p>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Footer ────────────────────────────────────── -->
+  <footer>
+    <span class="footer-name">Ann T. Choe</span>
+  </footer>
+
+  <!-- ── Scripts ───────────────────────────────────── -->
+  <script>
+    // Nav scroll effect
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 40);
+    }, { passive: true });
+
+    // Intersection Observer for reveal animations
+    const reveals = document.querySelectorAll('.reveal');
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.08 });
+    reveals.forEach(el => io.observe(el));
+
+    // Shared wave draw utility
+    function makeWaveCanvas(id, waveDefs, fillUp) {
+      const canvas = document.getElementById(id);
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      function resize() {
+        canvas.width  = canvas.offsetWidth  || canvas.parentElement.offsetWidth;
+        canvas.height = canvas.offsetHeight || canvas.parentElement.offsetHeight;
+      }
+      resize();
+      window.addEventListener('resize', resize, { passive: true });
+      let t = 0;
+      (function draw() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        const W = canvas.width, H = canvas.height;
+        waveDefs.forEach(w => {
+          ctx.beginPath();
+          const cy = H * w.y;
+          for (let x = 0; x <= W; x++) {
+            const y = cy + Math.sin(x * w.freq + t * w.speed + w.phase) * w.amp;
+            x === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+          }
+          if (fillUp) {
+            ctx.lineTo(W, 0); ctx.lineTo(0, 0);
+          } else {
+            ctx.lineTo(W, H); ctx.lineTo(0, H);
+          }
+          ctx.closePath();
+          ctx.fillStyle = `rgba(${w.color}, ${w.alpha})`;
+          ctx.fill();
+        });
+        t++;
+        requestAnimationFrame(draw);
+      })();
+    }
+
+    // Hero background canvas — waves at the top of the hero, fill upward
+    makeWaveCanvas('waveCanvas', [
+      { amp: 28, freq: 0.0012, speed: 0.00025, phase: 0,   y: 0.28, alpha: 0.04,  color: '122, 158, 142' },
+      { amp: 18, freq: 0.0018, speed: 0.00038, phase: 2.1, y: 0.34, alpha: 0.025, color: '78, 127, 163'  },
+      { amp: 38, freq: 0.0009, speed: 0.00016, phase: 4.5, y: 0.38, alpha: 0.02,  color: '196, 169, 125' },
+      { amp: 14, freq: 0.0022, speed: 0.00052, phase: 1.1, y: 0.22, alpha: 0.018, color: '122, 158, 142' },
+    ], true);
+
+    // Top fixed strip — waves fill downward from top edge
+    makeWaveCanvas('waveTop', [
+      { amp: 10, freq: 0.0014, speed: 0.00022, phase: 0.5, y: 0.72, alpha: 0.09,  color: '122, 158, 142' },
+      { amp: 7,  freq: 0.002,  speed: 0.00035, phase: 2.8, y: 0.82, alpha: 0.06,  color: '78, 127, 163'  },
+      { amp: 14, freq: 0.001,  speed: 0.00014, phase: 1.3, y: 0.88, alpha: 0.05,  color: '196, 169, 125' },
+    ], true);
+
+
+    // Stagger hero elements on load
+    (function () {
+      const els = ['.hero-eyebrow', 'h1', '.hero-tagline', '.hero-roles', '.hero-meta', '.hero-social'];
+      els.forEach((sel, i) => {
+        const el = document.querySelector(sel);
+        if (!el) return;
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(18px)';
+        el.style.transition = `opacity 0.7s ${0.15 + i * 0.12}s ease, transform 0.7s ${0.15 + i * 0.12}s ease`;
+        requestAnimationFrame(() => {
+          el.style.opacity = '1';
+          el.style.transform = 'none';
+        });
+      });
+    })();
+
+  </script>
+</body>
+</html>
