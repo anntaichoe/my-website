@@ -648,6 +648,33 @@
     }
     .wave-strip canvas { width: 100%; height: 100%; display: block; }
 
+    /* ── Hamburger ─────────────────────────────────── */
+    .nav-toggle {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      gap: 5px;
+      width: 32px;
+      height: 32px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 4px;
+      z-index: 110;
+    }
+    .nav-toggle span {
+      display: block;
+      width: 100%;
+      height: 1.5px;
+      background: var(--ink-soft);
+      border-radius: 2px;
+      transition: transform 0.3s ease, opacity 0.3s ease;
+      transform-origin: center;
+    }
+    .nav-toggle.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+    .nav-toggle.open span:nth-child(2) { opacity: 0; }
+    .nav-toggle.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
     /* ── Mobile ────────────────────────────────────── */
     @media (max-width: 680px) {
       .teaching-layout {
@@ -655,8 +682,41 @@
       }
       .hero-main { flex-direction: column-reverse; align-items: flex-start; }
       .hero-portrait { width: 160px; height: 160px; }
-      .nav-links { display: none; }
       .hero-meta { flex-direction: column; align-items: flex-start; }
+
+      .nav-toggle { display: flex; }
+
+      .nav-links {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0;
+        position: fixed;
+        top: 0; left: 0; right: 0;
+        background: rgba(250,249,247,0.97);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        padding: 5rem var(--gutter) 2rem;
+        z-index: 105;
+        transform: translateY(-110%);
+        transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+        border-bottom: 1px solid var(--rule);
+        box-shadow: 0 8px 32px rgba(0,0,0,0.06);
+      }
+      .nav-links.open {
+        transform: translateY(0);
+      }
+      .nav-links li {
+        width: 100%;
+        border-bottom: 1px solid var(--rule);
+      }
+      .nav-links li:last-child { border-bottom: none; }
+      .nav-links a {
+        display: block;
+        padding: 1rem 0;
+        font-size: 0.9rem;
+        letter-spacing: 0.1em;
+      }
     }
   </style>
 </head>
@@ -665,14 +725,17 @@
   <!-- ── Navigation ───────────────────────────────── -->
   <nav id="nav">
     <a class="nav-name" href="#hero">Ann T. Choe</a>
-    <ul class="nav-links">
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links" id="navLinks">
       <li><a href="#about">About</a></li>
       <li><a href="#education">Education</a></li>
       <li><a href="#research">Research</a></li>
       <li><a href="#teaching">Teaching</a></li>
       <li><a href="#grants">Grants</a></li>
       <li><a href="#awards">Awards</a></li>
-      <li><a href="#side-hustles">Projects</a></li>
+      <li><a href="#projects">Projects</a></li>
     </ul>
   </nav>
 
@@ -711,7 +774,6 @@
             <a href="https://www.researchgate.net/profile/Ann-Choe/research" target="_blank" rel="noopener">ResearchGate</a>
             <a href="https://scholar.google.com/citations?user=m7vYqyEAAAAJ&hl=en" target="_blank" rel="noopener">Google Scholar</a>
             <a href="https://github.com/anntaichoe" target="_blank" rel="noopener">GitHub</a>
-            <a href="#">CV</a>
           </div>
         </div>
         <div class="hero-portrait">
@@ -804,6 +866,10 @@
 
         <p class="pubs-category">Peer-reviewed journal articles</p>
 
+        <div class="pub-item">
+          <span class="pub-year">in review</span>
+          <p class="pub-ref">Choe, A. T., &amp; Jin, S-H. (under review). A conversation-analytic investigation of human-made vs. AI-generated podcasts and their implications for learning.</p>
+        </div>
         <div class="pub-item">
           <span class="pub-year">in review</span>
           <p class="pub-ref">Choe, A. T., &amp; Kang, J. (under review). Use of scales for assessing personal appearance in Korean variety shows.</p>
@@ -1106,12 +1172,12 @@
   </section>
 
   <!-- ── Side Hustles ──────────────────────────────── -->
-  <section id="side-hustles">
+  <section id="projects">
     <div class="inner">
       <p class="section-label">Projects</p>
       <h2>work x play x work</h2>
       <p class="hustles-intro reveal">
-        When I'm not researching or teaching, I am busy doing the following:
+        When I'm not not researching or teaching, I am busy doing:
       </p>
 
       <div class="hustles-grid reveal">
@@ -1141,6 +1207,25 @@
 
   <!-- ── Scripts ───────────────────────────────────── -->
   <script>
+    // Mobile nav toggle
+    (function () {
+      const toggle = document.getElementById('navToggle');
+      const links  = document.getElementById('navLinks');
+      toggle.addEventListener('click', () => {
+        const open = links.classList.toggle('open');
+        toggle.classList.toggle('open', open);
+        toggle.setAttribute('aria-expanded', open);
+      });
+      // Close on link tap
+      links.querySelectorAll('a').forEach(a => {
+        a.addEventListener('click', () => {
+          links.classList.remove('open');
+          toggle.classList.remove('open');
+          toggle.setAttribute('aria-expanded', false);
+        });
+      });
+    })();
+
     // Nav scroll effect
     const nav = document.getElementById('nav');
     window.addEventListener('scroll', () => {
