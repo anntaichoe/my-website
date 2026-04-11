@@ -1205,7 +1205,6 @@
 
   <!-- ── Footer ────────────────────────────────────── -->
   <footer>
-    <span class="footer-name">Ann T. Choe</span>
   </footer>
 
   <!-- ── Scripts ───────────────────────────────────── -->
@@ -1315,6 +1314,136 @@
       });
     })();
 
+  </script>
+
+  <!-- ── Music Player Widget ──────────────────────── -->
+  <div id="music-player">
+    <div id="music-art">
+      <img src="https://cdn2.suno.ai/image_fcb7cd94-5135-4364-8d1d-fff45f39d300.jpeg" alt="Album art" />
+    </div>
+    <div id="music-info">
+      <div id="music-marquee-wrap">
+        <span id="music-title"></span>
+      </div>
+    </div>
+    <div id="music-controls">
+      <button id="music-play" aria-label="Play / Pause">
+        <svg id="icon-play" viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M8 5v14l11-7z"/></svg>
+        <svg id="icon-pause" viewBox="0 0 24 24" fill="currentColor" width="16" height="16" style="display:none"><path d="M6 19h4V5H6zm8-14v14h4V5z"/></svg>
+      </button>
+      <button id="music-mute" aria-label="Mute / Unmute">
+        <svg id="icon-vol" viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3A4.5 4.5 0 0 0 14 7.97v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/></svg>
+        <svg id="icon-mute" viewBox="0 0 24 24" fill="currentColor" width="16" height="16" style="display:none"><path d="M16.5 12A4.5 4.5 0 0 0 14 7.97v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51A8.796 8.796 0 0 0 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06A8.99 8.99 0 0 0 17.73 19l2 2L21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/></svg>
+      </button>
+    </div>
+    <audio id="music-audio" src="https://cdn1.suno.ai/fcb7cd94-5135-4364-8d1d-fff45f39d300.mp3" preload="metadata"></audio>
+  </div>
+
+  <style>
+    #music-player {
+      position: fixed;
+      bottom: 1.5rem;
+      left: 1.5rem;
+      z-index: 200;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.55rem 0.85rem 0.55rem 0.55rem;
+      background: rgba(250, 249, 247, 0.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid var(--rule);
+      border-radius: 10px;
+      box-shadow: -2px -2px 8px 0px #fff, 2px 2px 8px 0px rgba(0,0,0,0.25);
+      max-width: 220px;
+    }
+    #music-art img {
+      width: 36px;
+      height: 36px;
+      border-radius: 6px;
+      object-fit: cover;
+      flex-shrink: 0;
+      display: block;
+    }
+    #music-info {
+      flex: 1;
+      overflow: hidden;
+    }
+    #music-marquee-wrap {
+      overflow: hidden;
+      width: 100%;
+    }
+    #music-title {
+      font-family: var(--sans);
+      font-size: 0.68rem;
+      font-weight: 500;
+      color: var(--ink-soft);
+      letter-spacing: 0.03em;
+      white-space: nowrap;
+      display: inline-block;
+      animation: marquee 10s linear infinite;
+    }
+    @keyframes marquee {
+      0%   { transform: translateX(100%); }
+      100% { transform: translateX(-100%); }
+    }
+    #music-controls {
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+      flex-shrink: 0;
+    }
+    #music-controls button {
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--ink-soft);
+      padding: 0.2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 4px;
+      transition: color 0.2s;
+    }
+    #music-controls button:hover { color: var(--sage); }
+  </style>
+
+  <script>
+    (function () {
+      const audio   = document.getElementById('music-audio');
+      const btnPlay = document.getElementById('music-play');
+      const btnMute = document.getElementById('music-mute');
+      const iconPlay  = document.getElementById('icon-play');
+      const iconPause = document.getElementById('icon-pause');
+      const iconVol   = document.getElementById('icon-vol');
+      const iconMuteEl= document.getElementById('icon-mute');
+      const titleEl  = document.getElementById('music-title');
+
+      titleEl.textContent = 'Night City · @musicforyourseoul';
+
+      btnPlay.addEventListener('click', () => {
+        if (audio.paused) {
+          audio.play();
+          iconPlay.style.display  = 'none';
+          iconPause.style.display = '';
+        } else {
+          audio.pause();
+          iconPlay.style.display  = '';
+          iconPause.style.display = 'none';
+        }
+      });
+
+      btnMute.addEventListener('click', () => {
+        audio.muted = !audio.muted;
+        iconVol.style.display    = audio.muted ? 'none' : '';
+        iconMuteEl.style.display = audio.muted ? ''     : 'none';
+      });
+
+      audio.addEventListener('ended', () => {
+        iconPlay.style.display  = '';
+        iconPause.style.display = 'none';
+      });
+    })();
   </script>
 </body>
 </html>
