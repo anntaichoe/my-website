@@ -268,7 +268,7 @@
       text-transform: uppercase;
       text-decoration: none;
       padding: 0.65rem 1.4rem;
-      border-radius: 2px;
+      border-radius: 10px;
       transition: all 0.2s;
     }
     .btn-primary {
@@ -560,11 +560,11 @@
       position: relative;
       padding: 1.75rem;
       border: 1px solid rgba(226, 223, 217, 0.7);
-      border-radius: 4px;
+      border-radius: 10px;
       background: rgba(250, 249, 247, 0.6);
       backdrop-filter: blur(8px);
       -webkit-backdrop-filter: blur(8px);
-      box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+      box-shadow: -2px -2px 8px 0px #fff, 2px 2px 8px 0px rgba(0,0,0,0.25);
       transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
     }
     .hustle-card:hover {
@@ -580,6 +580,10 @@
       line-height: 1;
       margin-bottom: 1rem;
       user-select: none;
+      transition: color 0.2s;
+    }
+    .hustle-card:hover .hustle-number {
+      color: #a8c9b8;
     }
 
     .hustle-title {
@@ -753,9 +757,10 @@
         <div class="hero-left">
           <h1>Ann T. Choe, <em>PhD</em></h1>
           <p class="hero-tagline">
-            I'm an applied linguist with a tech twist. I develop pedagogical and technological solutions aimed at enhancing learner experiences and fostering meaningful interaction.
+            I'm an applied linguist with a tech twist. I develop technological solutions aimed at enhancing user experiences and fostering meaningful interaction.
           </p>
           <div class="hero-roles">
+            <p class="hero-role">Generative AI Analyst · Nvidia</p>
             <p class="hero-role">Lecturer of Second Language Studies · University of Hawaiʻi at Mānoa</p>
             <p class="hero-role">Senior Adjunct Instructor of Applied Linguistics · Hawaiʻi Pacific University</p>
           </div>
@@ -775,6 +780,7 @@
             <a href="https://www.researchgate.net/profile/Ann-Choe/research" target="_blank" rel="noopener">ResearchGate</a>
             <a href="https://scholar.google.com/citations?user=m7vYqyEAAAAJ&hl=en" target="_blank" rel="noopener">Google Scholar</a>
             <a href="https://github.com/anntaichoe" target="_blank" rel="noopener">GitHub</a>
+            <a href="https://dribbble.com/diane2837" target="_blank" rel="noopener">Dribbble</a>
           </div>
         </div>
         <div class="hero-portrait">
@@ -952,10 +958,6 @@
         <div class="pub-item">
           <span class="pub-year">2018</span>
           <p class="pub-ref">Choe, A. T., &amp; Reddington, E. (2018). But-prefacing for refocusing in public questioning and answering. <em>Teachers College, Columbia University Working Papers in TESOL &amp; Applied Linguistics, 18</em>(1), 44–50.</p>
-        </div>
-        <div class="pub-item">
-          <span class="pub-year">2017</span>
-          <p class="pub-ref">Choe, A. T. (2017). Exploring the dynamics of willingness to communicate in written communication. <em>Teachers College, Columbia University Working Papers in TESOL &amp; Applied Linguistics, 17</em>(1), 39–55.</p>
         </div>
         <div class="pub-item">
           <span class="pub-year">2016</span>
