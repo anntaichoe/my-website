@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -48,6 +48,14 @@
     [data-theme="dark"] .hustle-card {
       background: rgba(42, 40, 36, 0.9);
       border-color: var(--rule);
+    }
+
+    [data-theme="dark"] .hustle-number {
+      color: var(--ink-soft);
+    }
+
+    [data-theme="dark"] .coming-soon {
+      color: var(--ink-soft);
     }
 
     [data-theme="dark"] #music-title,
@@ -312,6 +320,16 @@
       border-color: var(--sage);
       color: var(--paper);
     }
+    .btn-sage {
+      background: var(--sage);
+      border: 1px solid var(--sage);
+      color: var(--paper);
+    }
+    .btn-sage:hover {
+      background: transparent;
+      border-color: var(--rule);
+      color: var(--ink-soft);
+    }
 
     @keyframes fadeUp {
       from { opacity: 0; transform: translateY(8px); }
@@ -320,6 +338,19 @@
 
     /* ── About ─────────────────────────────────────── */
     #about { background: var(--paper-alt); }
+
+    /* ── Karaoke text ──────────────────────────────── */
+    .karaoke-text {
+      --kp: 0%;
+      background: linear-gradient(
+        to right,
+        var(--ink) var(--kp),
+        var(--sage) var(--kp)
+      );
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
 
     .about-text > * + * { margin-top: 1.2rem; }
 
@@ -517,13 +548,26 @@
     .philosophy-block p + p { margin-top: 1.2rem; }
     blockquote {
       margin: 2rem 0;
-      padding-left: 1.25rem;
+      padding-left: 3rem;
       border-left: 2px solid var(--sage);
       font-family: var(--serif);
       font-size: clamp(1.2rem, 2.2vw, 1.45rem);
       font-style: italic;
       color: var(--ink);
       line-height: 1.6;
+      position: relative;
+    }
+    blockquote::before {
+      content: '\201C';
+      font-family: Georgia, var(--serif);
+      font-size: 5rem;
+      font-style: normal;
+      line-height: 0;
+      color: var(--sage);
+      position: absolute;
+      left: 0.4rem;
+      top: 0.6em;
+      opacity: 0.5;
     }
 
     .courses-panel { }
@@ -558,7 +602,7 @@
       display: block;
       margin-top: 0.6rem;
       font-style: normal;
-      font-size: 0.82rem;
+      font-size: 0.95rem;
       color: var(--ink-faint);
       letter-spacing: 0.03em;
     }
@@ -839,7 +883,7 @@
             <p class="hero-role">Generative AI Analyst · Conversation Designer · Product Designer · Applied Linguistics Researcher</p>
           </div>
           <div class="hero-meta">
-            <a class="btn btn-outline" href="#about">About Me</a>
+            <a class="btn btn-sage" href="#about">About Me</a>
             <a class="btn btn-outline" href="https://dribbble.com/diane2837" target="_blank" rel="noopener">View Portfolio</a>
             <a class="btn btn-outline" href="#research">View Research</a>
           </div>
@@ -864,7 +908,7 @@
     <div class="inner">
       <p class="section-label">About</p>
       <div class="reveal">
-        <h2>language x technology x interaction</h2>
+        <h2><span class="karaoke-text">language x technology x interaction</span></h2>
         <div class="tag-row">
           <span class="tag">Conversation Design</span>
           <span class="tag">Product Design</span>
@@ -890,7 +934,7 @@
     <div class="inner">
       <p class="section-label">Qualifications</p>
       <p class="section-label">Experience</p>
-      <h2>accuracy x coherence x authenticity</h2>
+      <h2><span class="karaoke-text">accuracy x coherence x authenticity</span></h2>
       <p class="research-intro reveal">My professional training in applied linguistics, particularly conversation analysis, gives me a distinctive lens for working with AI-generated language in real-world contexts. Beyond catching hallucinations, I examine turn design, sequential organization, and conversational context as anchors for evaluating the full exchange. My work includes prompt design and human-in-the-loop evaluation for LLM-driven systems, where linguistic precision directly shapes model output. The result is output that is accurate, coherent, and authentic in the ways that matter to real users.</p>
       <div class="edu-list reveal">
 
@@ -987,7 +1031,7 @@
   <section id="projects">
     <div class="inner">
       <p class="section-label">Projects</p>
-      <h2>work x play x learn</h2>
+      <h2><span class="karaoke-text">work x play x learn</span></h2>
       <p class="hustles-intro reveal">
         Things I've learned by doing:
       </p>
@@ -1139,14 +1183,14 @@
   <section id="teaching">
     <div class="inner">
       <p class="section-label">Teaching</p>
-      <h2>experiential learning x relevancy</h2>
+      <h2><span class="karaoke-text">experiential learning x relevancy</span></h2>
       <div class="teaching-layout reveal">
         <div class="philosophy-block">
           <p>
             My teaching philosophy centers on creating the optimal conditions for learning. I design interactive, project-based experiences that connect course content to students' real-world needs and interests. In my classroom, students are active participants — collaborating, problem-solving, and applying concepts in ways that are immediately meaningful to them. I also believe in bringing current, up-to-date knowledge into the classroom, ensuring that what we discuss reflects the latest developments in the field.
           </p>
           <blockquote>
-            "If we teach today's students as we taught yesterday's, we rob them of tomorrow."
+            If we teach today's students as we taught yesterday's, we rob them of tomorrow.
             <footer>― John Dewey</footer>
           </blockquote>
         </div>
@@ -1359,7 +1403,7 @@
   <script>
     // Dark / light mode toggle
     (function () {
-      const btn     = document.getElementById('themeToggle');
+      const btn      = document.getElementById('themeToggle');
       const iconSun  = document.getElementById('icon-sun');
       const iconMoon = document.getElementById('icon-moon');
       const html     = document.documentElement;
@@ -1370,8 +1414,7 @@
         iconMoon.style.display = dark ? 'none' : '';
       }
 
-      const saved = localStorage.getItem('theme');
-      applyTheme(saved === 'dark');
+      applyTheme((localStorage.getItem('theme') || 'light') === 'dark');
 
       btn.addEventListener('click', () => {
         const isDark = html.getAttribute('data-theme') === 'dark';
@@ -1416,6 +1459,34 @@
       });
     }, { threshold: 0.08 });
     reveals.forEach(el => io.observe(el));
+
+    // Karaoke animation — triggers once per heading on scroll into view
+    (function () {
+      const duration = 2400;
+      function easeInOut(t) { return t < 0.5 ? 2*t*t : -1 + (4 - 2*t)*t; }
+
+      function runKaraoke(el) {
+        let start = null;
+        function frame(ts) {
+          if (!start) start = ts;
+          const raw = Math.min((ts - start) / duration, 1);
+          el.style.setProperty('--kp', (easeInOut(raw) * 100).toFixed(2) + '%');
+          if (raw < 1) requestAnimationFrame(frame);
+        }
+        requestAnimationFrame(frame);
+      }
+
+      const karaokeObserver = new IntersectionObserver(entries => {
+        entries.forEach(e => {
+          if (e.isIntersecting) {
+            runKaraoke(e.target);
+            karaokeObserver.unobserve(e.target);
+          }
+        });
+      }, { threshold: 0.6 });
+
+      document.querySelectorAll('.karaoke-text').forEach(el => karaokeObserver.observe(el));
+    })();
 
     // Shared wave draw utility
     function makeWaveCanvas(id, waveDefs, fillUp) {
