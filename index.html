@@ -23,12 +23,36 @@
       --ocean:     #4e7fa3;
       --sand:      #c4a97d;
       --rule:      #e2dfd9;
+      --nav-bg:    rgba(250,249,247,0.88);
 
       --serif: 'Cormorant Garamond', Georgia, serif;
       --sans:  'Inter', system-ui, sans-serif;
 
       --max: 860px;
       --gutter: clamp(1.5rem, 5vw, 4rem);
+    }
+
+    [data-theme="dark"] {
+      --ink:       #edeae4;
+      --ink-soft:  #b8b4ae;
+      --ink-faint: #8a8480;
+      --paper:     #1a1917;
+      --paper-alt: #222019;
+      --sage:      #8ab4a2;
+      --ocean:     #6a9fbe;
+      --sand:      #c4a97d;
+      --rule:      #3a3733;
+      --nav-bg:    rgba(26,25,23,0.92);
+    }
+
+    [data-theme="dark"] .hustle-card {
+      background: rgba(42, 40, 36, 0.9);
+      border-color: var(--rule);
+    }
+
+    [data-theme="dark"] #music-title,
+    [data-theme="dark"] #music-controls button {
+      color: var(--ink-soft);
     }
 
     html { scroll-behavior: smooth; font-size: 16px; }
@@ -39,6 +63,7 @@
       color: var(--ink);
       line-height: 1.7;
       -webkit-font-smoothing: antialiased;
+      transition: background 0.3s, color 0.3s;
     }
 
     /* ── Nav ───────────────────────────────────────── */
@@ -50,7 +75,7 @@
       justify-content: space-between;
       align-items: center;
       padding: 1.25rem var(--gutter);
-      background: rgba(250,249,247,0.88);
+      background: var(--nav-bg);
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
       border-bottom: 1px solid transparent;
@@ -671,6 +696,22 @@
     }
     .wave-strip canvas { width: 100%; height: 100%; display: block; }
 
+    /* ── Theme Toggle ──────────────────────────────── */
+    .theme-toggle {
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--ink-faint);
+      padding: 0.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: color 0.2s;
+      flex-shrink: 0;
+    }
+    .theme-toggle:hover { color: var(--sage); }
+    .theme-toggle svg { display: block; }
+
     /* ── Hamburger ─────────────────────────────────── */
     .nav-toggle {
       display: none;
@@ -716,7 +757,7 @@
         gap: 0;
         position: fixed;
         top: 0; left: 0; right: 0;
-        background: rgba(250,249,247,0.97);
+        background: var(--paper);
         backdrop-filter: blur(16px);
         -webkit-backdrop-filter: blur(16px);
         padding: 5rem var(--gutter) 2rem;
@@ -748,9 +789,6 @@
   <!-- ── Navigation ───────────────────────────────── -->
   <nav id="nav">
     <a class="nav-name" href="#hero">Ann T. Choe</a>
-    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
-      <span></span><span></span><span></span>
-    </button>
     <ul class="nav-links" id="navLinks">
       <li><a href="#about">About</a></li>
       <li><a href="#qualifications">Qualifications</a></li>
@@ -758,6 +796,19 @@
       <li><a href="#research">Research</a></li>
       <li><a href="#teaching">Teaching</a></li>
     </ul>
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+      <!-- sun icon (shown in dark mode) -->
+      <svg id="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none">
+        <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+      </svg>
+      <!-- moon icon (shown in light mode) -->
+      <svg id="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+      </svg>
+    </button>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
   </nav>
 
   <!-- Wave strips -->
@@ -1297,6 +1348,29 @@
 
   <!-- ── Scripts ───────────────────────────────────── -->
   <script>
+    // Dark / light mode toggle
+    (function () {
+      const btn     = document.getElementById('themeToggle');
+      const iconSun  = document.getElementById('icon-sun');
+      const iconMoon = document.getElementById('icon-moon');
+      const html     = document.documentElement;
+
+      function applyTheme(dark) {
+        html.setAttribute('data-theme', dark ? 'dark' : 'light');
+        iconSun.style.display  = dark ? '' : 'none';
+        iconMoon.style.display = dark ? 'none' : '';
+      }
+
+      const saved = localStorage.getItem('theme');
+      applyTheme(saved === 'dark');
+
+      btn.addEventListener('click', () => {
+        const isDark = html.getAttribute('data-theme') === 'dark';
+        localStorage.setItem('theme', isDark ? 'light' : 'dark');
+        applyTheme(!isDark);
+      });
+    })();
+
     // Mobile nav toggle
     (function () {
       const toggle = document.getElementById('navToggle');
