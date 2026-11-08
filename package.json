@@ -6,8 +6,13 @@
   "description": "anndtai.com - interactive 3D world plus a plain, crawlable version of the same content",
   "scripts": {
     "build": "node build.mjs",
-    "serve": "node build.mjs && cd site && python3 -m http.server 8080"
+    "serve": "node build.mjs && cd site && python3 -m http.server 8080",
+    "deploy": "node build.mjs && cp -r site/. ."
   },
-  "dependencies": { "three": "^0.187.0" },
-  "devDependencies": { "esbuild": "^0.25.0" }
+  "dependencies": {
+    "three": "^0.187.0"
+  },
+  "devDependencies": {
+    "esbuild": "^0.25.0"
+  }
 }
