@@ -1159,9 +1159,9 @@ function computer(R, x, y, z, ry) {
   add(R, box(0.9, 1.3, 0.08), mat(0xfdfaf0), -4.7, 2.4, -1.2);
   [-2.6, 0.2, 2.9].forEach(x => roomLamp('museum', x, 3.9, -3.6, 0xfff0d2, 5, 0.22));
   roomLamp('museum', 0.3, 4.3, 1.4, 0xfff4e2, 11, 0.3);
-  spot('museum', -2.4, 2.2, -1.4, 'GALLERY ONE', INFO.mus_one);
-  spot('museum', 0.3, 2.25, -1.0, 'GALLERY TWO', INFO.mus_two);
-  spot('museum', 2.9, 2.2, -1.4, 'GALLERY THREE', INFO.mus_three);
+  spot('museum', -2.4, 2.2, -1.4, 'GOALL', INFO.mus_one);
+  spot('museum', 0.3, 2.25, -1.0, 'UX & CxD', INFO.mus_two);
+  spot('museum', 2.9, 2.2, -1.4, 'TANGLE WITH ANN', INFO.mus_three);
 }
 
 /* ---- 05 QUALIFICATIONS: the conservatory office ---- */

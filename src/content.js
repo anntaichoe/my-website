@@ -7,7 +7,7 @@ export const CONTENT = {
   school: { eye: '05 / TEACHING', title: 'The University', body: '<p>Teaching philosophy and seventeen courses across two universities.</p>', list: ['UH M\u0101noa \u00b7 6 courses', 'Hawai\u02bbi Pacific University \u00b7 11 courses'], cta: 'Step inside the university', room: true },
   court: { eye: '06 / PLAY', title: 'The pickleball court', body: '<p>Of course there is a pickleball court. It is here because I like it, not because it proves anything.</p><p class="muted">Try clicking the loose balls on the grass.</p>', list: [] },
 };
-/* ============ real content, mapped from anndtai.com ============ */
+/* ============ site content ============ */
 const L = {
   linkedin: 'https://www.linkedin.com/in/ann-t-choe/',
   dribbble: 'https://dribbble.com/diane2837',
@@ -122,13 +122,13 @@ export const INFO = {
     list: [] },
 
   /* --- museum: projects --- */
-  mus_one: { eye: 'PROJECTS · GALLERY ONE', title: 'GOALL',
+  mus_one: { eye: 'PROJECTS', title: 'GOALL',
     body: '<p>An AI-powered Chinese language learning app that helps learners build reading skills from texts they bring themselves. Co-founded with Dr. Susanne DeVore; it grew out of first prize at the 2022 PACE Venture Competition.</p>'
       + '<p class="links">' + A(L.goall, 'goall.app') + '</p>', list: [] },
-  mus_two: { eye: 'PROJECTS · GALLERY TWO', title: 'UX & conversation design',
+  mus_two: { eye: 'PROJECTS', title: 'UX & conversation design',
     body: '<p>Certified product designer and conversation designer. I work in Figma and bring linguistic insight to interactions so they sound natural and stay on-brand.</p>'
       + '<p class="links">' + A(L.dribbble, 'Portfolio on Dribbble') + '</p>', list: [] },
-  mus_three: { eye: 'PROJECTS · GALLERY THREE', title: 'Tangle with Ann',
+  mus_three: { eye: 'PROJECTS', title: 'Tangle with Ann',
     body: '<p>A ten-lesson online course on Zentangle and Zendala, designed and taught as a certified Zentangle teacher.</p>'
       + '<p class="links">' + A(L.zendala, 'Take the course') + '</p>', list: [] },
 

@@ -7,7 +7,7 @@
   "scripts": {
     "build": "node build.mjs",
     "serve": "node build.mjs && cd site && python3 -m http.server 8080",
-    "deploy": "node build.mjs && cp -r site/. ."
+    "deploy": "node build.mjs && rm -f world.*.js && cp -r site/. ."
   },
   "dependencies": {
     "three": "^0.187.0"
