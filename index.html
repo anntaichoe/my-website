@@ -1,1682 +1,199 @@
-<!DOCTYPE html>
-<html lang="en" data-theme="light">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Ann T. Choe, PhD</title>
-  <link rel="icon" type="image/x-icon" href="favicon.ico" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
-
-  <style>
-    /* ── Reset & Base ──────────────────────────────── */
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    :root {
-      --ink:       #1c1c1c;
-      --ink-soft:  #5a5a5a;
-      --ink-faint: #9a9a9a;
-      --paper:     #faf9f7;
-      --paper-alt: #f2f0ec;
-      --sage:      #7a9e8e;
-      --ocean:     #4e7fa3;
-      --sand:      #c4a97d;
-      --rule:      #e2dfd9;
-      --nav-bg:    rgba(250,249,247,0.88);
-
-      --serif: 'Cormorant Garamond', Georgia, serif;
-      --sans:  'Inter', system-ui, sans-serif;
-
-      --max: 860px;
-      --gutter: clamp(1.5rem, 5vw, 4rem);
-    }
-
-    [data-theme="dark"] {
-      --ink:       #edeae4;
-      --ink-soft:  #b8b4ae;
-      --ink-faint: #8a8480;
-      --paper:     #1a1917;
-      --paper-alt: #222019;
-      --sage:      #8ab4a2;
-      --ocean:     #6a9fbe;
-      --sand:      #c4a97d;
-      --rule:      #3a3733;
-      --nav-bg:    rgba(26,25,23,0.92);
-    }
-
-    [data-theme="dark"] .hustle-card {
-      background: rgba(42, 40, 36, 0.9);
-      border-color: var(--rule);
-    }
-
-    [data-theme="dark"] .hustle-number {
-      color: var(--ink-soft);
-    }
-
-    [data-theme="dark"] .coming-soon {
-      color: var(--ink-soft);
-    }
-
-    [data-theme="dark"] #music-title,
-    [data-theme="dark"] #music-controls button {
-      color: var(--ink-soft);
-    }
-
-    html { scroll-behavior: smooth; font-size: 16px; }
-
-    body {
-      font-family: var(--sans);
-      background: var(--paper);
-      color: var(--ink);
-      line-height: 1.7;
-      -webkit-font-smoothing: antialiased;
-      transition: background 0.3s, color 0.3s;
-    }
-
-    /* ── Nav ───────────────────────────────────────── */
-    nav {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      z-index: 100;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 1.25rem var(--gutter);
-      background: var(--nav-bg);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border-bottom: 1px solid transparent;
-      transition: border-color 0.3s;
-    }
-    nav.scrolled { border-color: var(--rule); }
-
-    .nav-name {
-      font-family: var(--serif);
-      font-weight: 400;
-      font-size: 1.05rem;
-      letter-spacing: 0.02em;
-      color: var(--ink);
-      text-decoration: none;
-    }
-
-    .nav-links {
-      display: flex;
-      align-items: center;
-      gap: 2rem;
-      list-style: none;
-    }
-    .nav-links a {
-      font-size: 0.78rem;
-      font-weight: 400;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--ink-soft);
-      text-decoration: none;
-      transition: color 0.2s;
-    }
-    .nav-links a:hover { color: var(--sage); }
-
-    /* ── Shared Layout ─────────────────────────────── */
-    section {
-      padding: clamp(4rem, 10vh, 7rem) var(--gutter);
-    }
-
-    .inner {
-      max-width: var(--max);
-      margin: 0 auto;
-    }
-
-    .section-label {
-      font-size: 0.72rem;
-      font-weight: 500;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--sage);
-      margin-bottom: 2.5rem;
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-    }
-    .section-label::after {
-      content: '';
-      display: block;
-      flex: 1;
-      height: 1px;
-      background: var(--rule);
-    }
-
-    h2 {
-      font-family: var(--serif);
-      font-weight: 300;
-      font-size: clamp(2rem, 4vw, 2.8rem);
-      line-height: 1.25;
-      color: var(--ink);
-      margin-bottom: 1.5rem;
-    }
-
-    p { color: var(--ink-soft); font-size: 0.95rem; }
-
-    /* ── Fade-in animation ─────────────────────────── */
-    .reveal {
-      opacity: 0;
-      transform: translateY(22px);
-      transition: opacity 0.7s ease, transform 0.7s ease;
-    }
-    .reveal.visible {
-      opacity: 1;
-      transform: none;
-    }
-
-    /* ── Hero ──────────────────────────────────────── */
-    #hero {
-      min-height: 100dvh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      padding-top: calc(clamp(4rem, 10vh, 7rem) + 3.5rem);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .hero-canvas {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      z-index: 0;
-      pointer-events: none;
-    }
-
-    .hero-content {
-      position: relative;
-      z-index: 1;
-      max-width: var(--max);
-      margin: 0 auto;
-      width: 100%;
-    }
-
-    .hero-eyebrow {
-      font-size: 0.78rem;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--sage);
-      margin-bottom: 1.5rem;
-      font-weight: 400;
-    }
-
-    h1 {
-      font-family: var(--serif);
-      font-size: 26px;
-      font-weight: 300;
-      line-height: 1.08;
-      letter-spacing: -0.01em;
-      margin-bottom: 1.75rem;
-    }
-    h1 em {
-      font-style: italic;
-      color: var(--sage);
-    }
-
-    .hero-main {
-      display: flex;
-      align-items: flex-start;
-      gap: 3rem;
-    }
-
-    .hero-left {
-      flex: 1;
-      min-width: 0;
-    }
-
-    .hero-portrait {
-      width: 260px;
-      height: 260px;
-      border-radius: 50%;
-      overflow: hidden;
-      flex-shrink: 0;
-    }
-
-
-.hero-tagline {
-      font-family: var(--serif);
-      font-size: clamp(1.05rem, 2.2vw, 1.35rem);
-      font-weight: 300;
-      color: var(--ink-soft);
-      line-height: 1.55;
-      max-width: 540px;
-      margin-bottom: 1rem;
-    }
-
-    .hero-roles {
-      margin-bottom: 2rem;
-      display: flex;
-      flex-direction: column;
-      gap: 0.3rem;
-    }
-    .hero-social {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.4rem 1.25rem;
-      margin-top: 1.5rem;
-    }
-    .hero-social a {
-      font-size: 0.78rem;
-      letter-spacing: 0.06em;
-      color: var(--ink-faint);
-      text-decoration: none;
-      transition: color 0.2s;
-    }
-    .hero-social a:hover { color: var(--sage); }
-    .hero-role {
-      font-size: 0.8rem;
-      color: var(--ink-faint);
-      letter-spacing: 0.02em;
-    }
-
-    .hero-meta {
-      display: flex;
-      align-items: center;
-      gap: 1.5rem;
-      flex-wrap: wrap;
-    }
-
-    .hero-location {
-      font-size: 0.8rem;
-      letter-spacing: 0.06em;
-      color: var(--ink-faint);
-      display: flex;
-      align-items: center;
-      gap: 0.4rem;
-    }
-    .hero-location svg { flex-shrink: 0; }
-
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      font-size: 0.78rem;
-      font-weight: 500;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      text-decoration: none;
-      padding: 0.65rem 1.4rem;
-      border-radius: 10px;
-      transition: all 0.2s;
-    }
-    .btn-primary {
-      background: var(--ink);
-      color: var(--paper);
-    }
-    .btn-primary:hover {
-      background: var(--sage);
-    }
-    .btn-outline {
-      border: 1px solid var(--rule);
-      color: var(--ink-soft);
-    }
-    .btn-outline:hover {
-      background: var(--sage);
-      border-color: var(--sage);
-      color: var(--paper);
-    }
-    .btn-sage {
-      background: var(--sage);
-      border: 1px solid var(--sage);
-      color: var(--paper);
-    }
-    .btn-sage:hover {
-      background: transparent;
-      border-color: var(--rule);
-      color: var(--ink-soft);
-    }
-
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(8px); }
-      to   { opacity: 1; transform: none; }
-    }
-
-    /* ── About ─────────────────────────────────────── */
-    #about { background: var(--paper-alt); }
-
-    /* ── Karaoke text ──────────────────────────────── */
-    .karaoke-text {
-      --kp: 0%;
-      background: linear-gradient(
-        to right,
-        var(--ink) var(--kp),
-        var(--sage) var(--kp)
-      );
-      -webkit-background-clip: text;
-      background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-
-    .about-text > * + * { margin-top: 1.2rem; }
-
-    .tag-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-      margin-top: 1.75rem;
-    }
-    .tag {
-      font-size: 0.72rem;
-      font-weight: 400;
-      letter-spacing: 0.06em;
-      padding: 0.3rem 0.75rem;
-      border: 1px solid var(--rule);
-      border-radius: 100px;
-      color: var(--ink-soft);
-      background: var(--paper);
-      cursor: default;
-      transition: border-color 0.25s, color 0.25s, transform 0.25s;
-    }
-    .tag:hover {
-      border-color: var(--sage);
-      color: var(--sage);
-      transform: scale(1.1);
-    }
-
-    /* ── Education ─────────────────────────────────── */
-    .edu-list { margin-top: 0.5rem; }
-    .edu-item {
-      display: grid;
-      grid-template-columns: 1fr auto;
-      align-items: baseline;
-      gap: 1rem 2rem;
-      padding: 1.6rem 0;
-      border-bottom: 1px solid var(--rule);
-    }
-    .edu-item:first-child { border-top: 1px solid var(--rule); }
-    .edu-degree {
-      font-family: var(--serif);
-      font-size: 1.1rem;
-      font-weight: 400;
-      color: var(--ink);
-      margin-bottom: 0.2rem;
-    }
-    .edu-field {
-      font-size: 0.85rem;
-      color: var(--ink-soft);
-      margin-bottom: 0.35rem;
-    }
-    .edu-institution {
-      font-size: 0.8rem;
-      color: var(--ink-faint);
-      letter-spacing: 0.03em;
-    }
-    .edu-year {
-      font-size: 0.78rem;
-      font-weight: 500;
-      color: var(--sage);
-      letter-spacing: 0.04em;
-      white-space: nowrap;
-      align-self: start;
-      padding-top: 0.15rem;
-    }
-    .exp-type {
-      font-family: var(--sans);
-      font-size: 0.68rem;
-      font-weight: 500;
-      color: var(--ink-faint);
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      margin-left: 0.5rem;
-    }
-
-    /* ── Research ──────────────────────────────────── */
-    .research-intro {
-      font-family: var(--serif);
-      font-size: clamp(1.1rem, 2vw, 1.3rem);
-      font-weight: 300;
-      color: var(--ink-soft);
-      line-height: 1.65;
-      max-width: 620px;
-      margin-bottom: 3.5rem;
-    }
-
-
-    .pubs-list {
-      margin-top: 3.5rem;
-    }
-
-    .pubs-label {
-      font-size: 0.72rem;
-      font-weight: 500;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--ink-faint);
-      margin-bottom: 1.5rem;
-    }
-    .pubs-category {
-      font-size: 0.72rem;
-      font-weight: 500;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--sage);
-      margin-top: 2.5rem;
-      margin-bottom: 0.25rem;
-      padding-bottom: 0.5rem;
-      border-bottom: 1px solid var(--rule);
-    }
-    .pubs-category:first-child { margin-top: 0; }
-
-    .pub-item {
-      padding: 1.25rem 0;
-      border-bottom: 1px solid var(--rule);
-      display: grid;
-      grid-template-columns: auto 1fr;
-      gap: 1.25rem;
-      align-items: baseline;
-    }
-    .pub-year {
-      font-size: 0.78rem;
-      color: var(--sage);
-      font-weight: 500;
-      letter-spacing: 0.04em;
-      min-width: 2.5rem;
-    }
-    .pub-ref {
-      font-size: 0.88rem;
-      color: var(--ink-soft);
-      line-height: 1.65;
-    }
-    .pub-ref em { color: var(--ink); font-style: italic; }
-    .pub-ref a {
-      color: var(--ocean);
-      text-decoration: none;
-    }
-    .pub-ref a:hover { text-decoration: underline; }
-
-    /* ── Grants & Awards ───────────────────────────── */
-    .grant-list, .award-list { margin-top: 0.5rem; }
-
-    .grant-item, .award-item {
-      padding: 1.4rem 0;
-      border-bottom: 1px solid var(--rule);
-      display: grid;
-      grid-template-columns: 1fr auto;
-      gap: 0.5rem 2rem;
-      align-items: start;
-    }
-    .grant-item:first-of-type, .award-item:first-of-type {
-      border-top: 1px solid var(--rule);
-    }
-    .grant-title, .award-title {
-      font-family: var(--serif);
-      font-size: 1rem;
-      font-weight: 400;
-      color: var(--ink);
-      margin-bottom: 0.2rem;
-    }
-    .grant-org, .award-org {
-      font-size: 0.82rem;
-      color: var(--ink-soft);
-    }
-    .grant-role {
-      font-size: 0.78rem;
-      color: var(--ink-faint);
-      margin-top: 0.2rem;
-      font-style: italic;
-    }
-    .grant-date, .award-date {
-      font-size: 0.78rem;
-      font-weight: 500;
-      color: var(--sage);
-      letter-spacing: 0.03em;
-      white-space: nowrap;
-      text-align: right;
-    }
-
-    /* ── Teaching ──────────────────────────────────── */
-    #teaching { background: var(--paper-alt); }
-
-    .teaching-layout {
-      display: grid;
-      grid-template-columns: 1.1fr 1fr;
-      gap: 4rem;
-    }
-
-    .philosophy-block p {
-      font-family: var(--serif);
-      font-size: clamp(1.1rem, 2vw, 1.3rem);
-      font-weight: 300;
-      color: var(--ink-soft);
-      line-height: 1.65;
-    }
-    .philosophy-block p + p { margin-top: 1.2rem; }
-    blockquote {
-      margin: 2rem 0;
-      padding-left: 3rem;
-      border-left: 2px solid var(--sage);
-      font-family: var(--serif);
-      font-size: clamp(1.2rem, 2.2vw, 1.45rem);
-      font-style: italic;
-      color: var(--ink);
-      line-height: 1.6;
-      position: relative;
-    }
-    blockquote::before {
-      content: '\201C';
-      font-family: Georgia, var(--serif);
-      font-size: 5rem;
-      font-style: normal;
-      line-height: 0;
-      color: var(--sage);
-      position: absolute;
-      left: 0.4rem;
-      top: 0.6em;
-      opacity: 0.5;
-    }
-
-    .courses-panel { }
-    .courses-label {
-      font-size: 0.72rem;
-      font-weight: 500;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--ink-faint);
-      margin-bottom: 1.25rem;
-    }
-    .courses-institution {
-      font-size: 0.82rem;
-      font-weight: 500;
-      color: var(--ink);
-      margin-top: 1.5rem;
-      margin-bottom: 0.1rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-      gap: 0.5rem;
-    }
-    .courses-institution:first-of-type { margin-top: 0; }
-    .courses-dates {
-      font-size: 0.72rem;
-      font-weight: 400;
-      color: var(--sage);
-      letter-spacing: 0.04em;
-      white-space: nowrap;
-    }
-    blockquote footer {
-      display: block;
-      margin-top: 0.6rem;
-      font-style: normal;
-      font-size: 0.95rem;
-      color: var(--ink-faint);
-      letter-spacing: 0.03em;
-    }
-
-    .course-item {
-      padding: 0.45rem 0;
-    }
-    .course-name {
-      font-size: 0.85rem;
-      font-weight: 400;
-      color: var(--ink-soft);
-      line-height: 1.4;
-    }
-
-    /* ── Side Hustles ──────────────────────────────── */
-    .hustles-intro {
-      font-family: var(--serif);
-      font-size: clamp(1.1rem, 2vw, 1.3rem);
-      font-weight: 300;
-      color: var(--ink-soft);
-      max-width: 560px;
-      margin-bottom: 3rem;
-      line-height: 1.65;
-    }
-
-    .hustles-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-      gap: 2rem;
-    }
-
-    .hustle-card {
-      display: block;
-      text-decoration: none;
-      color: inherit;
-      position: relative;
-      padding: 1.75rem;
-      border: 1px solid rgba(226, 223, 217, 0.7);
-      border-radius: 10px;
-      background: rgba(250, 249, 247, 0.6);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
-      transition: border-color 0.2s, transform 0.2s;
-    }
-    .hustle-card:hover {
-      border-color: var(--sage);
-      transform: translateY(-3px);
-    }
-
-.hustle-number {
-      font-family: var(--serif);
-      font-size: 2.5rem;
-      font-weight: 300;
-      color: var(--rule);
-      line-height: 1;
-      margin-bottom: 1rem;
-      user-select: none;
-      transition: color 0.2s;
-    }
-    .hustle-card:hover .hustle-number {
-      color: #a8c9b8;
-    }
-    .coming-soon {
-      font-size: 1.1rem;
-      font-style: italic;
-      color: var(--ink-faint);
-      transition: color 0.2s;
-    }
-    .hustle-card:hover .coming-soon {
-      color: #a8c9b8;
-    }
-
-    .hustle-title {
-      font-family: var(--serif);
-      font-size: 1.1rem;
-      font-weight: 400;
-      color: var(--ink);
-      margin-bottom: 0.5rem;
-    }
-    .hustle-body {
-      font-size: 0.84rem;
-      color: var(--ink-soft);
-      line-height: 1.7;
-    }
-
-    /* ── Footer ────────────────────────────────────── */
-    footer {
-      padding: 1.25rem var(--gutter);
-      border-top: 1px solid var(--rule);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 1rem;
-    }
-
-    .footer-name {
-      font-family: var(--serif);
-      font-size: 1rem;
-      color: var(--ink-soft);
-    }
-
-    .footer-links {
-      display: flex;
-      gap: 1.5rem;
-    }
-    .footer-links a {
-      font-size: 0.78rem;
-      letter-spacing: 0.06em;
-      color: var(--ink-faint);
-      text-decoration: none;
-      transition: color 0.2s;
-    }
-    .footer-links a:hover { color: var(--sage); }
-
-    .footer-copy {
-      font-size: 0.72rem;
-      color: var(--ink-faint);
-      width: 100%;
-      margin-top: 0.5rem;
-    }
-
-    /* ── Wave strips ───────────────────────────────── */
-    .wave-strip {
-      position: fixed;
-      left: 0;
-      right: 0;
-      height: 72px;
-      z-index: 95;
-      pointer-events: none;
-    }
-    .wave-strip-top {
-      top: 0;
-      /* gradient fades out downward so strip blends into page */
-      -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 40%, rgba(0,0,0,0) 100%);
-      mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 40%, rgba(0,0,0,0) 100%);
-    }
-    .wave-strip canvas { width: 100%; height: 100%; display: block; }
-
-    /* ── Nav Right Group ───────────────────────────── */
-    .nav-right {
-      display: flex;
-      align-items: center;
-      gap: 0.25rem;
-    }
-
-    /* ── Theme Toggle ──────────────────────────────── */
-    .theme-toggle {
-      background: none;
-      border: none;
-      cursor: pointer;
-      color: var(--ink-faint);
-      padding: 0.25rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: color 0.2s;
-      flex-shrink: 0;
-    }
-    .theme-toggle:hover { color: var(--sage); }
-    .theme-toggle svg { display: block; }
-
-    /* ── Hamburger ─────────────────────────────────── */
-    .nav-toggle {
-      display: none;
-      flex-direction: column;
-      justify-content: center;
-      gap: 5px;
-      width: 32px;
-      height: 32px;
-      background: none;
-      border: none;
-      cursor: pointer;
-      padding: 4px;
-      z-index: 110;
-    }
-    .nav-toggle span {
-      display: block;
-      width: 100%;
-      height: 1.5px;
-      background: var(--ink-soft);
-      border-radius: 2px;
-      transition: transform 0.3s ease, opacity 0.3s ease;
-      transform-origin: center;
-    }
-    .nav-toggle.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
-    .nav-toggle.open span:nth-child(2) { opacity: 0; }
-    .nav-toggle.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
-
-    /* ── Mobile ────────────────────────────────────── */
-    @media (max-width: 680px) {
-      .teaching-layout {
-        grid-template-columns: 1fr;
-      }
-      .hero-main { flex-direction: column-reverse; align-items: flex-start; }
-      .hero-portrait { width: 160px; height: 160px; }
-      .hero-meta { flex-direction: column; align-items: flex-start; }
-
-      .nav-toggle { display: flex; }
-
-      .nav-links {
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 0;
-        position: fixed;
-        top: 0; left: 0; right: 0;
-        background: var(--paper);
-        backdrop-filter: blur(16px);
-        -webkit-backdrop-filter: blur(16px);
-        padding: 5rem var(--gutter) 2rem;
-        z-index: 105;
-        transform: translateY(-110%);
-        transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-        border-bottom: 1px solid var(--rule);
-        box-shadow: 0 8px 32px rgba(0,0,0,0.06);
-      }
-      .nav-links.open {
-        transform: translateY(0);
-      }
-      .nav-links li {
-        width: 100%;
-        border-bottom: 1px solid var(--rule);
-      }
-      .nav-links li:last-child { border-bottom: none; }
-      .nav-links a {
-        display: block;
-        padding: 1rem 0;
-        font-size: 0.9rem;
-        letter-spacing: 0.1em;
-      }
-    }
-  </style>
-</head>
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+<title>Ann's Website</title>
+<link rel="icon" type="image/x-icon" href="/favicon.ico">
+<style>/*STYLE-START*/
+:root{--ink:#4f6664;--soft:#7d918d;--card:#fffdf8;--mint:#dcebe3;--lav:#b7a9e6;--font:'Quicksand',ui-rounded,"SF Pro Rounded","Nunito",system-ui,sans-serif}
+::selection{background:#2f6b5c;color:#fff}
+::-moz-selection{background:#2f6b5c;color:#fff}
+body.night ::selection{background:#8ad3c0;color:#12233d}
+body.night ::-moz-selection{background:#8ad3c0;color:#12233d}
+*{box-sizing:border-box}html,body{margin:0;height:100%;overflow:hidden;font-family:var(--font);color:var(--ink);background:#bfe3f7}
+body{transition:background 1.2s}body.night{background:#1d2a52}
+canvas{position:fixed;top:0;right:0;bottom:0;left:0;inset:0;width:100%;height:100%;display:block;touch-action:none}
+button{font:inherit;cursor:pointer}button:focus,a:focus{outline:3px solid #7fb3aa;outline-offset:3px}
+button:focus:not(:focus-visible),a:focus:not(:focus-visible){outline:none}
+button:focus-visible,a:focus-visible{outline:3px solid #7fb3aa;outline-offset:3px}
+.brand{position:fixed;top:22px;left:28px;z-index:5;pointer-events:none}
+.brand h1{margin:0;font-size:clamp(18px,2.3vw,32px);letter-spacing:.2em;font-weight:700;color:#46605f}
+.brand p{margin:6px 0 0;font-size:clamp(13px,1vw,15px);letter-spacing:.08em;color:#2f5152}
+body.night .brand h1,body.night .brand p{color:#eef2ff}
+.tools{position:fixed;top:20px;right:22px;z-index:6;display:flex;gap:8px}
+.ib{height:44px;min-width:44px;padding:0 14px;border-radius:14px;border:1px solid #fff;background:rgba(255,252,246,.86);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);color:#3f5f5c;font-size:16px;font-weight:600;box-shadow:0 4px 16px #5b7a7722}
+.ib:hover{background:#fff}
+a.ib{display:inline-flex;align-items:center;text-decoration:none}
+.nav{position:fixed;left:0;right:0;bottom:22px;margin:0 auto;width:-webkit-fit-content;width:fit-content;z-index:5;display:flex;gap:7px;flex-wrap:wrap;justify-content:center;max-width:94vw;padding:8px;border-radius:22px;background:rgba(255,252,246,.72);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border:1px solid #fff;box-shadow:0 8px 28px #4d6b6a2b}
+.nav button{border:1px solid transparent;background:transparent;border-radius:999px;padding:14px 16px;font-size:13px;min-height:44px;font-weight:700;letter-spacing:.07em;color:#3f5f5c;transition:.2s}
+.nav button:hover,.nav button.on{background:var(--mint);border-color:#cfe3d9}
+.tip{position:fixed;z-index:7;pointer-events:none;transform:translate(-50%,-150%);padding:9px 15px;border-radius:999px;background:#fffdf8;color:#30514e;font-size:13px;font-weight:700;letter-spacing:.07em;box-shadow:0 6px 18px #4d6b6a40;opacity:0;transition:opacity .15s}
+.tip.on{opacity:1}
+.toast{position:fixed;left:50%;top:84px;transform:translate(-50%,-14px);z-index:9;padding:10px 18px;border-radius:999px;background:#fffdf8;font-size:13px;font-weight:700;color:#50706a;box-shadow:0 8px 24px #4d6b6a33;opacity:0;pointer-events:none;transition:.25s}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+.dpad{position:fixed;right:22px;bottom:96px;z-index:5;display:grid;grid-template-columns:repeat(3,48px);grid-template-rows:repeat(2,48px);gap:6px;justify-content:end}
+.dpad button{border:1px solid #fff;background:rgba(255,252,246,.82);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);border-radius:12px;color:#5b7a77;font-size:18px;box-shadow:0 4px 14px #5b7a7722;touch-action:none}
+.dpad button:active{background:var(--mint)}
+.dpad .up{grid-column:2}.dpad .left{grid-column:1;grid-row:2}.dpad .down{grid-column:2;grid-row:2}.dpad .right{grid-column:3;grid-row:2}
+.dpad small{grid-column:1/4;text-align:right;font-size:12px;letter-spacing:.12em;font-weight:700;color:#2f4f50;margin-top:4px}
+body.night .dpad small{color:#dde5ff}
+body.inroom .nav{display:none}
+.hint{pointer-events:none;position:fixed;left:28px;bottom:22px;z-index:4;max-width:280px;padding:13px 17px;font-size:13px;line-height:1.6;color:#3f5a56;border-radius:18px;background:rgba(255,253,248,.93);box-shadow:0 6px 22px #4d6b6a26;transition:opacity .6s}
+.hint.gone{opacity:0;pointer-events:none}
+.badge{pointer-events:none;position:fixed;right:22px;bottom:30px;z-index:4;font-size:12px;letter-spacing:.12em;font-weight:700;color:#2f4f50;text-align:right;line-height:1.7;background:rgba(255,253,248,.72);padding:8px 12px;border-radius:14px}
+body.night .badge{color:#dde5ff;background:rgba(30,40,66,.72)}
+.scrim{position:fixed;top:0;right:0;bottom:0;left:0;inset:0;z-index:19;background:rgba(48,70,70,.16);opacity:0;pointer-events:none;transition:opacity .3s}
+.scrim.on{opacity:1;pointer-events:auto}
+.panel{position:fixed;top:0;right:0;z-index:20;height:100vh;height:100dvh;width:min(440px,100%);padding:clamp(24px,4vw,44px);background:rgba(255,253,248,.97);box-shadow:-18px 0 50px #2f4c4b40;transform:translateX(105%);transition:transform .4s cubic-bezier(.2,.8,.25,1);overflow:auto;border-radius:28px 0 0 28px}
+.panel.open{transform:none}
+.panel .x{position:absolute;top:18px;right:18px;width:38px;height:38px;border-radius:50%;border:0;background:#e9f0eb;font-size:22px;color:#5f7a73}
+.eye{margin-top:44px;font-size:12px;letter-spacing:.18em;font-weight:700;color:#5e756d}
+.panel h2{margin:10px 0 14px;font-size:clamp(26px,3vw,36px);line-height:1.15;color:#4a6b64}
+.panel p{line-height:1.75;color:#4e635c;font-size:16px}
+.panel ul{padding-left:20px;line-height:1.95;color:#4e635c;font-size:15px}
+.tags{display:flex;flex-wrap:wrap;gap:6px;margin:14px 0}.tags span{padding:6px 11px;border-radius:999px;background:#eaf3ee;border:1px solid #cadfd2;font-size:12px;font-weight:700;color:#3c6659}
+.btn{margin-top:14px;border:0;border-radius:999px;padding:12px 20px;background:var(--mint);color:#4d7068;font-weight:700}
+.btn:hover{background:#cfe5d9}
+.rally{margin-top:18px;padding:16px;border-radius:18px;background:#eef3eb;color:#3f5a52}.score{font-size:15px;margin-bottom:8px}
+.note{margin-top:26px;font-size:12px;color:#637771}
+.panel .sub{margin:22px 0 6px;font-size:12px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;color:#5e756d}
+.panel .muted{color:#637771;font-weight:500}
+.panel .pubs li{margin-bottom:9px;line-height:1.6;font-size:14px}
+.panel a{color:#2f6b5c;font-weight:700;text-decoration:underline;text-underline-offset:2px}
+.panel a:hover{color:#1f5546}
+.panel .links a{display:inline-block;margin:4px 10px 4px 0;text-decoration:none;background:#eaf3ee;border:1px solid #cadfd2;border-radius:999px;padding:7px 13px;font-size:13px}
+.panel .links a:hover{background:#dbece2}
+.panel .quote{margin:14px 0;padding:12px 15px;border-left:3px solid #cadfd2;background:#f3f7f3;border-radius:0 12px 12px 0}
+.panel .quote p{margin:0;font-size:15px;line-height:1.6}
+.panel .quote cite{display:block;margin-top:8px;font-style:normal;font-size:12px;font-weight:700;letter-spacing:.06em;color:#5e756d}
+body.night .panel .quote{border-left-color:#3d4c78;background:#232e4c}
+body.night .panel .quote p{color:#c6d2ee}
+body.night .panel .quote cite{color:#9fb2dd}
+.panel blockquote{margin:16px 0;padding:12px 16px;border-left:3px solid #cadfd2;background:#f3f7f3;font-size:15px;line-height:1.65;color:#4e635c}
+body.night .panel .sub{color:#9fb2dd}body.night .panel .muted{color:#9cabce}
+body.night .panel a{color:#8fd0c0}body.night .panel a:hover{color:#a9e3d4}
+body.night .panel .links a{background:#2b3758;border-color:#3d4c78;color:#bfe3d8}
+body.night .panel .links a:hover{background:#36446a}
+body.night .panel blockquote{border-left-color:#3d4c78;background:#232e4c;color:#c6d2ee}
+.loading{position:fixed;top:0;right:0;bottom:0;left:0;inset:0;z-index:50;display:grid;place-items:center;background:#d6e7e8;letter-spacing:.2em;font-weight:700;color:#5b7a77;transition:opacity .6s}
+.loading.gone{opacity:0;pointer-events:none}
+#room-card{pointer-events:none;position:fixed;left:24px;top:76px;z-index:8;text-align:left;opacity:0;transform:translateY(-10px);transition:.45s;padding:14px 18px;border-radius:20px;background:rgba(255,253,248,.92);box-shadow:0 8px 28px #4d6b6a30;max-width:min(320px,74vw)}
+#room-card.open{opacity:1;transform:none}
+#room-card h3{margin:0;font-size:18px;color:#4a6b64}#room-card p{margin:4px 0 8px;font-size:13px;color:#4f655e}#room-card small{display:block;margin-top:8px;font-size:12px;letter-spacing:.05em;color:#637771}
+#room-back{display:none;position:fixed;left:24px;top:22px;z-index:9}
+body.inroom #room-back{display:block}body.inroom .brand,body.inroom .nav,body.inroom .badge,body.inroom .hint{opacity:0;pointer-events:none}
+body.inroom{background:#fadfd0}
+/* classic (accessible / SEO) view */
+#plain{display:none;position:fixed;top:0;right:0;bottom:0;left:0;inset:0;z-index:30;overflow-y:auto;background:#fbf8f2}
+body.plain #plain{display:block}
+.plain-wrap{max-width:760px;margin:0 auto;padding:0 clamp(18px,5vw,34px) 80px}
+.plain-bar{position:sticky;top:0;z-index:2;display:flex;flex-wrap:wrap;gap:10px;align-items:center;padding:16px 0 12px;background:#fbf8f2}
+.plain-nav{display:flex;flex-wrap:wrap;gap:6px}
+.plain-nav a{padding:10px 14px;border-radius:999px;background:#eaf3ee;border:1px solid #cadfd2;color:#3c6659;font-size:13px;font-weight:700;text-decoration:none}
+.plain-nav a:hover{background:#dbece2}
+.plain-head .sitename{margin:18px 0 2px;font-size:13px;letter-spacing:.1em;text-transform:uppercase;font-weight:700}
+.plain-head .sitename a{color:#5e756d;text-decoration:none}
+body.night .plain-head .sitename a{color:#9fb2dd}
+.plain-head h1{margin:6px 0 8px;font-size:clamp(26px,5vw,40px);color:#3f5f56}
+.plain-head .lede{font-size:17px;line-height:1.65;color:#4e635c;margin:0 0 14px}
+#plain h2{margin:46px 0 4px;font-size:clamp(20px,3vw,26px);color:#3f5f56;padding-bottom:8px;border-bottom:2px solid #dfeae2}
+#plain h3{margin:30px 0 6px;font-size:17px;color:#44675d}
+#plain p{line-height:1.7;color:#4e635c;font-size:16px}
+#plain ul{padding-left:20px}
+#plain li{line-height:1.65;color:#4e635c;font-size:15px;margin-bottom:5px}
+#plain a{color:#2f6b5c;font-weight:700;text-underline-offset:2px}
+#plain .sub{margin:20px 0 4px;font-size:12px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;color:#5e756d}
+#plain .muted{color:#637771}
+#plain .pubs li{margin-bottom:9px;font-size:14px}
+#plain .links a{display:inline-block;margin:4px 8px 4px 0;padding:9px 14px;border-radius:999px;background:#eaf3ee;border:1px solid #cadfd2;text-decoration:none;font-size:13px}
+#plain .quote{margin:14px 0;padding:12px 15px;border-left:3px solid #cadfd2;background:#f3f7f3;border-radius:0 12px 12px 0}
+#plain .quote p{margin:0;font-size:15px}
+#plain .quote cite{display:block;margin-top:8px;font-style:normal;font-size:12px;font-weight:700;letter-spacing:.06em;color:#5e756d}
+#plain blockquote{margin:14px 0;padding:12px 16px;border-left:3px solid #cadfd2;background:#f3f7f3;font-size:16px;line-height:1.65;color:#4e635c}
+.plain-foot{margin-top:60px;padding-top:18px;border-top:1px solid #e3ece5}
+.plain-foot p{font-size:13px;color:#637771}
+body.night #plain{background:#151e35}
+body.night .plain-bar{background:#151e35}
+body.night #plain h1,body.night #plain h2,body.night #plain h3{color:#eaf0ff}
+body.night #plain p,body.night #plain li,body.night .plain-head .lede{color:#c6d2ee}
+body.night #plain a{color:#8fd0c0}
+body.night .plain-nav a,body.night #plain .links a{background:#2b3758;border-color:#3d4c78;color:#bfe3d8}
+body.night #plain .quote,body.night #plain blockquote{background:#232e4c;border-left-color:#3d4c78}
+body.night #plain .sub,body.night #plain .quote cite{color:#9fb2dd}
+body.night #plain .muted,body.night .plain-foot p{color:#9cabce}
+body.night #plain h2{border-bottom-color:#2d3a5e}
+body.no3d .plain-bar .ib,body.no3d .tools,body.no3d .brand,body.no3d .nav,body.no3d .dpad,body.no3d .hint,body.no3d .badge,body.no3d #room-back{display:none!important}
+
+/* dark mode for every floating surface */
+body.night .panel{background:rgba(30,40,66,.97);box-shadow:-18px 0 50px #070d22aa}
+body.night .panel h2{color:#eaf0ff}body.night .panel p{color:#c6d2ee}body.night .panel ul{color:#bdc9e8}
+body.night .eye{color:#9fb2dd}body.night .panel .x{background:#2e3b60;color:#cfd9f3}
+body.night .tags span{background:#2b3758;border-color:#3d4c78;color:#bed1f1}
+body.night .btn{background:#3b537f;color:#e0e9ff}body.night .btn:hover{background:#46608f}
+body.night .note{color:#9cabce}body.night .rally{background:#2b3758}
+body.night .scrim{background:rgba(6,11,28,.42)}
+body.night #room-card{background:rgba(30,40,66,.93)}
+body.night #room-card h3{color:#eaf0ff}body.night #room-card p,body.night #room-card small{color:#aebfe3}
+body.night .toast{background:#283457;color:#e0e9ff;box-shadow:0 8px 24px #070d2255}
+body.night .hint{background:rgba(30,40,66,.93);color:#ccd8f3}body.night .hint b{color:#eaf0ff}
+body.night .ib{background:rgba(40,53,86,.84);border-color:#46588c;color:#d5e0fa}
+body.night .ib:hover{background:#35416c}
+body.night .nav{background:rgba(30,40,66,.8);border-color:#46588c}
+body.night .nav button{color:#ccd9f6}
+body.night .nav button:hover,body.night .nav button.on{background:#3b537f;border-color:#4c6095}
+body.night .dpad button{background:rgba(40,53,86,.84);border-color:#46588c;color:#d5e0fa}
+body.night .dpad button:active{background:#4b69a9}
+@media(max-width:700px){.hint,.badge{display:none}#room-card{left:12px;top:64px;padding:10px 13px;max-width:62vw}#room-card h3{font-size:15px}#room-card small{display:none}.dpad{right:10px;bottom:104px;grid-template-columns:repeat(3,46px);grid-template-rows:repeat(2,46px);gap:5px}.toast{top:70px;font-size:13px}.nav{flex-wrap:nowrap;overflow-x:auto;justify-content:flex-start;width:94vw;max-width:94vw;bottom:14px;border-radius:18px}.nav button{padding:13px 13px;font-size:12px;min-height:44px;white-space:nowrap}.brand{top:14px;left:16px;max-width:52vw}.brand h1{font-size:15px;letter-spacing:.14em}.brand p{font-size:10px;margin-top:3px}.tools{top:12px;right:12px}#classic{font-size:0}#classic:before{content:'≡';font-size:18px}}
+@media(max-width:430px){
+  .brand{max-width:42vw}
+  .brand h1{font-size:14px;letter-spacing:.09em;line-height:1.3}
+  .brand p{font-size:12px;margin-top:4px;letter-spacing:.04em}
+  .tools{gap:6px}
+  .ib{padding:0 10px}
+}
+@media(max-width:360px){
+  .brand p{display:none}
+  .ib{padding:0 8px;min-width:44px}
+  .nav{width:96vw;max-width:96vw}
+}
+@media(max-height:460px){            /* phone held sideways */
+  .dpad{top:50%;bottom:auto;transform:translateY(-50%);right:10px;grid-template-columns:repeat(3,44px);grid-template-rows:repeat(2,44px);gap:5px}
+  .dpad small{display:none}
+  .nav{bottom:10px}
+  #room-card{top:56px;max-width:44vw}
+  .hint{display:none}
+}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+/*STYLE-END*/</style></head>
 <body>
-
-  <!-- ── Navigation ───────────────────────────────── -->
-  <nav id="nav">
-    <a class="nav-name" href="#hero">Ann T. Choe</a>
-    <ul class="nav-links" id="navLinks">
-      <li><a href="#about">About</a></li>
-      <li><a href="#qualifications">Qualifications</a></li>
-      <li><a href="#projects">Projects</a></li>
-      <li><a href="#research">Research</a></li>
-      <li><a href="#teaching">Teaching</a></li>
-    </ul>
-    <div class="nav-right">
-      <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
-        <!-- sun icon (shown in dark mode) -->
-        <svg id="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none">
-          <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
-        </svg>
-        <!-- moon icon (shown in light mode) -->
-        <svg id="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
-        </svg>
-      </button>
-      <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
-        <span></span><span></span><span></span>
-      </button>
-    </div>
-  </nav>
-
-  <!-- Wave strips -->
-  <div class="wave-strip wave-strip-top"><canvas id="waveTop"></canvas></div>
-
-  <!-- ── Hero ─────────────────────────────────────── -->
-  <section id="hero">
-    <canvas class="hero-canvas" id="waveCanvas"></canvas>
-
-    <div class="hero-content">
-      <p class="hero-eyebrow">Applied Linguistics · Conversation Analysis · Design</p>
-      <div class="hero-main">
-        <div class="hero-left">
-          <h1>Ann T. Choe, <em>PhD</em></h1>
-          <p class="hero-tagline">
-            I'm an applied linguist with a tech twist. I design and develop technological solutions that enhance user experience and drive real-world impact.
-          </p>
-          <div class="hero-roles">
-            <p class="hero-role">Generative AI Analyst · Conversation Designer · Product Designer · Applied Linguistics Researcher</p>
-          </div>
-          <div class="hero-meta">
-            <a class="btn btn-sage" href="#about">About Me</a>
-            <a class="btn btn-outline" href="https://dribbble.com/diane2837" target="_blank" rel="noopener">View Portfolio</a>
-            <a class="btn btn-outline" href="#research">View Research</a>
-          </div>
-          <div class="hero-social">
-            <a href="https://www.linkedin.com/in/ann-t-choe/" target="_blank" rel="noopener">LinkedIn</a>
-            <a href="https://dribbble.com/diane2837" target="_blank" rel="noopener">Dribbble</a>
-            <a href="https://github.com/anntaichoe" target="_blank" rel="noopener">GitHub</a>
-            <a href="https://scholar.google.com/citations?user=m7vYqyEAAAAJ&hl=en" target="_blank" rel="noopener">Google Scholar</a>
-            <a href="https://www.researchgate.net/profile/Ann-Choe/research" target="_blank" rel="noopener">ResearchGate</a>
-          </div>
-        </div>
-        <div class="hero-portrait">
-          <img src="profile.jpg" alt="Ann T. Choe" style="width:100%;height:100%;object-fit:cover;display:block;" />
-        </div>
-      </div>
-    </div>
-
-  </section>
-
-  <!-- ── About ─────────────────────────────────────── -->
-  <section id="about">
-    <div class="inner">
-      <p class="section-label">About</p>
-      <div class="reveal">
-        <h2><span class="karaoke-text">language x technology x interaction</span></h2>
-        <div class="tag-row">
-          <span class="tag">Conversation Design</span>
-          <span class="tag">Product Design</span>
-          <span class="tag">Figma</span>
-          <span class="tag">Generative AI</span>
-          <span class="tag">Human-Computer Interaction</span>
-          <span class="tag">AI Solutions</span>
-          <span class="tag">Multimodality</span>
-          <span class="tag">Entrepreneurship</span>
-          <span class="tag">Conversation Analysis</span>
-          <span class="tag">Applied Linguistics</span>
-          <span class="tag">Interactional Linguistics</span>
-          <span class="tag">Multilingual Interaction</span>
-          <span class="tag">Mandarin Chinese</span>
-          <span class="tag">Korean</span>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ── Qualifications ─────────────────────────────── -->
-  <section id="qualifications">
-    <div class="inner">
-      <p class="section-label">Qualifications</p>
-      <p class="section-label">Experience</p>
-      <h2><span class="karaoke-text">accuracy x coherence x authenticity</span></h2>
-      <p class="research-intro reveal">My professional training in applied linguistics, particularly conversation analysis, gives me a distinctive lens for working with AI-generated language in real-world contexts. Beyond catching hallucinations, I examine turn design, sequential organization, and conversational context as anchors for evaluating the full exchange. My work includes prompt design and human-in-the-loop evaluation for LLM-driven systems, where linguistic precision directly shapes model output. The result is output that is accurate, coherent, and authentic in the ways that matter to real users.</p>
-      <div class="edu-list reveal">
-
-        <div class="edu-item">
-          <div>
-            <p class="edu-degree">Lead Generative AI Analyst</p>
-            <p class="edu-institution">Nvidia</p>
-          </div>
-          <span class="edu-year">Nov 2024 – Present</span>
-        </div>
-
-        <div class="edu-item">
-          <div>
-            <p class="edu-degree">AI Solutions Consultant</p>
-            <p class="edu-institution">JumpstartAI</p>
-          </div>
-          <span class="edu-year">Jan 2024 – Oct 2024</span>
-        </div>
-
-        <div class="edu-item">
-          <div>
-            <p class="edu-degree">AI Data Specialist</p>
-            <p class="edu-institution">Duolingo English Test</p>
-          </div>
-          <span class="edu-year">Nov 2021 – May 2022</span>
-        </div>
-
-      </div>
-
-      <p class="section-label" style="margin-top: 3.5rem;">Education</p>
-      <div class="edu-list reveal">
-
-        <div class="edu-item">
-          <div>
-            <p class="edu-degree">Ph.D. Applied Linguistics</p>
-            <p class="edu-field"></p>
-            <p class="edu-institution">University of Hawaiʻi at Mānoa &mdash; Hawaiʻi, USA</p>
-          </div>
-          <span class="edu-year">2023</span>
-        </div>
-
-        <div class="edu-item">
-          <div>
-            <p class="edu-degree">Ed.M. Applied Linguistics</p>
-            <p class="edu-field"></p>
-            <p class="edu-institution">Teachers College, Columbia University &mdash; New York, USA</p>
-          </div>
-          <span class="edu-year">2017</span>
-        </div>
-
-        <div class="edu-item">
-          <div>
-            <p class="edu-degree">M.A. Teaching English to Speakers of Other Languages (TESOL)</p>
-            <p class="edu-field"></p>
-            <p class="edu-institution">Hawaiʻi Pacific University &mdash; Hawaiʻi, USA</p>
-          </div>
-          <span class="edu-year">2013</span>
-        </div>
-
-      </div>
-
-      <p class="section-label" style="margin-top: 3.5rem;">Credentials</p>
-      <div class="edu-list reveal">
-
-        <div class="edu-item">
-          <div>
-            <p class="edu-degree">Conversation Design</p>
-            <p class="edu-institution">Conversational Academy</p>
-          </div>
-          <span class="edu-year">2023</span>
-        </div>
-
-        <div class="edu-item">
-          <div>
-            <p class="edu-degree">Product Design</p>
-            <p class="edu-institution">Dribbble</p>
-          </div>
-          <span class="edu-year">2022</span>
-        </div>
-
-        <div class="edu-item">
-          <div>
-            <p class="edu-degree">Artificial Intelligence and Machine Learning</p>
-            <p class="edu-institution">Texas McCombs School of Business</p>
-          </div>
-          <span class="edu-year">2021</span>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- ── Side Hustles ──────────────────────────────── -->
-  <section id="projects">
-    <div class="inner">
-      <p class="section-label">Projects</p>
-      <h2><span class="karaoke-text">work x play x learn</span></h2>
-      <p class="hustles-intro reveal">
-        Things I've learned by doing:
-      </p>
-
-      <div class="hustles-grid reveal">
-        <a class="hustle-card" href="https://www.goall.app/" target="_blank" rel="noopener">
-          <div class="hustle-number">01</div>
-          <p class="hustle-title">GOALL</p>
-          <p class="hustle-body">I co-founded a Chinese language learning app with Dr. Susanne DeVore. The AI-powered app helps learners improve their reading skills with user-provided texts.</p>
-        </a>
-        <a class="hustle-card" href="https://dribbble.com/diane2837" target="_blank" rel="noopener">
-          <div class="hustle-number">02</div>
-          <p class="hustle-title">UX & CxD</p>
-          <p class="hustle-body">I am a certified Product Designer and Conversation Designer. I work in Figma and apply linguistic insight to craft interactions that feel natural and on-brand.</p>
-        </a>
-        <a class="hustle-card" href="https://www.annadenning.com/zendala-drawing-course" target="_blank" rel="noopener noreferrer">
-          <div class="hustle-number">03</div>
-          <p class="hustle-title">Tangle with Ann</p>
-          <p class="hustle-body">I am a certified Zentangle teacher who specializes in Zendala. I designed this online course (10 lessons) for anyone interested in the art of Zentangle and Zendala.</p>
-        </a>
-      </div>
-    </div>
-  </section>
-
-
-  <!-- ── Research ──────────────────────────────────── -->
-  <section id="research">
-    <div class="inner">
-      <p class="section-label">Research</p>
-      <p class="research-intro reveal">
-        My research sits at the intersection of conversation analysis, second language learning, and digital/AI interaction. Much of my work examines multilingual interaction in institutional and educational settings. I draw heavily on ethnomethodology and conversation analysis (EMCA) to study the fine-grained organization of multimodal interaction.
-      </p>
-      <p class="research-intro reveal">
-        A growing thread in my research explores human-AI interaction and AI-supported learning, including how learners' attitudes toward tools like ChatGPT shape their writing processes and outcomes, how generative AI can be leveraged in the applied linguistics classroom, and the impact of human-made vs. AI-generated podcasts on learning.
-      </p>
-
-      <div class="pubs-list reveal">
-
-        <p class="pubs-category">Peer-reviewed journal articles</p>
-
-        <div class="pub-item">
-          <span class="pub-year">2026</span>
-          <p class="pub-ref">Choe, A. T., &amp; Kang, J. (2026). Use of scales for assessing personal appearance in Korean variety shows. <em>Journal of Pragmatics</em>, <em>261</em>, 93–131. <a href="https://doi.org/10.1016/j.pragma.2026.04.012" target="_blank" rel="noopener">https://doi.org/10.1016/j.pragma.2026.04.012</a></p>
-        </div>
-        <div class="pub-item">
-          <span class="pub-year">2026</span>
-          <p class="pub-ref">Jin, S-H., &amp; Choe, A. T. (2026). Investigating how learners' attitudes shape AI-supported argumentative writing processes and outcomes. <em>Journal of Computer Assisted Learning, 42</em>(2), 1–21. <a href="https://doi.org/10.1002/jcal.70232" target="_blank" rel="noopener">https://doi.org/10.1002/jcal.70232</a></p>
-        </div>
-        <div class="pub-item">
-          <span class="pub-year">2026</span>
-          <p class="pub-ref">Choe, A. T., &amp; Huang, S-Y. (2026). Marking pedagogical saliency with honh in Taiwan Mandarin interaction. <em>Interactional Linguistics, 6</em>(1), 66–94. <a href="https://doi.org/10.1075/il.24023.cho" target="_blank" rel="noopener">https://doi.org/10.1075/il.24023.cho</a></p>
-        </div>
-        <div class="pub-item">
-          <span class="pub-year">2023</span>
-          <p class="pub-ref">Chang, Y-Z., Choe, A. T., Holden, D., Isbell, D. R. (2023). Making each point count: Revising a local adaptation of the Jacobs et al. (1981) ESL COMPOSITION PROFILE rubric, <em>Language Testing</em>, <em>41</em>(2). <a href="https://doi.org/10.1177/02655322231217979" target="_blank" rel="noopener">https://doi.org/10.1177/02655322231217979</a></p>
-        </div>
-        <div class="pub-item">
-          <span class="pub-year">2023</span>
-          <p class="pub-ref">Choe, A. T., &amp; Yagi, J. (2023). Embodied remembering in coordinated performances. <em>Multimodal Communication, 12</em>(2), 99–122. <a href="https://doi.org/10.1515/mc-2022-0029" target="_blank" rel="noopener">https://doi.org/10.1515/mc-2022-0029</a></p>
-        </div>
-        <div class="pub-item">
-          <span class="pub-year">2022</span>
-          <p class="pub-ref">Choe, A. T., Nguyen, H. t., &amp; Vicentini, C. (2022). Interactional practices to manage epistemic stances in online searches during a computer-mediated conversation-for-learning. <em>TESOL in Context, 30</em>(2), 9–33. <a href="https://doi.org/10.21153/tesol2022vol30no2art1517" target="_blank" rel="noopener">https://doi.org/10.21153/tesol2022vol30no2art1517</a></p>
-        </div>
-        <div class="pub-item">
-          <span class="pub-year">2022</span>
-          <p class="pub-ref">Nguyen, H. t., Choe, A. T., &amp; Vicentini, C. (2022). Opportunities for second language learning in online search sequences during a computer-mediated tutoring session. <em>Classroom Discourse, 13</em>(2), 145–163. <a href="https://doi.org/10.1080/19463014.2021.2023597" target="_blank" rel="noopener">https://doi.org/10.1080/19463014.2021.2023597</a></p>
-        </div>
-        <div class="pub-item">
-          <span class="pub-year">2022</span>
-          <p class="pub-ref">Kyle, K., Eguchi, M., Choe, A. T., LaFlair, G. (2022). Register variation in spoken and written language use across technology-mediated and non-technology-mediated learning environments. <em>Language Testing.</em> <a href="https://doi.org/10.1177/02655322211057868" target="_blank" rel="noopener">https://doi.org/10.1177/02655322211057868</a></p>
-        </div>
-        <div class="pub-item">
-          <span class="pub-year">2021</span>
-          <p class="pub-ref">Kyle, K., Choe, A. T., Eguchi, M., LaFlair, G., &amp; Ziegler, N. (2021). A comparison of spoken and written language use in traditional and technology mediated learning environments. <em>ETS Research Report Series.</em> <a href="https://doi.org/10.1002/ets2.12329" target="_blank" rel="noopener">https://doi.org/10.1002/ets2.12329</a></p>
-        </div>
-        <div class="pub-item">
-          <span class="pub-year">2018</span>
-          <p class="pub-ref">Choe, A. T. (2018). 'Can anyone help her?': Managing student embarrassment in the adult ESL classroom. <em>Hacettepe University Journal of Education, 33</em>(Special Issue), 16–35. <a href="https://doi.org/10.16986/HUJE.2018038794" target="_blank" rel="noopener">doi.org/10.16986/HUJE.2018038794</a></p>
-        </div>
-
-        <p class="pubs-category">Book chapters and conference proceedings</p>
-
-        <div class="pub-item">
-          <span class="pub-year">2027</span>
-          <p class="pub-ref">Isbell, D. R., Choe, A. T., Holden, D., Kawasaki, A., Kim, J., Kim, Y., McGehee, M., Nishizawa, H., Park, L., &amp; Tang, A. F. (2027). Investigating Duolingo English Test washback: A focus on test preparation activities. In <em>The Routledge handbook of digital language assessment</em> (pp. 287&ndash;305). Routledge.</p>
-        </div>
-        <div class="pub-item">
-          <span class="pub-year">in review</span>
-          <p class="pub-ref">Wang, J., Shin, M., Nishizawa, H., Miller, M., Larkin, R., Kim, J., Nguyen, H., Holden, D., Diez-Ortega, M., Choe, A. T., &amp; Crowther, D. (under review). Multiʻōlelo's legacy and future: Cultivating research dissemination through multilingual and multimodal approaches. <em>Cambridge University Press.</em></p>
-        </div>
-        <div class="pub-item">
-          <span class="pub-year">2022</span>
-          <p class="pub-ref">Choe, A. T., Yagi, J. (2022). Embodied remembering in coordinated performances. <em>Proceedings of the 5th CAN-Asia Symposium on L2 Interaction</em> (pp. 45–55).</p>
-        </div>
-        <div class="pub-item">
-          <span class="pub-year">2020</span>
-          <p class="pub-ref">Choe, A. T., &amp; Reddington, E. (2020). But-prefacing for refocusing in public talk. In H. Z. Waring &amp; E. Reddington (Eds.), <em>Communicating with the public: Conversation analytic studies</em> (pp. 87–110). Bloomsbury. <a href="https://doi.org/10.5040/9781350098213.ch-005" target="_blank" rel="noopener">doi.org/10.5040/9781350098213.ch-005</a></p>
-        </div>
-
-        <p class="pubs-category">Working papers</p>
-
-        <div class="pub-item">
-          <span class="pub-year">2025</span>
-          <p class="pub-ref">Choe, A. T. (2025). AI as empowerment in the applied linguistics classroom. <em>Hawaiʻi Pacific University Working Paper Series, 23,</em> 67–72.</p>
-        </div>
-        <div class="pub-item">
-          <span class="pub-year">2024</span>
-          <p class="pub-ref">Choe, A. T. (2024). Using AI to enhance language teaching: Introduction. <em>Hawaiʻi Pacific University Working Paper Series, 22,</em> 89–90.</p>
-        </div>
-        <div class="pub-item">
-          <span class="pub-year">2022</span>
-          <p class="pub-ref">Chang, Y-T., Choe, A. T., Holden, D., &amp; Isbell, D. R. (2022). An evaluation of HELP's writing placement test rubric using Many-Facet Rasch Analysis. <em>Second Language Studies, 40</em>(1). <a href="https://www.hawaii.edu/sls/wp-content/uploads/Chang-et-al.-2022.pdf" target="_blank" rel="noopener">https://www.hawaii.edu/sls/wp-content/uploads/Chang-et-al.-2022.pdf</a></p>
-        </div>
-        <div class="pub-item">
-          <span class="pub-year">2020</span>
-          <p class="pub-ref">Phung, H., Choe, A. T., Diez-Ortega, M., Eguchi, M., Holden, D., Mendoza, A., &amp; Nguyen, T. H. (2020). The Multiʻōlelo initiative for language research communications. <em>Second Language Studies, 38</em>(1), Article 2. <a href="https://www.hawaii.edu/sls/wp-content/uploads/Phung-et-al.-2020.pdf" target="_blank" rel="noopener">https://www.hawaii.edu/sls/wp-content/uploads/Phung-et-al.-2020.pdf</a></p>
-        </div>
-        <div class="pub-item">
-          <span class="pub-year">2018</span>
-          <p class="pub-ref">Choe, A. T., &amp; Reddington, E. (2018). But-prefacing for refocusing in public questioning and answering. <em>Teachers College, Columbia University Working Papers in TESOL &amp; Applied Linguistics, 18</em>(1), 44–50.</p>
-        </div>
-        <div class="pub-item">
-          <span class="pub-year">2016</span>
-          <p class="pub-ref">Choe, A. T. (2016). A critical review of Pimsleur® language learning programs. <em>Hawaiʻi Pacific University Working Paper Series, 14,</em> 108–120.</p>
-        </div>
-        <div class="pub-item">
-          <span class="pub-year">2012</span>
-          <p class="pub-ref">Tai, A. &amp; Tregelles, E. (2012). Inquiry-based learning: Gender stereotypes in advertising. <em>Hawaiʻi Pacific University TESOL Working Paper Series, 10,</em> 107–137.</p>
-        </div>
-
-        <p class="pubs-category">Book reviews</p>
-
-        <div class="pub-item">
-          <span class="pub-year">2022</span>
-          <p class="pub-ref">Choe, A. T. (2022). Review of the book <em>Teaching and testing second language pragmatics and interaction: A practical guide</em> by C. Roever. <em>TESOL in Context, 30</em>(2), 63–67. <a href="https://doi.org/10.21153/tesol2022vol30no2art1567" target="_blank" rel="noopener">https://doi.org/10.21153/tesol2022vol30no2art1567</a></p>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-
-  <!-- ── Teaching ──────────────────────────────────── -->
-  <section id="teaching">
-    <div class="inner">
-      <p class="section-label">Teaching</p>
-      <h2><span class="karaoke-text">experiential learning x relevancy</span></h2>
-      <div class="teaching-layout reveal">
-        <div class="philosophy-block">
-          <p>
-            My teaching philosophy centers on creating the optimal conditions for learning. I design interactive, project-based experiences that connect course content to students' real-world needs and interests. In my classroom, students are active participants — collaborating, problem-solving, and applying concepts in ways that are immediately meaningful to them. I also believe in bringing current, up-to-date knowledge into the classroom, ensuring that what we discuss reflects the latest developments in the field.
-          </p>
-          <blockquote>
-            If we teach today's students as we taught yesterday's, we rob them of tomorrow.
-            <footer>― John Dewey</footer>
-          </blockquote>
-        </div>
-
-        <div class="courses-panel">
-          <p class="courses-label">Current &amp; Past Courses</p>
-
-          <p class="courses-institution">University of Hawaiʻi at Mānoa <span class="courses-dates">2019–2021, 2025–Present</span></p>
-          <div class="course-item"><p class="course-name">SLS 150: Learning Languages and Communicating Interculturally</p></div>
-          <div class="course-item"><p class="course-name">SLS 302: Second Language Learning</p></div>
-          <div class="course-item"><p class="course-name">SLS 303: Second Language Teaching</p></div>
-          <div class="course-item"><p class="course-name">SLS 480E: Language Learning with Apps</p></div>
-          <div class="course-item"><p class="course-name">SLS 675: Second Language Qualitative Research</p></div>
-
-          <p class="courses-institution">Hawaiʻi Pacific University <span class="courses-dates">2023–2024</span></p>
-          <div class="course-item"><p class="course-name">UNIV 1000: First Year Success Seminar</p></div>
-          <div class="course-item"><p class="course-name">AL 3500: Second Language Learning and Teaching</p></div>
-          <div class="course-item"><p class="course-name">AL 3950: Language Classroom Experience</p></div>
-          <div class="course-item"><p class="course-name">AL 3740: Technology in Language Teaching</p></div>
-          <div class="course-item"><p class="course-name">AL 4710: Teaching Listening and Speaking Skills</p></div>
-          <div class="course-item"><p class="course-name">AL 4720: Teaching Reading and Writing Skills</p></div>
-          <div class="course-item"><p class="course-name">AL 4960: Practice Teaching</p></div>
-          <div class="course-item"><p class="course-name">AL 6720: Second Language Reading and Writing</p></div>
-          <div class="course-item"><p class="course-name">AL 6740: Research &amp; Issues in CALL</p></div>
-          <div class="course-item"><p class="course-name">AL 6961: Practicum I in TESOL</p></div>
-          <div class="course-item"><p class="course-name">AL 7099: Practicum II and Capstone</p></div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ── Grants ──────────────────────────────────────── -->
-  <section id="grants">
-    <div class="inner">
-      <p class="section-label">Grants</p>
-      <div class="grant-list reveal">
-
-        <div class="grant-item">
-          <div>
-            <p class="grant-title">Access Pakistan Teacher Training and Cultural Exchange Program</p>
-            <p class="grant-org">U.S. Department of State · Hawaiʻi Pacific University</p>
-            <p class="grant-role">Lead Instructor</p>
-          </div>
-          <span class="grant-date">October 2024</span>
-        </div>
-
-        <div class="grant-item">
-          <div>
-            <p class="grant-title">Duolingo English Test (DET)</p>
-            <p class="grant-org">University of Hawaiʻi at Mānoa</p>
-            <p class="grant-role">Research Assistant</p>
-          </div>
-          <span class="grant-date">Sep 2024–Jun 2025</span>
-        </div>
-
-        <div class="grant-item">
-          <div>
-            <p class="grant-title">Education Testing Service (ETS)</p>
-            <p class="grant-org">University of Hawaiʻi at Mānoa</p>
-            <p class="grant-role">Research Assistant</p>
-          </div>
-          <span class="grant-date">Fall 2018–Summer 2019</span>
-        </div>
-
-        <div class="grant-item">
-          <div>
-            <p class="grant-title">Robert Wood Johnson Foundation (RWJF)</p>
-            <p class="grant-org">Teachers College, Columbia University</p>
-            <p class="grant-role">Research Assistant</p>
-          </div>
-          <span class="grant-date">2016–2017</span>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- ── Awards ───────────────────────────────────────── -->
-  <section id="awards" style="background: var(--paper-alt);">
-    <div class="inner">
-      <p class="section-label">Awards</p>
-      <div class="award-list reveal">
-
-        <div class="award-item">
-          <div>
-            <p class="award-title">Honolulu Tech Week Hackathon: Best AI Project</p>
-            <p class="award-org">Honolulu Tech Week</p>
-          </div>
-          <span class="award-date">September 2024</span>
-        </div>
-
-        <div class="award-item">
-          <div>
-            <p class="award-title">Calvin Shindo Student Venture Fund</p>
-            <p class="award-org">Pacific Asian Center for Entrepreneurship (PACE), Shidler College of Business</p>
-          </div>
-          <span class="award-date">May 2024</span>
-        </div>
-
-        <div class="award-item">
-          <div>
-            <p class="award-title">Achievement Scholarship</p>
-            <p class="award-org">Department of Second Language Studies, University of Hawaiʻi at Mānoa</p>
-          </div>
-          <span class="award-date">August 2023</span>
-        </div>
-
-        <div class="award-item">
-          <div>
-            <p class="award-title">CPB Foundation Scholarship</p>
-            <p class="award-org">Central Pacific Bank</p>
-          </div>
-          <span class="award-date">August 2023</span>
-        </div>
-
-        <div class="award-item">
-          <div>
-            <p class="award-title">AAAL Graduate Student Award</p>
-            <p class="award-org">American Association for Applied Linguistics (AAAL)</p>
-          </div>
-          <span class="award-date">March 2023</span>
-        </div>
-
-        <div class="award-item">
-          <div>
-            <p class="award-title">Graduate Dean's Scholarship</p>
-            <p class="award-org">Graduate Division, University of Hawaiʻi at Mānoa</p>
-          </div>
-          <span class="award-date">February 2023</span>
-        </div>
-
-        <div class="award-item">
-          <div>
-            <p class="award-title">Merit-Based Award in Mentorship</p>
-            <p class="award-org">Graduate Student Organization, University of Hawaiʻi at Mānoa</p>
-          </div>
-          <span class="award-date">April 2022</span>
-        </div>
-
-        <div class="award-item">
-          <div>
-            <p class="award-title">Venture Competition First Prize</p>
-            <p class="award-org">Pacific Asian Center for Entrepreneurship (PACE), Shidler College of Business</p>
-          </div>
-          <span class="award-date">April 2022</span>
-        </div>
-
-        <div class="award-item">
-          <div>
-            <p class="award-title">Bilinski Dissertation Fellowship</p>
-            <p class="award-org">Russell J. &amp; Dorothy S. Bilinski Fellowships</p>
-          </div>
-          <span class="award-date">Aug 2021–Dec 2022</span>
-        </div>
-
-        <div class="award-item">
-          <div>
-            <p class="award-title">Dean's Special Fund</p>
-            <p class="award-org">College of Languages, Linguistics, &amp; Literature, University of Hawaiʻi at Mānoa</p>
-          </div>
-          <span class="award-date">September 2018</span>
-        </div>
-
-        <div class="award-item">
-          <div>
-            <p class="award-title">Teachers College Scholarship</p>
-            <p class="award-org">Teachers College, Columbia University</p>
-          </div>
-          <span class="award-date">November 2016</span>
-        </div>
-
-        <div class="award-item">
-          <div>
-            <p class="award-title">Annual Teachers of Excellence Award</p>
-            <p class="award-org">Chinese Culture University School of Continuing Education</p>
-          </div>
-          <span class="award-date">September 2014</span>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- ── Footer ────────────────────────────────────── -->
-  <footer>
-    <div id="music-player">
-      <div id="music-art">
-        <img src="https://i.ytimg.com/vi/5DXi3W78SdA/hqdefault.jpg" alt="Album art" />
-      </div>
-      <div id="music-info">
-        <div id="music-marquee-wrap">
-          <span id="music-title"></span>
-        </div>
-      </div>
-      <div id="music-controls">
-        <button id="music-play" aria-label="Play / Pause">
-          <svg id="icon-play" viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M8 5v14l11-7z"/></svg>
-          <svg id="icon-pause" viewBox="0 0 24 24" fill="currentColor" width="16" height="16" style="display:none"><path d="M6 19h4V5H6zm8-14v14h4V5z"/></svg>
-        </button>
-        <button id="music-mute" aria-label="Mute / Unmute">
-          <svg id="icon-vol" viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3A4.5 4.5 0 0 0 14 7.97v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/></svg>
-          <svg id="icon-mute" viewBox="0 0 24 24" fill="currentColor" width="16" height="16" style="display:none"><path d="M16.5 12A4.5 4.5 0 0 0 14 7.97v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51A8.796 8.796 0 0 0 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06A8.99 8.99 0 0 0 17.73 19l2 2L21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/></svg>
-        </button>
-      </div>
-      <!-- Audio-only: YouTube player is kept off-screen, no video shown -->
-      <div id="yt-audio-host" aria-hidden="true"><div id="yt-audio"></div></div>
-    </div>
-  </footer>
-
-  <!-- ── Scripts ───────────────────────────────────── -->
-  <script>
-    // Dark / light mode toggle
-    (function () {
-      const btn      = document.getElementById('themeToggle');
-      const iconSun  = document.getElementById('icon-sun');
-      const iconMoon = document.getElementById('icon-moon');
-      const html     = document.documentElement;
-
-      function applyTheme(dark) {
-        html.setAttribute('data-theme', dark ? 'dark' : 'light');
-        iconSun.style.display  = dark ? '' : 'none';
-        iconMoon.style.display = dark ? 'none' : '';
-      }
-
-      applyTheme(false);
-
-      btn.addEventListener('click', () => {
-        const isDark = html.getAttribute('data-theme') === 'dark';
-        applyTheme(!isDark);
-      });
-    })();
-
-    // Mobile nav toggle
-    (function () {
-      const toggle = document.getElementById('navToggle');
-      const links  = document.getElementById('navLinks');
-      toggle.addEventListener('click', () => {
-        const open = links.classList.toggle('open');
-        toggle.classList.toggle('open', open);
-        toggle.setAttribute('aria-expanded', open);
-      });
-      // Close on link tap
-      links.querySelectorAll('a').forEach(a => {
-        a.addEventListener('click', () => {
-          links.classList.remove('open');
-          toggle.classList.remove('open');
-          toggle.setAttribute('aria-expanded', false);
-        });
-      });
-    })();
-
-    // Nav scroll effect
-    const nav = document.getElementById('nav');
-    window.addEventListener('scroll', () => {
-      nav.classList.toggle('scrolled', window.scrollY > 40);
-    }, { passive: true });
-
-    // Intersection Observer for reveal animations
-    const reveals = document.querySelectorAll('.reveal');
-    const io = new IntersectionObserver((entries) => {
-      entries.forEach(e => {
-        if (e.isIntersecting) {
-          e.target.classList.add('visible');
-          io.unobserve(e.target);
-        }
-      });
-    }, { threshold: 0.08 });
-    reveals.forEach(el => io.observe(el));
-
-    // Karaoke animation — triggers once per heading on scroll into view
-    (function () {
-      const duration = 2400;
-      function easeInOut(t) { return t < 0.5 ? 2*t*t : -1 + (4 - 2*t)*t; }
-
-      function runKaraoke(el) {
-        let start = null;
-        function frame(ts) {
-          if (!start) start = ts;
-          const raw = Math.min((ts - start) / duration, 1);
-          el.style.setProperty('--kp', (easeInOut(raw) * 100).toFixed(2) + '%');
-          if (raw < 1) requestAnimationFrame(frame);
-        }
-        requestAnimationFrame(frame);
-      }
-
-      const karaokeObserver = new IntersectionObserver(entries => {
-        entries.forEach(e => {
-          if (e.isIntersecting) {
-            runKaraoke(e.target);
-            karaokeObserver.unobserve(e.target);
-          }
-        });
-      }, { threshold: 0.6 });
-
-      document.querySelectorAll('.karaoke-text').forEach(el => karaokeObserver.observe(el));
-    })();
-
-    // Shared wave draw utility
-    function makeWaveCanvas(id, waveDefs, fillUp) {
-      const canvas = document.getElementById(id);
-      if (!canvas) return;
-      const ctx = canvas.getContext('2d');
-      function resize() {
-        canvas.width  = canvas.offsetWidth  || canvas.parentElement.offsetWidth;
-        canvas.height = canvas.offsetHeight || canvas.parentElement.offsetHeight;
-      }
-      resize();
-      window.addEventListener('resize', resize, { passive: true });
-      let t = 0;
-      (function draw() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        const W = canvas.width, H = canvas.height;
-        waveDefs.forEach(w => {
-          ctx.beginPath();
-          const cy = H * w.y;
-          for (let x = 0; x <= W; x++) {
-            const y = cy + Math.sin(x * w.freq + t * w.speed + w.phase) * w.amp;
-            x === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
-          }
-          if (fillUp) {
-            ctx.lineTo(W, 0); ctx.lineTo(0, 0);
-          } else {
-            ctx.lineTo(W, H); ctx.lineTo(0, H);
-          }
-          ctx.closePath();
-          ctx.fillStyle = `rgba(${w.color}, ${w.alpha})`;
-          ctx.fill();
-        });
-        t++;
-        requestAnimationFrame(draw);
-      })();
-    }
-
-    // Hero background canvas — waves at the top of the hero, fill upward
-    makeWaveCanvas('waveCanvas', [
-      { amp: 28, freq: 0.0012, speed: 0.00025, phase: 0,   y: 0.28, alpha: 0.04,  color: '122, 158, 142' },
-      { amp: 18, freq: 0.0018, speed: 0.00038, phase: 2.1, y: 0.34, alpha: 0.025, color: '78, 127, 163'  },
-      { amp: 38, freq: 0.0009, speed: 0.00016, phase: 4.5, y: 0.38, alpha: 0.02,  color: '196, 169, 125' },
-      { amp: 14, freq: 0.0022, speed: 0.00052, phase: 1.1, y: 0.22, alpha: 0.018, color: '122, 158, 142' },
-    ], true);
-
-    // Top fixed strip — waves fill downward from top edge
-    makeWaveCanvas('waveTop', [
-      { amp: 10, freq: 0.0014, speed: 0.00022, phase: 0.5, y: 0.72, alpha: 0.09,  color: '122, 158, 142' },
-      { amp: 7,  freq: 0.002,  speed: 0.00035, phase: 2.8, y: 0.82, alpha: 0.06,  color: '78, 127, 163'  },
-      { amp: 14, freq: 0.001,  speed: 0.00014, phase: 1.3, y: 0.88, alpha: 0.05,  color: '196, 169, 125' },
-    ], true);
-
-
-    // Stagger hero elements on load
-    (function () {
-      const els = ['.hero-eyebrow', 'h1', '.hero-tagline', '.hero-roles', '.hero-meta', '.hero-social'];
-      els.forEach((sel, i) => {
-        const el = document.querySelector(sel);
-        if (!el) return;
-        el.style.opacity = '0';
-        el.style.transform = 'translateY(18px)';
-        el.style.transition = `opacity 0.7s ${0.15 + i * 0.12}s ease, transform 0.7s ${0.15 + i * 0.12}s ease`;
-        requestAnimationFrame(() => {
-          el.style.opacity = '1';
-          el.style.transform = 'none';
-        });
-      });
-    })();
-
-  </script>
-
-  <style>
-    #music-player {
-      display: flex;
-      align-items: center;
-      gap: 0.6rem;
-      padding: 0.55rem 0.85rem 0.55rem 0.55rem;
-      border-radius: 10px;
-      width: 220px;
-    }
-    #yt-audio-host {
-      position: fixed;
-      left: -9999px;
-      top: 0;
-      width: 200px;
-      height: 200px;
-      overflow: hidden;
-      pointer-events: none;
-    }
-    #music-art img {
-      width: 36px;
-      height: 36px;
-      border-radius: 6px;
-      object-fit: cover;
-      flex-shrink: 0;
-      display: block;
-    }
-    #music-info {
-      flex: 1;
-      overflow: hidden;
-    }
-    #music-marquee-wrap {
-      overflow: hidden;
-      width: 100%;
-    }
-    #music-title {
-      font-family: var(--sans);
-      font-size: 0.68rem;
-      font-weight: 500;
-      color: var(--rule);
-      letter-spacing: 0.03em;
-      white-space: nowrap;
-      display: inline-block;
-      animation: marquee 10s linear infinite;
-    }
-    @keyframes marquee {
-      0%   { transform: translateX(100%); }
-      100% { transform: translateX(-100%); }
-    }
-    #music-controls {
-      display: flex;
-      align-items: center;
-      gap: 0.3rem;
-      flex-shrink: 0;
-    }
-    #music-controls button {
-      background: none;
-      border: none;
-      cursor: pointer;
-      color: var(--rule);
-      padding: 0.2rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 4px;
-      transition: color 0.2s;
-    }
-    #music-controls button:hover { color: var(--sage); }
-  </style>
-
-  <script src="https://www.youtube.com/iframe_api"></script>
-  <script>
-    (function () {
-      const VIDEO_ID = '5DXi3W78SdA';
-      const btnPlay = document.getElementById('music-play');
-      const btnMute = document.getElementById('music-mute');
-      const iconPlay  = document.getElementById('icon-play');
-      const iconPause = document.getElementById('icon-pause');
-      const iconVol   = document.getElementById('icon-vol');
-      const iconMuteEl= document.getElementById('icon-mute');
-      const titleEl  = document.getElementById('music-title');
-      let player = null;
-      let ready = false;
-
-      titleEl.textContent = 'Night City · Music For Your Seoul';
-
-      function showPlaying(on) {
-        iconPlay.style.display  = on ? 'none' : '';
-        iconPause.style.display = on ? '' : 'none';
-      }
-
-      window.onYouTubeIframeAPIReady = function () {
-        player = new YT.Player('yt-audio', {
-          width: '200',
-          height: '200',
-          videoId: VIDEO_ID,
-          playerVars: { controls: 0, playsinline: 1, rel: 0, modestbranding: 1 },
-          events: {
-            onReady: function () { ready = true; },
-            onStateChange: function (e) {
-              if (e.data === YT.PlayerState.PLAYING) showPlaying(true);
-              else if (e.data === YT.PlayerState.PAUSED || e.data === YT.PlayerState.ENDED) showPlaying(false);
-            },
-            onError: function () { showPlaying(false); titleEl.textContent = 'Music unavailable'; }
-          }
-        });
-      };
-
-      btnPlay.addEventListener('click', function () {
-        if (!ready) return;
-        if (player.getPlayerState() === YT.PlayerState.PLAYING) player.pauseVideo();
-        else player.playVideo();
-      });
-
-      btnMute.addEventListener('click', function () {
-        if (!ready) return;
-        const nowMuted = !player.isMuted();
-        if (nowMuted) player.mute(); else player.unMute();
-        iconVol.style.display    = nowMuted ? 'none' : '';
-        iconMuteEl.style.display = nowMuted ? ''     : 'none';
-      });
-    })();
-  </script>
-</body>
-</html>
+<noscript><style>#plain{display:block!important}canvas,.brand,.tools,.nav,.dpad,.hint,.badge,.loading,#room-back,.panel,.scrim{display:none!important}.plain-bar .ib{display:none}</style></noscript>
+<canvas id="c" aria-label="Interactive isometric island portfolio" role="img"></canvas>
+<div class="loading" id="loading">LOADING ANN'S WEBSITE…</div>
+<script>(function(){var ok=false;try{var c=document.createElement('canvas');ok=!!(window.WebGL2RenderingContext&&c.getContext('webgl2'));}catch(e){}
+if(!ok){window.__NO3D=1;document.body.classList.add('plain','no3d');var l=document.getElementById('loading');if(l)l.className='loading gone';}})();</script>
+<header class="brand"><h1>ANN TAI CHOE, PhD</h1><p>welcome to my website</p></header>
+<div class="tools"><button class="ib" id="classic" aria-label="Switch to plain text view" title="Switch to plain text view">≡ Classic view</button><button class="ib" id="resetview" aria-label="Reset the camera view" title="Reset the camera">⟳</button><button class="ib" id="tod" aria-pressed="false" aria-label="Toggle day and night">☾</button></div>
+<nav class="nav" aria-label="Places"><button data-go="home">HOME</button><button data-go="dome">QUALIFICATIONS</button><button data-go="museum">PROJECTS</button><button data-go="library">RESEARCH</button><button data-go="school">TEACHING</button></nav>
+<div class="hint" id="hint"><b>✦ Click a building</b> - Ann will walk there.<br>Walk her with the arrows · <b>space to jump, twice to double-jump onto a roof</b><br>Drag to turn &amp; tilt · scroll to zoom</div>
+<div class="badge">v2 MOCKUP · REAL-TIME 3D<br>procedural low-poly placeholder art</div>
+<div class="tip" id="tip" aria-hidden="true"></div>
+<div class="toast" id="toast" aria-live="polite"></div>
+<div class="dpad" role="group" aria-label="Move Ann">
+  <button class="up" data-move="up" aria-label="Move up">↑</button>
+  <button class="left" data-move="left" aria-label="Move left">←</button>
+  <button class="down" data-move="down" aria-label="Move down">↓</button>
+  <button class="right" data-move="right" aria-label="Move right">→</button>
+  <small>WALK</small>
+</div>
+<div class="scrim" id="scrim" aria-hidden="true"></div>
+<aside class="panel" id="panel" role="dialog" aria-modal="true" aria-labelledby="p-title" aria-hidden="true" aria-live="polite"><button class="x" id="p-close" aria-label="Close">×</button><div class="eye" id="p-eye"></div><h2 id="p-title"></h2><div id="p-body"></div><div class="note">Content mapped from anndtai.com</div></aside>
+<button class="ib" id="room-back">← Back to island</button>
+<div id="room-card"><h3 id="room-title"></h3><p id="room-sub"></p><div class="tags" id="room-tags" style="margin:0"></div><small>Arrows to walk · space to jump · drag to look around</small></div>
+<div id="plain"><div class="plain-wrap">
+<div class="plain-bar"><button class="ib" id="plain-back">&#8592; Back to the world</button><nav class="plain-nav" aria-label="Sections"><a href="/about/">About</a><a href="/qualifications/">Qualifications</a><a href="/projects/">Projects</a><a href="/research/">Research</a><a href="/teaching/">Teaching</a></nav></div>
+<header class="plain-head"><h1>Ann T. Choe, PhD</h1><p class="lede">Generative AI Analyst &middot; Conversation Designer &middot; Product Designer &middot; Applied Linguistics Researcher</p></header>
+<section id="about"><h2>About</h2><article><h3>Who I am</h3><p>An applied linguist with a technology focus, designing and building things that improve how people and machines talk to each other.</p><p class="sub">Find me</p><p class="links"><a href="https://www.linkedin.com/in/ann-t-choe/" target="_blank" rel="noopener">LinkedIn</a><a href="https://scholar.google.com/citations?user=m7vYqyEAAAAJ&hl=en" target="_blank" rel="noopener">Google Scholar</a><a href="https://github.com/anntaichoe" target="_blank" rel="noopener">GitHub</a><a href="https://dribbble.com/diane2837" target="_blank" rel="noopener">Dribbble</a><a href="https://www.researchgate.net/profile/Ann-Choe/research" target="_blank" rel="noopener">ResearchGate</a></p></article><article><h3>What I do</h3><ul><li>Lead Generative AI Analyst at NVIDIA</li><li>Lecturer at the University of Hawaiʻi at Mānoa</li><li>Others: researcher, designer &amp; builder</li></ul></article><article><h3>Junbi & Jjanggu</h3><p>The two most important members of the household.</p><ul><li><b>Junbi</b> (F) · adopted 2025 at 10 months old. Her name means “get ready” in Korean.</li><li><b>Jjanggu</b> (M) · adopted 2026 at 9.5 weeks old. His name means “a big forehead” in Korean.</li></ul></article></section><section id="qualifications"><h2>Qualifications</h2><article><h3>Work experience</h3><ul><li><b>Lead Generative AI Analyst</b> · NVIDIA <span class="muted">Nov 2024 - present</span></li><li><b>AI Solutions Consultant</b> · JumpstartAI <span class="muted">Jan 2024 - Oct 2024</span></li><li><b>AI Data Specialist</b> · Duolingo English Test <span class="muted">Nov 2021 - May 2022</span></li></ul><p class="sub">What I bring</p><p>Conversation design, product design, generative AI evaluation, human-computer interaction, multimodality, and applied linguistics - in English, Mandarin Chinese and Korean.</p></article><article><h3>Education</h3><ul><li><b>PhD, Applied Linguistics</b> · University of Hawaiʻi at Mānoa <span class="muted">2023</span></li><li><b>EdM, Applied Linguistics</b> · Teachers College, Columbia University <span class="muted">2017</span></li><li><b>MA, TESOL</b> · Hawaiʻi Pacific University <span class="muted">2013</span></li></ul></article><article><h3>Credentials</h3><ul><li>Conversation Design - Conversational Academy, 2023</li><li>Product Design - Dribbble, 2022</li><li>Artificial Intelligence &amp; Machine Learning - Texas McCombs School of Business, 2021</li></ul></article><article><h3>Grants & awards</h3><p class="sub">Grants</p><ul><li>Access Pakistan Teacher Training &amp; Cultural Exchange, U.S. Dept. of State / HPU - Lead Instructor <span class="muted">Oct 2024</span></li><li>Duolingo English Test, UH Mānoa - Research Assistant <span class="muted">Sep 2024 - Jun 2025</span></li><li>Educational Testing Service (ETS), UH Mānoa - Research Assistant <span class="muted">2018–2019</span></li><li>Robert Wood Johnson Foundation, Teachers College - Research Assistant <span class="muted">2016–2017</span></li></ul><p class="sub">Awards</p><ul><li>Best AI Project - Honolulu Tech Week Hackathon <span class="muted">2024</span></li><li>Calvin Shindo Student Venture Fund - PACE, Shidler College of Business <span class="muted">2024</span></li><li>Achievement Scholarship - UH Mānoa Second Language Studies <span class="muted">2023</span></li><li>CPB Foundation Scholarship - Central Pacific Bank <span class="muted">2023</span></li><li>AAAL Graduate Student Award <span class="muted">2023</span></li><li>Graduate Dean’s Scholarship - UH Mānoa <span class="muted">2023</span></li><li>Merit-Based Award in Mentorship - UH Mānoa GSO <span class="muted">2022</span></li><li>Venture Competition First Prize - PACE, Shidler College of Business <span class="muted">2022</span></li><li>Bilinski Dissertation Fellowship <span class="muted">2021–2022</span></li><li>Dean’s Special Fund - UH Mānoa College of LLL <span class="muted">2018</span></li><li>Teachers College Scholarship - Columbia University <span class="muted">2016</span></li><li>Annual Teachers of Excellence Award - Chinese Culture University <span class="muted">2014</span></li></ul></article></section><section id="projects"><h2>Projects</h2><article><h3>GOALL</h3><p>An AI-powered Chinese language learning app that helps learners build reading skills from texts they bring themselves. Co-founded with Dr. Susanne DeVore; it grew out of first prize at the 2022 PACE Venture Competition.</p><p class="links"><a href="https://www.goall.app/" target="_blank" rel="noopener">goall.app</a></p></article><article><h3>UX & conversation design</h3><p>Certified product designer and conversation designer. I work in Figma and bring linguistic insight to interactions so they sound natural and stay on-brand.</p><p class="links"><a href="https://dribbble.com/diane2837" target="_blank" rel="noopener">Portfolio on Dribbble</a></p></article><article><h3>Tangle with Ann</h3><p>A ten-lesson online course on Zentangle and Zendala, designed and taught as a certified Zentangle teacher.</p><p class="links"><a href="https://www.annadenning.com/zendala-drawing-course" target="_blank" rel="noopener">Take the course</a></p></article></section><section id="research"><h2>Research</h2><article><h3>Research interests</h3><p>My work sits where conversation analysis, second language learning, and digital interaction meet. I study multilingual interaction in institutional and educational settings using ethnomethodology and conversation analysis.</p><p>A growing strand looks at human–AI interaction and AI-supported learning: how learners regard tools like ChatGPT, generative AI in the applied linguistics classroom, and how human-made podcasts compare with AI-generated ones.</p><ul><li>Conversation Analysis &amp; EMCA</li><li>Human–AI interaction</li><li>Second language learning</li><li>Multimodality &amp; embodiment</li><li>Language assessment</li></ul></article><article><h3>Publications</h3><p class="sub">Peer-reviewed journal articles</p><ul class="pubs"><li>Choe &amp; Kang (2026). Scales for assessing personal appearance in Korean variety shows. <i>Journal of Pragmatics</i>, 261, 93–131. <a href="https://doi.org/10.1016/j.pragma.2026.04.012" target="_blank" rel="noopener">DOI</a></li><li>Jin &amp; Choe (2026). Learners’ attitudes and AI-supported argumentative writing. <i>Journal of Computer Assisted Learning</i>, 42(2). <a href="https://doi.org/10.1002/jcal.70232" target="_blank" rel="noopener">DOI</a></li><li>Choe &amp; Huang (2026). Pedagogical saliency with <i>honh</i> in Taiwan Mandarin. <i>Interactional Linguistics</i>, 6(1), 66–94. <a href="https://doi.org/10.1075/il.24023.cho" target="_blank" rel="noopener">DOI</a></li><li>Chang, Choe, Holden, &amp; Isbell (2023). Revising an ESL composition profile rubric. <i>Language Testing</i>, 41(2). <a href="https://doi.org/10.1177/02655322231217979" target="_blank" rel="noopener">DOI</a></li><li>Choe &amp; Yagi (2023). Embodied remembering in coordinated performances. <i>Multimodal Communication</i>, 12(2), 99–122. <a href="https://doi.org/10.1515/mc-2022-0029" target="_blank" rel="noopener">DOI</a></li><li>Choe, Nguyen, &amp; Vicentini (2022). Managing epistemic stances in online searches. <i>TESOL in Context</i>, 30(2), 9–33. <a href="https://doi.org/10.21153/tesol2022vol30no2art1517" target="_blank" rel="noopener">DOI</a></li><li>Nguyen, Choe, &amp; Vicentini (2022). L2 learning opportunities in online search sequences. <i>Classroom Discourse</i>, 13(2), 145–163. <a href="https://doi.org/10.1080/19463014.2021.2023597" target="_blank" rel="noopener">DOI</a></li><li>Kyle, Eguchi, Choe, &amp; LaFlair (2022). Register variation across technology-mediated learning. <i>Language Testing</i>. <a href="https://doi.org/10.1177/02655322211057868" target="_blank" rel="noopener">DOI</a></li><li>Kyle, Choe, Eguchi, LaFlair, &amp; Ziegler (2021). Spoken and written language use in traditional and technology-mediated learning. <i>ETS Research Report Series</i>. <a href="https://doi.org/10.1002/ets2.12329" target="_blank" rel="noopener">DOI</a></li><li>Choe (2018). Managing student embarrassment in the adult ESL classroom. <i>Hacettepe University Journal of Education</i>, 33, 16–35. <a href="https://doi.org/10.16986/HUJE.2018038794" target="_blank" rel="noopener">DOI</a></li></ul><p class="sub">Book chapters &amp; proceedings</p><ul class="pubs"><li>Isbell et al. (2027). Investigating Duolingo English Test washback. In <i>The Routledge Handbook of Digital Language Assessment</i>, 287–305.</li><li>Wang et al. (in review). Multiʻōlelo’s legacy and future. Cambridge University Press.</li><li>Choe &amp; Yagi (2022). Embodied remembering in coordinated performances. <i>Proceedings of the 5th CAN-Asia Symposium on L2 Interaction</i>, 45–55.</li><li>Choe &amp; Reddington (2020). But-prefacing for refocusing in public talk. In <i>Communicating with the Public</i>, 87–110. Bloomsbury. <a href="https://doi.org/10.5040/9781350098213.ch-005" target="_blank" rel="noopener">DOI</a></li></ul><p class="sub">Working papers</p><ul class="pubs"><li>Choe (2025). AI as empowerment in the applied linguistics classroom. <i>HPU Working Paper Series</i>, 23, 67–72.</li><li>Choe (2024). Using AI to enhance language teaching: Introduction. <i>HPU Working Paper Series</i>, 22, 89–90.</li><li>Chang, Choe, Holden, &amp; Isbell (2022). Evaluating HELP’s writing placement rubric. <i>Second Language Studies</i>, 40(1). <a href="https://www.hawaii.edu/sls/wp-content/uploads/Chang-et-al.-2022.pdf" target="_blank" rel="noopener">PDF</a></li><li>Phung et al. (2020). The Multiʻōlelo initiative. <i>Second Language Studies</i>, 38(1). <a href="https://www.hawaii.edu/sls/wp-content/uploads/Phung-et-al.-2020.pdf" target="_blank" rel="noopener">PDF</a></li><li>Choe &amp; Reddington (2018). But-prefacing in public questioning and answering. <i>TC Columbia Working Papers</i>, 18(1), 44–50.</li><li>Choe (2016). A critical review of Pimsleur language learning programs. <i>HPU Working Paper Series</i>, 14, 108–120.</li><li>Tai &amp; Tregelles (2012). Inquiry-based learning: gender stereotypes in advertising. <i>HPU TESOL Working Paper Series</i>, 10, 107–137.</li></ul><p class="sub">Book review</p><ul class="pubs"><li>Choe (2022). Review of Roever’s <i>Teaching and Testing Second Language Pragmatics and Interaction</i>. <i>TESOL in Context</i>, 30(2), 63–67. <a href="https://doi.org/10.21153/tesol2022vol30no2art1567" target="_blank" rel="noopener">DOI</a></li></ul></article></section><section id="teaching"><h2>Teaching</h2><article><h3>Teaching philosophy</h3><p>My teaching philosophy centers on creating the optimal conditions for learning. I design interactive, project-based experiences that connect course content to students’ real-world needs and interests.</p><p>In my classroom, students are active participants - collaborating, problem-solving, and applying concepts in ways that are immediately meaningful to them. I also believe in bringing current, up-to-date knowledge into the classroom, ensuring that what we discuss reflects the latest developments in the field.</p><blockquote>“If we teach today’s students as we taught yesterday’s, we rob them of tomorrow.” - John Dewey</blockquote></article><article><h3>Courses</h3><p class="sub">University of Hawaiʻi at Mānoa <span class="muted">2019-2021, 2025-present</span></p><ul><li><b>SLS 150</b> Learning Languages and Communicating Interculturally</li><li><b>SLS 302</b> Second Language Learning</li><li><b>SLS 303</b> Second Language Teaching</li><li><b>SLS 480E</b> Language Learning with Apps</li><li><b>SLS 675</b> Second Language Qualitative Research</li><li><b>SLS 680R</b> Conversation Analysis for Human-Computer Interaction <span class="muted">next semester</span></li></ul><p class="sub">Hawaiʻi Pacific University <span class="muted">2023-2024</span></p><ul><li><b>UNIV 1000</b> First Year Success Seminar</li><li><b>AL 3500</b> Second Language Learning and Teaching</li><li><b>AL 3950</b> Language Classroom Experience</li><li><b>AL 3740</b> Technology in Language Teaching</li><li><b>AL 4710</b> Teaching Listening and Speaking</li><li><b>AL 4720</b> Teaching Reading and Writing</li><li><b>AL 4960</b> Practice Teaching</li><li><b>AL 6720</b> Second Language Reading and Writing</li><li><b>AL 6740</b> Research &amp; Issues in CALL</li><li><b>AL 6961</b> Practicum I in TESOL</li><li><b>AL 7099</b> Practicum II and Capstone</li></ul></article><article><h3>Testimonials</h3><p>Comments from student course evaluations, 2019-2026.</p><figure class="quote"><p>“The instructor’s strength is being very open, flexible, and approachable. This created a supportive learning environment where I felt comfortable participating and sharing ideas.”</p><cite>SLS 675 · Spring 2026</cite></figure><figure class="quote"><p>“The instructor encouraged a lot of critical thinking through examples, definitions, theories, and open discussions based on the readings.”</p><cite>SLS 675 · Spring 2026</cite></figure><figure class="quote"><p>“Passionate and intelligent instructor with the right amount of warmth, push, and encouragement.”</p><cite>SLS 480E · Fall 2025</cite></figure><figure class="quote"><p>“I think that the professor was very knowledgeable, gracious, flexible, open, and understanding. I wish she taught more courses, because I would take them.”</p><cite>SLS 480E · Fall 2025</cite></figure><figure class="quote"><p>“Ann Tai was the best professor and encouraged all students to challenge ideologies, apply their own perspectives, and have discussions about differing views”</p><cite>SLS 480E · Fall 2025</cite></figure><figure class="quote"><p>“She broke down the SLS theories in a digestible manner.”</p><cite>SLS 480E · Fall 2025</cite></figure><figure class="quote"><p>“She is a truly one of the best instructors I’ve had. She really pays attention to detail, it truly shocked me.”</p><cite>SLS 150 · Spring 2021</cite></figure><figure class="quote"><p>“She was always available, provided amazing feedback, and always motivated learners like me.”</p><cite>SLS 302 · Fall 2020</cite></figure><figure class="quote"><p>“Really an individual who cares. She seems to be very knowledgeable about SLS at a level much beyond this course. But she is able to use her expertise to teach us the basic things.”</p><cite>SLS 302 · Fall 2020</cite></figure><figure class="quote"><p>“There was not one class where I didn’t want to come to class. Every class was super fun and highly informational on what we were learning in each class.”</p><cite>SLS 303 · Fall 2019</cite></figure><figure class="quote"><p>“I liked how she tailored the class to each student and motivated each and every one of us to do our best and beyond.”</p><cite>SLS 303 · Fall 2019</cite></figure><figure class="quote"><p>“She made the class challenging and got me thinking in many different and creative ways.”</p><cite>SLS 303 · Fall 2019</cite></figure><figure class="quote"><p>“The instructor is really caring and helps us get the best from the materials.”</p><cite>SLS 303 · Fall 2019</cite></figure></article></section>
+<footer class="plain-foot"><p>This is the plain-text version of the same site. Everything here matches the interactive world exactly.</p></footer>
+</div></div>
+<script>(function(){if(window.__NO3D)return;var s=document.createElement("script");s.src="/world.71645cc2.js";s.defer=true;document.head.appendChild(s);})();</script>
+</body></html>
