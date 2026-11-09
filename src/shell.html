@@ -26,12 +26,13 @@ body.night .brand h1,body.night .brand p{color:#eef2ff}
 a.ib{display:inline-flex;align-items:center;text-decoration:none}
 .nav{position:fixed;left:0;right:0;bottom:22px;margin:0 auto;width:-webkit-fit-content;width:fit-content;z-index:5;display:flex;gap:7px;flex-wrap:wrap;justify-content:center;max-width:94vw;padding:8px;border-radius:22px;background:rgba(255,252,246,.72);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border:1px solid #fff;box-shadow:0 8px 28px #4d6b6a2b}
 .nav button{border:1px solid transparent;background:transparent;border-radius:999px;padding:14px 16px;font-size:13px;min-height:44px;font-weight:700;letter-spacing:.07em;color:#3f5f5c;transition:.2s}
-.nav button:hover,.nav button.on{background:var(--mint);border-color:#cfe3d9}
+.nav button:hover{background:var(--mint);border-color:#cfe3d9}
+.nav button.on{background:#2f6b5c;border-color:#2f6b5c;color:#fff}
 .tip{position:fixed;z-index:7;pointer-events:none;transform:translate(-50%,-150%);padding:9px 15px;border-radius:999px;background:#fffdf8;color:#30514e;font-size:13px;font-weight:700;letter-spacing:.07em;box-shadow:0 6px 18px #4d6b6a40;opacity:0;transition:opacity .15s}
 .tip.on{opacity:1}
 .toast{position:fixed;left:50%;top:84px;transform:translate(-50%,-14px);z-index:9;padding:10px 18px;border-radius:999px;background:#fffdf8;font-size:13px;font-weight:700;color:#50706a;box-shadow:0 8px 24px #4d6b6a33;opacity:0;pointer-events:none;transition:.25s}
 .toast.on{opacity:1;transform:translate(-50%,0)}
-.dpad{position:fixed;right:22px;bottom:96px;z-index:5;display:grid;grid-template-columns:repeat(3,48px);grid-template-rows:repeat(2,48px);gap:6px;justify-content:end}
+.dpad{position:fixed;left:0;right:0;bottom:96px;z-index:5;display:grid;grid-template-columns:repeat(3,48px);grid-template-rows:repeat(2,48px);gap:6px;width:-webkit-fit-content;width:fit-content;margin:0 auto;justify-content:center}
 .dpad button{border:1px solid #fff;background:rgba(255,252,246,.82);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);border-radius:12px;color:#5b7a77;font-size:18px;box-shadow:0 4px 14px #5b7a7722;touch-action:none}
 .dpad button:active{background:var(--mint)}
 .dpad .up{grid-column:2}.dpad .left{grid-column:1;grid-row:2}.dpad .down{grid-column:2;grid-row:2}.dpad .right{grid-column:3;grid-row:2}
@@ -74,11 +75,19 @@ body.night .panel .sub{color:#9fb2dd}body.night .panel .muted{color:#9cabce}
 body.night .panel a{color:#8fd0c0}body.night .panel a:hover{color:#a9e3d4}
 body.night .panel .links a{background:#2b3758;border-color:#3d4c78;color:#bfe3d8}
 body.night .panel .links a:hover{background:#36446a}
-body.night .panel blockquote{border-left-color:#3d4c78;background:#232e4c;color:#c6d2ee}
+body.night .panel blockquote{border-left-color:#3d4c78;background:#232e4c;color:#d7e2fb}
 .loading{position:fixed;top:0;right:0;bottom:0;left:0;inset:0;z-index:50;display:grid;place-items:center;background:#d6e7e8;letter-spacing:.2em;font-weight:700;color:#5b7a77;transition:opacity .6s}
 .loading.gone{opacity:0;pointer-events:none}
 #room-card{pointer-events:none;position:fixed;left:24px;top:76px;z-index:8;text-align:left;opacity:0;transform:translateY(-10px);transition:.45s;padding:14px 18px;border-radius:20px;background:rgba(255,253,248,.92);box-shadow:0 8px 28px #4d6b6a30;max-width:min(320px,74vw)}
 #room-card.open{opacity:1;transform:none}
+.plain-bar .tod2{margin-left:auto;width:44px;min-height:44px;padding:0;font-size:16px;flex:none}
+#room-card{padding-right:46px}
+#room-toggle{pointer-events:auto;position:absolute;top:10px;right:10px;width:32px;height:32px;border:0;border-radius:50%;background:#eaf3ee;color:#3f5f5c;font-size:15px;line-height:1;display:flex;align-items:center;justify-content:center}
+#room-toggle:before{content:"\2013"}
+#room-card.min #room-body{display:none}
+#room-card.min #room-toggle:before{content:"+"}
+#room-card.min{padding-bottom:12px}
+body.night #room-toggle{background:#2b3758;color:#cfdcff}
 #room-card h3{margin:0;font-size:18px;color:#4a6b64}#room-card p{margin:4px 0 8px;font-size:13px;color:#4f655e}#room-card small{display:block;margin-top:8px;font-size:12px;letter-spacing:.05em;color:#637771}
 #room-back{display:none;position:fixed;left:24px;top:22px;z-index:9}
 body.inroom #room-back{display:block}body.inroom .brand,body.inroom .nav,body.inroom .badge,body.inroom .hint{opacity:0;pointer-events:none}
@@ -118,8 +127,9 @@ body.night #plain h1,body.night #plain h2,body.night #plain h3{color:#eaf0ff}
 body.night #plain p,body.night #plain li,body.night .plain-head .lede{color:#c6d2ee}
 body.night #plain a{color:#8fd0c0}
 body.night .plain-nav a,body.night #plain .links a{background:#2b3758;border-color:#3d4c78;color:#bfe3d8}
-body.night #plain .quote,body.night #plain blockquote{background:#232e4c;border-left-color:#3d4c78}
-body.night #plain .sub,body.night #plain .quote cite{color:#9fb2dd}
+body.night #plain .quote,body.night #plain blockquote{background:#232e4c;border-left-color:#3d4c78;color:#d7e2fb}
+body.night #plain .quote p,body.night #plain blockquote p{color:#d7e2fb}
+body.night #plain .sub,body.night #plain .quote cite{color:#a9bbe4}
 body.night #plain .muted,body.night .plain-foot p{color:#9cabce}
 body.night #plain h2{border-bottom-color:#2d3a5e}
 body.no3d .plain-bar .ib,body.no3d .tools,body.no3d .brand,body.no3d .nav,body.no3d .dpad,body.no3d .hint,body.no3d .badge,body.no3d #room-back{display:none!important}
@@ -140,10 +150,11 @@ body.night .ib{background:rgba(40,53,86,.84);border-color:#46588c;color:#d5e0fa}
 body.night .ib:hover{background:#35416c}
 body.night .nav{background:rgba(30,40,66,.8);border-color:#46588c}
 body.night .nav button{color:#ccd9f6}
-body.night .nav button:hover,body.night .nav button.on{background:#3b537f;border-color:#4c6095}
+body.night .nav button:hover{background:#3b537f;border-color:#4c6095}
+body.night .nav button.on{background:#8ad3c0;border-color:#8ad3c0;color:#12233d}
 body.night .dpad button{background:rgba(40,53,86,.84);border-color:#46588c;color:#d5e0fa}
 body.night .dpad button:active{background:#4b69a9}
-@media(max-width:700px){.hint,.badge{display:none}#room-card{left:12px;top:64px;padding:10px 13px;max-width:62vw}#room-card h3{font-size:15px}#room-card small{display:none}.dpad{right:10px;bottom:104px;grid-template-columns:repeat(3,46px);grid-template-rows:repeat(2,46px);gap:5px}.toast{top:70px;font-size:13px}.nav{flex-wrap:nowrap;overflow-x:auto;justify-content:flex-start;width:94vw;max-width:94vw;bottom:14px;border-radius:18px}.nav button{padding:13px 13px;font-size:12px;min-height:44px;white-space:nowrap}.brand{top:14px;left:16px;max-width:52vw}.brand h1{font-size:15px;letter-spacing:.14em}.brand p{font-size:10px;margin-top:3px}.tools{top:12px;right:12px}#classic{font-size:0}#classic:before{content:'≡';font-size:18px}}
+@media(max-width:700px){.hint,.badge{display:none}#room-card{left:12px;right:12px;top:72px;padding:12px 15px;max-width:none;width:auto}#room-card h3{font-size:16px}#room-card small{display:none}#room-card .tags{display:flex;flex-wrap:wrap;gap:6px}.dpad{bottom:104px;grid-template-columns:repeat(3,46px);grid-template-rows:repeat(2,46px);gap:5px}.toast{top:70px;font-size:13px}.nav{flex-wrap:nowrap;overflow-x:auto;justify-content:flex-start;width:94vw;max-width:94vw;bottom:14px;border-radius:18px}.nav button{padding:13px 13px;font-size:12px;min-height:44px;white-space:nowrap}.brand{top:14px;left:16px;max-width:52vw}.brand h1{font-size:15px;letter-spacing:.14em}.brand p{font-size:10px;margin-top:3px}.tools{top:12px;right:12px}#classic{font-size:0}#classic:before{content:'≡';font-size:18px}}
 @media(max-width:430px){
   .brand{max-width:42vw}
   .brand h1{font-size:14px;letter-spacing:.09em;line-height:1.3}
@@ -169,6 +180,7 @@ body.night .dpad button:active{background:#4b69a9}
 <noscript><style>#plain{display:block!important}canvas,.brand,.tools,.nav,.dpad,.hint,.badge,.loading,#room-back,.panel,.scrim{display:none!important}.plain-bar .ib{display:none}</style></noscript>
 <canvas id="c" aria-label="Interactive isometric island portfolio" role="img"></canvas>
 <div class="loading" id="loading">LOADING ANN'S WEBSITE…</div>
+<script>(function(){try{var t=localStorage.getItem('theme');var d=t?t==='night':matchMedia('(prefers-color-scheme: dark)').matches;window.__theme=d;if(d)document.body.classList.add('night');}catch(e){}})();</script>
 <script>(function(){var ok=false;try{var c=document.createElement('canvas');ok=!!(window.WebGL2RenderingContext&&c.getContext('webgl2'));}catch(e){}
 if(!ok){window.__NO3D=1;document.body.classList.add('plain','no3d');var l=document.getElementById('loading');if(l)l.className='loading gone';}})();</script>
 <header class="brand"><h1>ANN TAI CHOE, PhD</h1><p>welcome to my website</p></header>
@@ -182,12 +194,11 @@ if(!ok){window.__NO3D=1;document.body.classList.add('plain','no3d');var l=docume
   <button class="left" data-move="left" aria-label="Move left">←</button>
   <button class="down" data-move="down" aria-label="Move down">↓</button>
   <button class="right" data-move="right" aria-label="Move right">→</button>
-  <small>WALK</small>
-</div>
+  </div>
 <div class="scrim" id="scrim" aria-hidden="true"></div>
 <aside class="panel" id="panel" role="dialog" aria-modal="true" aria-labelledby="p-title" aria-hidden="true" aria-live="polite"><button class="x" id="p-close" aria-label="Close">×</button><div class="eye" id="p-eye"></div><h2 id="p-title"></h2><div id="p-body"></div></aside>
 <button class="ib" id="room-back">← Back to island</button>
-<div id="room-card"><h3 id="room-title"></h3><p id="room-sub"></p><div class="tags" id="room-tags" style="margin:0"></div><small>Arrows to walk · space to jump · drag to look around</small></div>
+<div id="room-card"><button id="room-toggle" aria-expanded="true" aria-controls="room-body" aria-label="Collapse details"></button><h3 id="room-title"></h3><div id="room-body"><p id="room-sub"></p><div class="tags" id="room-tags" style="margin:0"></div><small>Arrows to walk · space to jump · drag to look around</small></div></div>
 <div id="plain"><button class="ib" onclick="document.body.classList.remove('plain')">← Back to the world</button>
 <h1>Ann T. Choe, PhD</h1><section><h2>About</h2><p>Applied linguist, conversation designer and builder.</p></section><section><h2>Qualifications</h2><ul><li>Experience: NVIDIA, JumpstartAI, Duolingo English Test</li><li>Education &amp; credentials</li></ul></section><section><h2>Projects</h2><ul><li>GOALL</li><li>UX &amp; CxD</li><li>Tangle with Ann</li></ul></section><section><h2>Research</h2><p>Publications, chapters, working papers.</p></section><section><h2>Teaching</h2><p>Philosophy and courses.</p></section><p><small>Every page of the world also exists as plain, crawlable HTML - this is the fallback for screen readers, search engines and slow devices.</small></p></div>
 <script>/*BUNDLE*/</script>

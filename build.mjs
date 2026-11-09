@@ -54,7 +54,7 @@ function classicInner(href, current, backHref) {
     ? '<section id="' + current + '">' + SECTIONS.find(s => s.id === current).keys.map(k => block(k, 2)).join('') + '</section>'
     : SECTIONS.map(s => '<section id="' + s.id + '"><h2>' + s.h + '</h2>' + s.keys.map(k => block(k, 3)).join('') + '</section>').join('');
   return `<div id="plain"><div class="plain-wrap">
-<div class="plain-bar">${back}<nav class="plain-nav" aria-label="Sections">${navHtml(href, current)}</nav></div>
+<div class="plain-bar">${back}<nav class="plain-nav" aria-label="Sections">${navHtml(href, current)}</nav><button class="ib tod2" id="tod2" aria-pressed="false" aria-label="Toggle dark mode" hidden></button></div>
 ${head}
 ${body}
 <footer class="plain-foot"><p>This is the plain-text version of the same site. Everything here matches the interactive world exactly.</p></footer>
@@ -111,7 +111,7 @@ ${FONTS}
 <style>${STYLE}</style></head>
 <body class="plain">
 ${classicInner(x => '/' + x.id + '/', s.id, '/')}
-<script>try{if(matchMedia('(prefers-color-scheme: dark)').matches)document.body.classList.add('night')}catch(e){}</script>
+<script>(function(){try{var t=localStorage.getItem('theme');var d=t?t==='night':matchMedia('(prefers-color-scheme: dark)').matches;if(d)document.body.classList.add('night');var b=document.getElementById('tod2');if(!b)return;b.hidden=false;var p=function(){b.textContent=document.body.classList.contains('night')?'\u2600':'\u263e';b.setAttribute('aria-pressed',document.body.classList.contains('night'));};p();b.addEventListener('click',function(){var n=document.body.classList.toggle('night');try{localStorage.setItem('theme',n?'night':'day');}catch(e){}p();});}catch(e){}})();</script>
 </body></html>`;
 
 for (const s of SECTIONS) {

@@ -818,8 +818,21 @@ addEventListener('keydown', e => {
   if (e.key === 'Escape') { if (panelOpen) closePanel(); else if (view === 'room') exitRoom(); }
 });
 
+/* ============ room card collapse ============ */
+function setRoomToggleLabel() {
+  const card = document.getElementById('room-card'), b = document.getElementById('room-toggle');
+  const min = card.classList.contains('min');
+  b.setAttribute('aria-expanded', String(!min));
+  b.setAttribute('aria-label', min ? 'Show details' : 'Hide details');
+}
+document.getElementById('room-toggle').addEventListener('click', e => {
+  e.stopPropagation();
+  document.getElementById('room-card').classList.toggle('min');
+  setRoomToggleLabel();
+});
+
 /* ============ day / night ============ */
-let night = false, nightK = 0;
+let night = !!window.__theme, nightK = night ? 1 : 0;
 const cSky = new THREE.Color(), cA = new THREE.Color(), cB = new THREE.Color();
 function applyTime(k) {
   if (view === 'room') { skyScene.background.set(activeRoom && rooms[activeRoom] ? rooms[activeRoom].bg : 0xfadfd0).lerp(cA.set(0x2b2444), k); hemi.color.set(0xfff6ee).lerp(cA.set(0xc3bdf3), k); hemi.groundColor.set(0xf3d2b4).lerp(cA.set(0x6a5c9e), k); hemi.intensity = 1.95 - k * 0.5; sun.intensity = 1.3 - k * 0.6;
@@ -835,7 +848,18 @@ function applyTime(k) {
   moonMat.opacity = k; haloMat.opacity = k * 0.16; starMat.opacity = k * 0.9; arcMat.opacity = Math.max(0, k * 1.8 - 0.8);
   document.body.classList.toggle('night', k > 0.5);
 }
-document.getElementById('tod').addEventListener('click', () => { night = !night; document.getElementById('tod').textContent = night ? '☀' : '☾'; document.getElementById('tod').setAttribute('aria-pressed', night); });
+(function(){ const tod = document.getElementById('tod');
+  const paint = () => { tod.textContent = night ? '☀' : '☾'; tod.setAttribute('aria-pressed', night); };
+  paint();
+  const set = v => { night = v; paint();
+    try { localStorage.setItem('theme', night ? 'night' : 'day'); } catch (e) {} };
+  tod.addEventListener('click', () => set(!night));
+  const tod2 = document.getElementById('tod2');
+  if (tod2) { tod2.hidden = false;
+    const paint2 = () => { tod2.textContent = night ? '☀' : '☾'; tod2.setAttribute('aria-pressed', night); };
+    paint2(); tod2.addEventListener('click', () => { set(!night); paint2(); });
+    tod.addEventListener('click', paint2); }
+})();
 
 /* ============ interiors: one walkable cutaway room per building ============ */
 const ROOM_Y = -60, ROOM_LIM = 4.05, HIP = 0.52;
@@ -1260,7 +1284,10 @@ function enterRoom(key) {
   document.getElementById('room-title').textContent = rooms[key].title;
   document.getElementById('room-sub').textContent = rooms[key].sub;
   document.getElementById('room-tags').innerHTML = rooms[key].tags.map(t => '<span>' + t + '</span>').join('');
-  document.getElementById('room-card').classList.add('open');
+  const card = document.getElementById('room-card');
+  card.classList.toggle('min', innerWidth <= 700);
+  setRoomToggleLabel();
+  card.classList.add('open');
 }
 function exitRoom() {
   closePanel(); seated = null; roomAnn.userData.sit = 0;

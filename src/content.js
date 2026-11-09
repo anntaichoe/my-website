@@ -63,8 +63,8 @@ export const INFO = {
       + UL([
         'Choe (2025). AI as empowerment in the applied linguistics classroom. <i>HPU Working Paper Series</i>, 23, 67–72.',
         'Choe (2024). Using AI to enhance language teaching: Introduction. <i>HPU Working Paper Series</i>, 22, 89–90.',
-        'Chang, Choe, Holden, &amp; Isbell (2022). Evaluating HELP’s writing placement rubric. <i>Second Language Studies</i>, 40(1). ' + A('https://www.hawaii.edu/sls/wp-content/uploads/Chang-et-al.-2022.pdf', 'PDF'),
-        'Phung et al. (2020). The Multiʻōlelo initiative. <i>Second Language Studies</i>, 38(1). ' + A('https://www.hawaii.edu/sls/wp-content/uploads/Phung-et-al.-2020.pdf', 'PDF'),
+        'Chang, Choe, Holden, &amp; Isbell (2022). Evaluating HELP’s writing placement rubric. <i>Second Language Studies</i>, 40(1).',
+        'Phung et al. (2020). The Multiʻōlelo initiative. <i>Second Language Studies</i>, 38(1).',
         'Choe &amp; Reddington (2018). But-prefacing in public questioning and answering. <i>TC Columbia Working Papers</i>, 18(1), 44–50.',
         'Choe (2016). A critical review of Pimsleur language learning programs. <i>HPU Working Paper Series</i>, 14, 108–120.',
         'Tai &amp; Tregelles (2012). Inquiry-based learning: gender stereotypes in advertising. <i>HPU TESOL Working Paper Series</i>, 10, 107–137.'
