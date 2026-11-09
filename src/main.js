@@ -129,7 +129,7 @@ const P = {
   school: new THREE.Vector3(1, 0, -6.5),        // teaching
   museum: new THREE.Vector3(10.5, 0, -3.5),     // projects
   dome: new THREE.Vector3(1.5, 0, 2.5),         // qualifications
-  court: new THREE.Vector3(10.5, 0, 5.2),       // pickleball
+  court: new THREE.Vector3(10.5, 0, 5.2),
   phone: new THREE.Vector3(5.9, 0, -4.7),       // decorative phone booth
 };
 const doors = {
@@ -263,8 +263,7 @@ function court() {
     const pl = new THREE.PointLight(0xfff0c4, 0, 17, 1.4); pl.position.set(lx, 3.6, lz + 0.3); g.add(pl);
     nightLights.push({ l: pl, power: 20 });
   }
-  interactive.push({ key: 'court', group: g, label: 'PICKLEBALL', hit: new THREE.Vector3(0, 0.6, 0), r: 3.4 });
-  court.group = g;
+  mergeStatic(g, g);   // scenery only - no label, not clickable
 }
 
 function phoneBooth() {
@@ -583,7 +582,7 @@ function makeCapy() {
   clickables.push({ obj: koala, label: 'A KOALA?', fn: () => { hearts(koala.position, 2); toastMsg('A koala in Hawaii? Don\u2019t ask. \u2661'); } });
   clickables.push({ obj: capy, label: 'A CAPYBARA?', fn: () => { hearts(capy.position, 2); toastMsg('The capybara is unbothered, as always.'); } });
 }
-/* ---------- loose pickleballs you can bounce ---------- */
+/* ---------- loose balls you can bounce ---------- */
 const looseBalls = [];
 [[9.2, 7.3], [11.6, 7.1], [12.8, 3.1]].forEach(([x, z]) => {
   const m = new THREE.Mesh(ico(0.17, 1), mat(0xfff06b, { emissive: 0xffe34f, emissiveIntensity: 0.2 }));
@@ -750,6 +749,7 @@ canvas.addEventListener('pointermove', ev => {
   if (panelOpen || (view !== 'island' && view !== 'room')) return;
   const h = pick(ev); setHover(h); if (h) { tip.style.left = ev.clientX + 'px'; tip.style.top = ev.clientY + 'px'; }
 });
+canvas.addEventListener('pointerdown', () => stopGoPulse());
 canvas.addEventListener('click', ev => {
   if (panelOpen) return;
   const h = pick(ev);
@@ -791,9 +791,29 @@ function closePanel() { panel.classList.remove('open'); panelOpen = false; panel
   if (view === 'island') { camGoal.set(0, 0, 0); zoomGoal = 1; } current = null; }
 document.getElementById('p-close').addEventListener('click', closePanel);
 document.getElementById('scrim').addEventListener('pointerdown', closePanel);
-function go(key) { closePanel(); const target = key; const node = key; setHover(null); tip.classList.remove('on'); walkTo(node, () => openPanel(target)); document.querySelectorAll('[data-go]').forEach(b => b.classList.toggle('on', b.dataset.go === key)); }
+function go(key) {
+  // highlight before anything heavy runs, so the press registers immediately
+  document.querySelectorAll('[data-go]').forEach(b => {
+    const on = b.dataset.go === key;
+    b.classList.toggle('on', on); b.classList.toggle('going', on);
+  });
+  const act = document.querySelector('.nav button.on');
+  if (act && act.scrollIntoView) {
+    try { act.scrollIntoView({ inline: 'center', block: 'nearest', behavior: 'smooth' }); }
+    catch (e) { act.scrollIntoView(); }
+  }
+  closePanel(); setHover(null); tip.classList.remove('on');
+  clearTimeout(goPulseT);
+  goPulseT = setTimeout(stopGoPulse, 4000);   // never leave it pulsing if the walk is interrupted
+  walkTo(key, () => { stopGoPulse(); openPanel(key); });
+}
+let goPulseT = 0;
+function stopGoPulse() {
+  clearTimeout(goPulseT);
+  document.querySelectorAll('[data-go].going').forEach(b => b.classList.remove('going'));
+}
 
-/* ---------- the court's paddle rack (decoration) ---------- */
+/* ---------- the paddle rack (decoration) ---------- */
 function paddleMesh(faceC) {
   const g = new THREE.Group();
   add(g, cyl(0.23, 0.23, 0.04, 18), mat(faceC), 0, 0.27, 0, { rx: Math.PI / 2 });

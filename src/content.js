@@ -5,7 +5,6 @@ export const CONTENT = {
   museum: { eye: '03 / PROJECTS', title: 'The Project Museum', body: '<p>One gallery per project. Walk in and pick an exhibit.</p>', list: ['GOALL - Chinese reading app', 'UX &amp; conversation design', 'Tangle with Ann - Zendala course'], cta: 'Step inside the museum', room: true },
   library: { eye: '04 / RESEARCH', title: 'The Research Library', body: '<p>Conversation analysis, second language learning, and human\u2013AI interaction.</p>', list: ['10 peer-reviewed articles', '4 chapters &amp; proceedings', '7 working papers', '1 book review'], cta: 'Step inside the library', room: true },
   school: { eye: '05 / TEACHING', title: 'The University', body: '<p>Teaching philosophy and seventeen courses across two universities.</p>', list: ['UH M\u0101noa \u00b7 6 courses', 'Hawai\u02bbi Pacific University \u00b7 11 courses'], cta: 'Step inside the university', room: true },
-  court: { eye: '06 / PLAY', title: 'The pickleball court', body: '<p>Of course there is a pickleball court. It is here because I like it, not because it proves anything.</p><p class="muted">Try clicking the loose balls on the grass.</p>', list: [] },
 };
 /* ============ site content ============ */
 const L = {
@@ -90,7 +89,7 @@ export const INFO = {
             '<b>SLS 303</b> Second Language Teaching',
             '<b>SLS 480E</b> Language Learning with Apps',
             '<b>SLS 675</b> Second Language Qualitative Research',
-            '<b>SLS 680R</b> Conversation Analysis for Human-Computer Interaction <span class="muted">next semester</span>'])
+            '<b>SLS 680R</b> Conversation Analysis for Human-Computer Interaction'])
       + H('Hawai\u02bbi Pacific University <span class="muted">2023-2024</span>')
       + UL(['<b>UNIV 1000</b> First Year Success Seminar',
             '<b>AL 3500</b> Second Language Learning and Teaching',
