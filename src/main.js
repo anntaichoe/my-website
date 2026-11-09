@@ -1084,7 +1084,7 @@ function computer(R, x, y, z, ry) {
 
 /* ---- 02 RESEARCH: the library ---- */
 {
-  const R = newRoom('library', { bg: 0xe3eedb, title: 'Research', sub: 'The library · publications & questions', tags: ['Conversation Analysis', 'Human-AI interaction', 'L2 learning'],
+  const R = newRoom('library', { bg: 0xe3eedb, title: 'Research', sub: 'The library · publications & interests', tags: ['Conversation Analysis', 'Human-AI interaction', 'L2 learning'],
     floor: 0xdcb98a, wallA: 0xeef5e6, wallB: 0xe5efdc, trim: 0xc39862, beam: 0x97b085, windowAt: 2.4, start: new THREE.Vector3(1.4, 0, 2.2) });
   rug(R, 0.2, 0.9, 5.2, 4.0, 0xeee6d2, 0x8aa47c, 0xc9b98f);
   const bookCols = [0x9ccf8f, 0xf2c3d2, 0xc8c0ee, 0xf3d9a4, 0xa9d4ee, 0xe8b9a0];

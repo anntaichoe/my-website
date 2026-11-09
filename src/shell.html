@@ -94,7 +94,7 @@ body.night .panel blockquote{border-left-color:#3d4c78;background:#232e4c;color:
 #room-card.min #room-toggle:before{content:"+"}
 #room-card.min{padding-bottom:12px}
 body.night #room-toggle{background:#2b3758;color:#cfdcff}
-#room-card h3{margin:0;font-size:18px;color:#4a6b64}#room-card p{margin:4px 0 8px;font-size:13px;color:#4f655e}#room-card small{display:block;margin-top:8px;font-size:12px;letter-spacing:.05em;color:#637771}
+#room-card h3{margin:0;font-size:18px;color:#4a6b64}#room-card p{margin:4px 0 8px;font-size:13px;color:#4f655e}
 #room-back{display:none;position:fixed;left:24px;top:22px;z-index:9}
 body.inroom #room-back{display:block}body.inroom .brand,body.inroom .nav,body.inroom .badge,body.inroom .hint{opacity:0;pointer-events:none}
 body.inroom{background:#fadfd0}
@@ -149,7 +149,7 @@ body.night .btn{background:#3b537f;color:#e0e9ff}body.night .btn:hover{backgroun
 body.night .note{color:#9cabce}body.night .rally{background:#2b3758}
 body.night .scrim{background:rgba(6,11,28,.42)}
 body.night #room-card{background:rgba(30,40,66,.93)}
-body.night #room-card h3{color:#eaf0ff}body.night #room-card p,body.night #room-card small{color:#aebfe3}
+body.night #room-card h3{color:#eaf0ff}body.night #room-card p,body.night 
 body.night .toast{background:#283457;color:#e0e9ff;box-shadow:0 8px 24px #070d2255}
 body.night .hint{background:rgba(30,40,66,.93);color:#ccd8f3}body.night .hint b{color:#eaf0ff}
 body.night .ib{background:rgba(40,53,86,.84);border-color:#46588c;color:#d5e0fa}
@@ -160,7 +160,7 @@ body.night .nav button:hover{background:#3b537f;border-color:#4c6095}
 body.night .nav button.on{background:#8ad3c0;border-color:#8ad3c0;color:#12233d}
 body.night .dpad button{background:rgba(40,53,86,.84);border-color:#46588c;color:#d5e0fa}
 body.night .dpad button:active{background:#4b69a9}
-@media(max-width:700px){.hint,.badge{display:none}#room-card{left:12px;right:12px;top:72px;padding:12px 15px;max-width:none;width:auto}#room-card h3{font-size:16px}#room-card small{display:none}#room-card .tags{display:flex;flex-wrap:wrap;gap:6px}.dpad{bottom:104px;grid-template-columns:repeat(3,46px);grid-template-rows:repeat(2,46px);gap:5px}.toast{top:70px;font-size:13px}.nav{flex-wrap:nowrap;overflow-x:auto;justify-content:flex-start;width:94vw;max-width:94vw;bottom:14px;border-radius:18px}.nav button{padding:13px 13px;font-size:12px;min-height:44px;white-space:nowrap}.brand{top:14px;left:16px;max-width:52vw}.brand h1{font-size:15px;letter-spacing:.14em}.brand p{font-size:10px;margin-top:3px}.tools{top:12px;right:12px}#classic{font-size:0}#classic:before{content:'≡';font-size:18px}}
+@media(max-width:700px){.hint,.badge{display:none}#room-card{left:12px;right:12px;top:72px;padding:12px 15px;max-width:none;width:auto}#room-card h3{font-size:16px}#room-card .tags{display:flex;flex-wrap:wrap;gap:6px}.dpad{bottom:104px;grid-template-columns:repeat(3,46px);grid-template-rows:repeat(2,46px);gap:5px}.toast{top:70px;font-size:13px}.nav{flex-wrap:nowrap;overflow-x:auto;justify-content:flex-start;width:94vw;max-width:94vw;bottom:14px;border-radius:18px}.nav button{padding:13px 13px;font-size:12px;min-height:44px;white-space:nowrap}.brand{top:14px;left:16px;max-width:52vw}.brand h1{font-size:15px;letter-spacing:.14em}.brand p{font-size:10px;margin-top:3px}.tools{top:12px;right:12px}#classic{font-size:0}#classic:before{content:'≡';font-size:18px}}
 @media(max-width:430px){
   .brand{max-width:42vw}
   .brand h1{font-size:14px;letter-spacing:.09em;line-height:1.3}
@@ -204,7 +204,7 @@ if(!ok){window.__NO3D=1;document.body.classList.add('plain','no3d');var l=docume
 <div class="scrim" id="scrim" aria-hidden="true"></div>
 <aside class="panel" id="panel" role="dialog" aria-modal="true" aria-labelledby="p-title" aria-hidden="true" aria-live="polite"><button class="x" id="p-close" aria-label="Close">×</button><div class="eye" id="p-eye"></div><h2 id="p-title"></h2><div id="p-body"></div></aside>
 <button class="ib" id="room-back">← Back to island</button>
-<div id="room-card"><button id="room-toggle" aria-expanded="true" aria-controls="room-body" aria-label="Collapse details"></button><h3 id="room-title"></h3><div id="room-body"><p id="room-sub"></p><div class="tags" id="room-tags" style="margin:0"></div><small>Arrows to walk · space to jump · drag to look around</small></div></div>
+<div id="room-card"><button id="room-toggle" aria-expanded="true" aria-controls="room-body" aria-label="Collapse details"></button><h3 id="room-title"></h3><div id="room-body"><p id="room-sub"></p><div class="tags" id="room-tags" style="margin:0"></div></div></div>
 <div id="plain"><button class="ib" onclick="document.body.classList.remove('plain')">← Back to the world</button>
 <h1>Ann T. Choe, PhD</h1><section><h2>About</h2><p>Applied linguist, conversation designer and builder.</p></section><section><h2>Qualifications</h2><ul><li>Experience: NVIDIA, JumpstartAI, Duolingo English Test</li><li>Education &amp; credentials</li></ul></section><section><h2>Projects</h2><ul><li>GOALL</li><li>UX &amp; CxD</li><li>Tangle with Ann</li></ul></section><section><h2>Research</h2><p>Publications, chapters, working papers.</p></section><section><h2>Teaching</h2><p>Philosophy and courses.</p></section><p><small>Every page of the world also exists as plain, crawlable HTML - this is the fallback for screen readers, search engines and slow devices.</small></p></div>
 <script>/*BUNDLE*/</script>
