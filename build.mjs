@@ -11,7 +11,7 @@ const SECTIONS = [
     desc: 'Ann T. Choe, PhD - applied linguist with a technology focus, working on conversation design, generative AI and product design.' },
   { id: 'qualifications', h: 'Qualifications', keys: ['dome_desk', 'dome_diplomas', 'dome_certs', 'dome_awards'],
     desc: 'Work experience at NVIDIA, JumpstartAI and Duolingo English Test, three degrees, certifications, grants and awards.' },
-  { id: 'projects', h: 'Projects', keys: ['mus_one', 'mus_two', 'mus_three'],
+  { id: 'projects', h: 'Projects', keys: ['mus_one', 'mus_two', 'mus_three', 'mus_four'],
     desc: 'GOALL, a Chinese reading app; UX and conversation design work; and Tangle with Ann, a Zendala course.' },
   { id: 'research', h: 'Research', keys: ['lib_papers', 'lib_shelves'],
     desc: 'Conversation analysis, second language learning and human-AI interaction: peer-reviewed articles, chapters and working papers.' },

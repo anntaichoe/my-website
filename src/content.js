@@ -2,7 +2,7 @@
 export const CONTENT = {
   home: { eye: '01 / HOME', title: 'About me', body: '<p>Applied linguist with a technology focus. I design and build things that improve how people and machines talk to each other.</p>', tags: ['Conversation Design', 'Generative AI', 'Product Design', 'Applied Linguistics', 'UX Design', 'Conversation Analysis', 'Mandarin Chinese', 'Korean'], list: ['Generative AI Analyst', 'Conversation Designer', 'Product Designer', 'Applied Linguistics Researcher'], cta: 'Step inside the cottage', room: true },
   dome: { eye: '02 / QUALIFICATIONS', title: 'The Glass Conservatory', body: '<p>Experience, education, credentials, grants and awards.</p>', list: ['NVIDIA \u00b7 JumpstartAI \u00b7 Duolingo English Test', 'PhD, EdM, MA', '3 certifications', '4 grants, 12 awards'], cta: 'Step inside the conservatory', room: true },
-  museum: { eye: '03 / PROJECTS', title: 'The Project Museum', body: '<p>One gallery per project. Walk in and pick an exhibit.</p>', list: ['GOALL - Chinese reading app', 'UX &amp; conversation design', 'Tangle with Ann - Zendala course'], cta: 'Step inside the museum', room: true },
+  museum: { eye: '03 / PROJECTS', title: 'The Project Museum', body: '<p>One gallery per project. Walk in and pick an exhibit.</p>', list: ['GOALL - Chinese reading app', 'UX &amp; conversation design', 'Tangle with Ann - Zendala course', 'Vibecoding 101 - instructional design'], cta: 'Step inside the museum', room: true },
   library: { eye: '04 / RESEARCH', title: 'The Research Library', body: '<p>Conversation analysis, second language learning, and human\u2013AI interaction.</p>', list: ['10 peer-reviewed articles', '4 chapters &amp; proceedings', '7 working papers', '1 book review'], cta: 'Step inside the library', room: true },
   school: { eye: '05 / TEACHING', title: 'The University', body: '<p>Teaching philosophy and seventeen courses across two universities.</p>', list: ['UH M\u0101noa \u00b7 6 courses', 'Hawai\u02bbi Pacific University \u00b7 11 courses'], cta: 'Step inside the university', room: true },
 };
@@ -14,7 +14,8 @@ const L = {
   scholar: 'https://scholar.google.com/citations?user=m7vYqyEAAAAJ&hl=en',
   rgate: 'https://www.researchgate.net/profile/Ann-Choe/research',
   goall: 'https://www.goall.app/',
-  zendala: 'https://www.annadenning.com/zendala-drawing-course'
+  zendala: 'https://www.annadenning.com/zendala-drawing-course',
+  vibecoding: 'https://anntaichoe.github.io/vibecoding101/'
 };
 const A = (href, text) => '<a href="' + href + '" target="_blank" rel="noopener">' + text + '</a>';
 const UL = (items, cls) => '<ul' + (cls ? ' class="' + cls + '"' : '') + '>' + items.map(i => '<li>' + i + '</li>').join('') + '</ul>';
@@ -130,6 +131,10 @@ export const INFO = {
   mus_three: { eye: 'PROJECTS', title: 'Tangle with Ann',
     body: '<p>A ten-lesson online course on Zentangle and Zendala, designed and taught as a certified Zentangle teacher.</p>'
       + '<p class="links">' + A(L.zendala, 'Take the course') + '</p>', list: [] },
+
+  mus_four: { eye: 'PROJECTS', title: 'Vibecoding 101',
+    body: '<p>A website built for teaching beginners the basic concepts of vibecoding \u2014 building software by describing what you want to an AI rather than writing the code yourself.</p>'
+      + '<p class="links">' + A(L.vibecoding, 'Open Vibecoding 101') + '</p>', list: [] },
 
   /* --- conservatory: qualifications --- */
   dome_certs: { eye: 'QUALIFICATIONS · CERTIFICATES', title: 'Credentials',

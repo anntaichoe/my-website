@@ -1173,7 +1173,7 @@ function computer(R, x, y, z, ry) {
 
 /* ---- 04 PROJECTS: the museum ---- */
 {
-  const R = newRoom('museum', { bg: 0xf7f0e2, title: 'Projects', sub: 'The museum · one gallery per project', tags: ['GOALL', 'UX & CxD', 'Tangle with Ann'],
+  const R = newRoom('museum', { bg: 0xf7f0e2, title: 'Projects', sub: 'The museum · one gallery per project', tags: ['GOALL', 'UX & CxD', 'Tangle with Ann', 'Instructional design'],
     floor: 0xdcd3c4, wallA: 0xfbf4e6, wallB: 0xf4ece0, trim: 0xd8c9ae, beam: 0xa99be0, windowAt: 3.2, start: new THREE.Vector3(1.4, 0, 2.8) });
   add(R, box(9.6, 0.05, 9.6), mat(0xe8e1d4), 0, 0.03, 0, { cast: false });
   // flat, framed artwork - no shapes poking out of the canvas
@@ -1206,6 +1206,7 @@ function computer(R, x, y, z, ry) {
   spot('museum', -2.4, 2.2, -1.4, 'GOALL', INFO.mus_one);
   spot('museum', 0.3, 2.25, -1.0, 'UX & CxD', INFO.mus_two);
   spot('museum', 2.9, 2.2, -1.4, 'TANGLE WITH ANN', INFO.mus_three);
+  spot('museum', -2.6, 3.1, -4.3, 'INSTRUCTIONAL DESIGN', INFO.mus_four);   // on the left painting
 }
 
 /* ---- 05 QUALIFICATIONS: the conservatory office ---- */
