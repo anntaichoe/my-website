@@ -1206,7 +1206,7 @@ function computer(R, x, y, z, ry) {
   spot('museum', -2.4, 2.2, -1.4, 'GOALL', INFO.mus_one);
   spot('museum', 0.3, 2.25, -1.0, 'UX & CxD', INFO.mus_two);
   spot('museum', 2.9, 2.2, -1.4, 'TANGLE WITH ANN', INFO.mus_three);
-  spot('museum', -2.6, 3.1, -4.3, 'INSTRUCTIONAL DESIGN', INFO.mus_four);   // on the left painting
+  spot('museum', -2.6, 3.1, -4.3, 'VIBECODING 101', INFO.mus_four);   // on the left painting
 }
 
 /* ---- 05 QUALIFICATIONS: the conservatory office ---- */
