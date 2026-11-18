@@ -54,7 +54,7 @@ export const INFO = {
       ], 'pubs')
       + H('Book chapters &amp; proceedings')
       + UL([
-        'Isbell et al. (2027). Investigating Duolingo English Test washback. In <i>The Routledge Handbook of Digital Language Assessment</i>, 287–305.',
+        'Isbell et al. (2026). Investigating Duolingo English Test washback: A focus on test preparation activities. In <i>The Routledge Handbook of Digital Language Assessment</i>, 286–305. Routledge.',
         'Wang et al. (in review). Multiʻōlelo’s legacy and future. Cambridge University Press.',
         'Choe &amp; Yagi (2022). Embodied remembering in coordinated performances. <i>Proceedings of the 5th CAN-Asia Symposium on L2 Interaction</i>, 45–55.',
         'Choe &amp; Reddington (2020). But-prefacing for refocusing in public talk. In <i>Communicating with the Public</i>, 87–110. Bloomsbury. ' + A('https://doi.org/10.5040/9781350098213.ch-005', 'DOI')
