@@ -1,7 +1,7 @@
 /* Single source of truth for the 3D panels AND the classic view. */
 export const CONTENT = {
   home: { eye: '01 / HOME', title: 'About me', body: '<p>Applied linguist with a technology focus. I design and build things that improve how people and machines talk to each other.</p>', tags: ['Conversation Design', 'Generative AI', 'Product Design', 'Applied Linguistics', 'UX Design', 'Conversation Analysis', 'Mandarin Chinese', 'Korean'], list: ['Generative AI Analyst', 'Conversation Designer', 'Product Designer', 'Applied Linguistics Researcher'], cta: 'Step inside the cottage', room: true },
-  dome: { eye: '02 / QUALIFICATIONS', title: 'The Glass Conservatory', body: '<p>Experience, education, credentials, grants and awards.</p>', list: ['NVIDIA \u00b7 JumpstartAI \u00b7 Duolingo English Test', 'PhD, EdM, MA', '3 certifications', '4 grants, 12 awards'], cta: 'Step inside the conservatory', room: true },
+  dome: { eye: '02 / QUALIFICATIONS', title: 'The Glass Conservatory', body: '<p>Experience, education, credentials, grants and awards.</p>', list: ['NVIDIA \u00b7 JumpstartAI \u00b7 Duolingo English Test', 'PhD, EdM, MA', '3 certifications', '4 grants, 13 awards'], cta: 'Step inside the conservatory', room: true },
   museum: { eye: '03 / PROJECTS', title: 'The Project Museum', body: '<p>One gallery per project. Walk in and pick an exhibit.</p>', list: ['GOALL - Chinese reading app', 'UX &amp; conversation design', 'Tangle with Ann - Zendala course', 'Vibecoding 101 - instructional design'], cta: 'Step inside the museum', room: true },
   library: { eye: '04 / RESEARCH', title: 'The Research Library', body: '<p>Conversation analysis, second language learning, and human\u2013AI interaction.</p>', list: ['10 peer-reviewed articles', '4 chapters &amp; proceedings', '7 working papers', '1 book review'], cta: 'Step inside the library', room: true },
   school: { eye: '05 / TEACHING', title: 'The University', body: '<p>Teaching philosophy and seventeen courses across two universities.</p>', list: ['UH M\u0101noa \u00b7 6 courses', 'Hawai\u02bbi Pacific University \u00b7 11 courses'], cta: 'Step inside the university', room: true },
@@ -162,6 +162,7 @@ export const INFO = {
       ])
       + H('Awards')
       + UL([
+        'Honorable Mention, Scarpa Faculty Change Makers Fellowship <span class="muted">2026</span>',
         'Best AI Project - Honolulu Tech Week Hackathon <span class="muted">2024</span>',
         'Calvin Shindo Student Venture Fund - PACE, Shidler College of Business <span class="muted">2024</span>',
         'Achievement Scholarship - UH Mānoa Second Language Studies <span class="muted">2023</span>',
